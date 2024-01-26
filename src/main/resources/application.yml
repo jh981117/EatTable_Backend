@@ -1,1 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  output:
+    ansi:
+      enabled: always
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/eatable?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: user907
+    password: 1234
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+
+    hibernate:
+      ddl-auto: create-drop
+
+
+
+
+  security:
+    user:
+      name: user1
+      password: 1234
+
+#      Oauth2
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+
+app:
+    upload_user:
+      path: upload_user
+
+    upload_partner:
+      path: upload_partner
+
+    upload_menu:
+      path: upload_menu
 
