@@ -1,21 +1,32 @@
 package com.lec.spring.domain;
 
 
+import com.lec.spring.domain.PartnerMenu;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class PartnerMenuAttachment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String sourcename; // 원본 파일명
+    private String filename;   // 저장된 파일명 (rename 된 파일명)
     private String imageUrl;
     private String description;
 
+    private boolean isImage;   // 이미지
+
     @OneToOne
-    @JoinColumn(name = "partnermenu_id")
+    @JoinColumn(name = "partnerMenuId")
     private PartnerMenu partnerMenu;
 
 

@@ -1,10 +1,10 @@
 package com.lec.spring.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -15,24 +15,35 @@ public class Waiting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String people;
+
+    @ColumnDefault(value = "0")
+    private int people;
+
+    @Enumerated(value = EnumType.STRING)
+    private TrueFalse waitingState;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime waitingRegDate;
-    private String waitingTime;
+
+
+    private String Time;
 
 
     //user 에 name  이랑  phonenumber   user 에서 꺼내기
 
     @ManyToOne
-    @ToString.Exclude
-    @JsonIgnore
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="userId")
     private User user;
 
     @ManyToOne
-    @ToString.Exclude
-    @JsonIgnore
-    @JoinColumn(name="partnerInfo_id")
-    private PartnerInfo partnerInfo;
+    @JoinColumn(name="partnerId")
+    private Partner partner;
+
+
+    @PrePersist
+    public void prePersist (){
+        this.waitingRegDate = LocalDateTime.now();
+    }
 
 
 }

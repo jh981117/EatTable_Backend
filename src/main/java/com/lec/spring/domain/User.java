@@ -3,15 +3,19 @@ package com.lec.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.GrantedAuthority;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 public class User {
 
@@ -19,59 +23,39 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
-
-
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
+    private String nickName;
+    @Column(nullable = false)
     private String birthdate;
-
+    @Column(nullable = false)
     private String email;
 
-    private String temperature;
+    @ColumnDefault(value = "10")
+    private long temperature;
 
     private String profileImageUrl;
     private String bio;
 
-
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-    private List<Waiting> waitingList = new ArrayList<>();
-
-
+    // 좋아요 목록
     @OneToMany(mappedBy = "user")
-    private List<PartnerReview> partnerReviews = new ArrayList<>();
+    private List<ReviewLike> reviewLikes;
 
-
-
-
-    @OneToOne(mappedBy = "user")
-    private UserAttachment userAttachment;
-
-
-    @OneToMany(mappedBy = "follower")
-    private List<Follow> following = new ArrayList<>();
-
-    @OneToMany(mappedBy = "followee")
-    private List<Follow> followee = new ArrayList<>();
-
-
-    @OneToMany(mappedBy = "user")
-    private List<Comment> comments = new ArrayList<>();
-
-
-    @OneToMany(mappedBy = "user")
-    private List<PartnerInfo> partnerInfos = new ArrayList<>();
 
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            name = "userRole",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId")
     )
     private List<Role> roles;
 
-    @OneToMany(mappedBy = "user")
-    private List<PartnerReceipt> partnerReceipts = new ArrayList<>();
+
 
 }

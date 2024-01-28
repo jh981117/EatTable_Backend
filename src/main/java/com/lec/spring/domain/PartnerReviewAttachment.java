@@ -1,5 +1,6 @@
 package com.lec.spring.domain;
 
+import com.lec.spring.domain.StoreReview;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,16 +17,17 @@ public class PartnerReviewAttachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String sourcename; // 원본 파일명
+    private String filename;   // 저장된 파일명 (rename 된 파일명)
     private String imageUrl;
     private String description;
     private LocalDateTime regDate;
 
-
+    private boolean isImage;   // 이미지
 
     @ManyToOne
-    @JoinColumn(name = "partnewReviewid")
-    private PartnerReview partnerReview;
+    @JoinColumn(name = "storeReviewId")
+    private StoreReview storeReview;
 
 
 }

@@ -1,11 +1,9 @@
 package com.lec.spring.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -13,22 +11,18 @@ import lombok.ToString;
 @Entity
 public class Follow {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @EmbeddedId
+    private FollowId id;
 
     @ManyToOne
-    @ToString.Exclude
-    @JsonIgnore
-    @JoinColumn(name = "follower_id")
-    private User follower;
+    @MapsId("fromId")
+    @JoinColumn(name = "fromId")
+    private User fromId;
 
     @ManyToOne
-    @ToString.Exclude
-    @JsonIgnore
-    @JoinColumn(name = "followee_id")
-    private User followee;
+    @MapsId("toId")
+    @JoinColumn(name = "toId")
+    private User toId;
 
 
 }

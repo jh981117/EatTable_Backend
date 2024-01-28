@@ -23,6 +23,9 @@ public class MvcConfiguration {
         @Value("${app.upload_menu.path}")
         private String menuUploadDir;
 
+        @Value("${app.upload.store.path}")
+        private String storeUploadDir;
+
 
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -39,6 +42,10 @@ public class MvcConfiguration {
           registry
                   .addResourceHandler("/upload_menu.path/**")
                   .addResourceLocations("file:" + menuUploadDir + "/");
+
+          registry
+                  .addResourceHandler("/upload_store.path/**")
+                  .addResourceLocations("file:" + storeUploadDir + "/");
         }
 
 

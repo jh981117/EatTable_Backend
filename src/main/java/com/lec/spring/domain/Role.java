@@ -1,13 +1,11 @@
 package com.lec.spring.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,9 +15,11 @@ import java.util.List;
 public class Role {
     @Id
     private Long id;
-    private String roleName;
+
+    @Enumerated(EnumType.STRING)
+    private RoleName roleName;
 
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 }
