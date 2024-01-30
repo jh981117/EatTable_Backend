@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Embeddable
 public class Address {
-    private String street;
-    private String city;
-    private String state;
+    private String area;
     private String zipCode;
+    private double lat;
+    private double lng;
 }

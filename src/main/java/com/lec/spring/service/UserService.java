@@ -32,8 +32,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    private final RoleRepository roleRepository;
-    private final UserAttachmenmtRepository userAttachmentRepository;
+
 
 
 
