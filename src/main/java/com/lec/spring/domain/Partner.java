@@ -23,9 +23,13 @@ public class Partner {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String storeName;
     @Column(nullable = false)
-    private String phone;
+    private String partnerName;
+    @Column(nullable = false)
+    private String partnerPhone;
+    @Column(nullable = false)
+    private String storePhone;
 
     @Embedded
     private Address address;
@@ -39,7 +43,7 @@ public class Partner {
 
     private String reserveInfo;
 
-    private String category;
+    private String favorite;
 
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

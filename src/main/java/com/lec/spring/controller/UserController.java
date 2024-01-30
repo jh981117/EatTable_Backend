@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/user")
+@CrossOrigin
 public class UserController {
 
 
@@ -21,12 +21,12 @@ public class UserController {
 
 
 
-        @GetMapping("/list")
+        @GetMapping("/api/user/list")
         public ResponseEntity<?> list () {
                 return new ResponseEntity<>(userService.list(), HttpStatus.OK);
         }
 
-        @PostMapping("/singup")
+        @PostMapping("/api/user/signup")
         public ResponseEntity<?> signup(@RequestBody User user){
                 return new ResponseEntity<>(userService.signup(user),HttpStatus.CREATED);
         }

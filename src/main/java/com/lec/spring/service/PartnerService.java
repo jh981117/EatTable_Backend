@@ -62,10 +62,15 @@ public class PartnerService {
 
         //수정가능한것  :  주차,예약정보,매장정보,업종(category),콜키지,테이블수,오픈정보
         //나머진 불가
+        partnerUpdate.setStoreName(partner.getStoreName());
+        partnerUpdate.setPartnerName(partner.getPartnerName());
+        partnerUpdate.setPartnerPhone(partner.getPartnerPhone());
+        partnerUpdate.setStorePhone(partner.getStorePhone());
+
         partnerUpdate.setParking(partner.getParking());
         partnerUpdate.setReserveInfo(partner.getReserveInfo());
         partnerUpdate.setInfo(partnerUpdate.getInfo());
-        partnerUpdate.setCategory(partner.getCategory());
+        partnerUpdate.setFavorite(partner.getFavorite());
         partnerUpdate.setCorkCharge(partner.getCorkCharge());
         partnerUpdate.setTableCnt(partner.getTableCnt());
         partnerUpdate.setOpenTime(partner.getOpenTime());
