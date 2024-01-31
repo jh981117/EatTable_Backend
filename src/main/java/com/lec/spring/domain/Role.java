@@ -1,9 +1,8 @@
 package com.lec.spring.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 public class Role {
     @Id
@@ -21,5 +21,7 @@ public class Role {
 
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<User> users = new ArrayList<>();
 }

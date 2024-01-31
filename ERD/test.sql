@@ -3,26 +3,29 @@
 SELECT * FROM comment;
 SELECT * FROM follow;
 SELECT * FROM partner;
-SELECT * FROM partner_attachment;
-SELECT * FROM partner_menu;
-SELECT * FROM partner_menu_attachment;
-SELECT * FROM store_review;
-SELECT * FROM partner_review_attachment;
+SELECT * FROM partnerattachment;
+SELECT * FROM partnermenu;
+SELECT * FROM partnermenuattachment;
+SELECT * FROM storereview;
+SELECT * FROM partnerreviewattachment;
 SELECT * FROM role;
-SELECT * FROM user_role;
+SELECT * FROM userrole;
 SELECT * FROM user;
-SELECT * FROM user_attachment;
-SELECT * FROM partner_req;
-SELECT * FROM review_like;
+SELECT * FROM userattachment;
+SELECT * FROM partnerreq;
+SELECT * FROM reviewlike;
 SELECT * FROM waiting;
 
 
 
 
-insert into user (id, username, PASSWORD, name, bio)
-values (1, 'admin', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'admin', 1);
+insert into user (id, username,birthdate,activated, password,nickName, name, bio , email)
+values (2, 'admin', '910309','','$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi' ,'송', 'admin', 'ㅇㅇㄴ', 'mino030@naver.com');
 
+insert into userrole (userId, roleId) values (2,1);
+insert into userrole (userId, roleId) values (1,3);
 
-
-insert into role (id, role_name) values (1, 'EAT_MEMBER');
-insert into role (id, role_name) values (1, 'EAT_ADMIN');
+insert into role (id, roleName) values
+    (1, 'ROLE_MEMBER'),
+    (2, 'ROLE_PARTNER'),
+    (3, 'ROLE_ADMIN');

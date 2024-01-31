@@ -3,12 +3,12 @@ package com.lec.spring.config;
 
 import com.lec.spring.domain.RoleName;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class SecurityConfig   {
 
     private final TokenProvider tokenProvider;
@@ -24,7 +25,7 @@ public class SecurityConfig   {
 
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-
+    private final CustomUserDetailsService userDetailService;
 
 
 
@@ -44,30 +45,33 @@ public class SecurityConfig   {
                 .csrf((csrfConfig) ->
                         csrfConfig.disable()
                 )
+
                 // HTTP 헤더 설정 중, 프레임 옵션 비활성화
                 .headers((headerConfig) ->
                         headerConfig.frameOptions(frameOptionsConfig ->
                                 frameOptionsConfig.disable()
                         )
                 )
+
+
                 // HTTP 요청 권한 설정
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
-                                // H2 Console에 대한 모든 사용자 접근 허용
-                                .requestMatchers(PathRequest.toH2Console()).permitAll()
                                 // 루트 경로와 /login/**에 대한 모든 사용자 접근 허용
-                                .requestMatchers("/", "/login/**").permitAll()
-                                // /posts/** 및 /api/v1/posts/** 경로에 대해 "EAT_MEMBER" 권한 필요
-                                .requestMatchers("/posts/**", "/api/v1/posts/**").hasRole(RoleName.EAT_MEMBER.name())
-                                // /admins/** 및 /api/v1/admins/** 경로에 대해 "ADMIN" 권한 필요
-                                .requestMatchers("/admins/**", "/api/v1/admins/**").hasRole(RoleName.ADMIN.name())
-                                // 그 외의 모든 요청은 인증된 사용자에게만 허용
-                                .anyRequest().authenticated()
+
+                                .requestMatchers("/api/authenticate").permitAll() //
+                                .requestMatchers("/api/user/signup").permitAll() // 회원가입 api
+                                .requestMatchers("/api/user/login").permitAll() // 로그인 api
+                                .requestMatchers("/favicon.ico").permitAll()
+//                                .requestMatchers("/authenticate/**").hasAuthority(RoleName.ROLE_ADMIN.name())
+                                .anyRequest().permitAll()// 그 외 인증 없이 접근X
                 )
+
                 // 예외 처리 관련 설정
                 .exceptionHandling((exceptionConfig) ->
-                        exceptionConfig.authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedHandler(accessDeniedHandler)
+                        exceptionConfig.authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedHandler(jwtAccessDeniedHandler)
                 )
+
                 // 로그인 페이지 및 관련 설정
                 .formLogin((formLogin) ->
                         formLogin
@@ -85,8 +89,11 @@ public class SecurityConfig   {
                 .logout((logoutConfig) ->
                         logoutConfig.logoutSuccessUrl("/")
                 )
+                .userDetailsService(userDetailService)
+                // JwtSecurityConfig 적용
+                .apply(new JwtSecurityConfig(tokenProvider));
                 // 사용자 상세 정보 서비스 설정
-                .userDetailsService(myUserDetailsService);
+
 
         return http.build();
     }

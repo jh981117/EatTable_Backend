@@ -1,5 +1,6 @@
 package com.lec.spring.util;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -7,12 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 import java.util.Optional;
-import java.util.logging.Logger;
+
 
 //UserService 에서 사용하는 메소드 모음
 public class SecurityUtil {
 
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(SecurityUtil.class);
+    private static final Logger logger =  LoggerFactory.getLogger(SecurityUtil.class);
 
     private SecurityUtil() {}
 
@@ -24,7 +25,7 @@ public class SecurityUtil {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
-
+            logger.debug("Security Context에 인증 정보가 없습니다.");
             return Optional.empty();
         }
 

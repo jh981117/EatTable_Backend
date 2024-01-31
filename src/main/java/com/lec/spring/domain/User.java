@@ -1,16 +1,13 @@
 package com.lec.spring.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -25,6 +22,7 @@ public class User {
 
     @Column(nullable = false)
     private String username;
+
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
@@ -36,6 +34,9 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    //계정활성화?
+    private boolean activated;
+
     @ColumnDefault(value = "10")
     private long temperature;
 
@@ -43,7 +44,7 @@ public class User {
     private String bio;
 
     // 좋아요 목록
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY)
     private List<ReviewLike> reviewLikes;
 
 
@@ -54,7 +55,7 @@ public class User {
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId")
     )
-    private List<Role> roles;
+    private Set<Role> roles ;
 
 
 

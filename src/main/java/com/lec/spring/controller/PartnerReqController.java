@@ -6,6 +6,7 @@ import com.lec.spring.service.PartnerReqService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class PartnerReqController {
     //전체리스트 ( 필요시)
     @Transactional
     @GetMapping("/totalList")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<?> totalList(){
         return new ResponseEntity<>(partnerReqService.list(), HttpStatus.OK);
     }

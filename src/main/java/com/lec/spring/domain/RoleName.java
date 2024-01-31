@@ -2,7 +2,7 @@ package com.lec.spring.domain;
 
 public enum RoleName {
 
-    EAT_MEMBER,
-    PARTNER,
-    ADMIN
+    ROLE_MEMBER,
+    ROLE_PARTNER,
+    ROLE_ADMIN
 }

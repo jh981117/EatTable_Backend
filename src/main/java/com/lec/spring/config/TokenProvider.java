@@ -1,36 +1,40 @@
 package com.lec.spring.config;
 
-import com.lec.spring.domain.User;
+
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.logging.Logger;
+
 import java.util.stream.Collectors;
 
 @Component
 public class TokenProvider implements InitializingBean {
-    private final Logger logger = (Logger) LoggerFactory.getLogger(TokenProvider.class);
+    private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
     private static final String AUTHORITIES_KEY = "auth";
     private final String secret;
     private final long tokenValidityInMilliseconds;
     private Key key;
 
     public TokenProvider(
-            @Value("${app.jwt.secret}") String secret,
-            @Value("${app.token-validity-in-seconds}")
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.token-validity-in-seconds}")
             long tokenValidityInSeconds) {
         this.secret = secret;
         this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
@@ -58,7 +62,10 @@ public class TokenProvider implements InitializingBean {
                 .signWith(key, SignatureAlgorithm.HS512) // 사용할 암호화 알고리즘과 , signature 에 들어갈 secret값 세팅
                 .setExpiration(validity) // set Expire Time 해당 옵션 안넣으면 expire안함
                 .compact();
+
     }
+
+
 
     // 토큰으로 클레임을 만들고 이를 이용해 유저 객체를 만들어서 최종적으로 authentication 객체를 리턴
     public UsernamePasswordAuthenticationToken getAuthentication(String token) {

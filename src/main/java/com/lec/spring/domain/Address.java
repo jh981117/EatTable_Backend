@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class Address {
     private String area;
     private String zipCode;
-    private double lat;
-    private double lng;
+    private Double lat;
+    private Double lng;
 }

@@ -6,6 +6,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.security.core.Authentication;
@@ -15,7 +16,6 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 //실제로 이 컴포넌트를 이용하는 것은 인증 작업을 진행하는 Filter
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 @RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(JwtFilter.class);
+    private static final Logger logger =  LoggerFactory.getLogger(JwtFilter.class);
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private final TokenProvider tokenProvider;
 
@@ -37,15 +37,16 @@ public class JwtFilter extends GenericFilterBean {
         String requestURI = httpServletRequest.getRequestURI();
 
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-            Authentication authentication = (Authentication) tokenProvider.getAuthentication(jwt);
+            Authentication authentication = tokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            logger.log(Level.parse("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}"), authentication.getName(), requestURI);
+            logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
         } else {
-            logger.log(Level.parse("유효한 JWT 토큰이 없습니다, uri: {}"), requestURI);
+            logger.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
+
 
     // Request Header 에서 토큰 정보를 꺼내오기 위한 메소드
     private String resolveToken(HttpServletRequest request) {

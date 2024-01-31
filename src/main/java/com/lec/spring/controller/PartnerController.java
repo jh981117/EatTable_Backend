@@ -1,6 +1,7 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.domain.DTO.PartnerWriteDto;
 import com.lec.spring.domain.Partner;
 
 import com.lec.spring.service.PartnerService;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/partner")
+@CrossOrigin // cross-origin 요청 허용
 public class PartnerController {
 
 
@@ -26,9 +28,17 @@ public class PartnerController {
         return new ResponseEntity<>(partnerService.list(), HttpStatus.OK);
     }
 
+//    //매장등록
+//    @PostMapping("/write")
+//    public ResponseEntity<?> write(@RequestBody Partner partner){
+//        return new ResponseEntity<>(partnerService.write(partner),HttpStatus.CREATED);
+//    }
     //매장등록
+
     @PostMapping("/write")
-    public ResponseEntity<?> write(@RequestBody Partner partner){
+    public ResponseEntity<?> write(@RequestBody PartnerWriteDto partnerWriteDto){
+
+        Partner partner = partnerWriteDto.toEntity();
         return new ResponseEntity<>(partnerService.write(partner),HttpStatus.CREATED);
     }
 
