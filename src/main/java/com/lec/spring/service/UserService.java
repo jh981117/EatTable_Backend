@@ -2,7 +2,6 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.*;
 import com.lec.spring.repository.RoleRepository;
-import com.lec.spring.repository.UserAttachmenmtRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.SecurityUtil;
 import com.lec.spring.util.U;
