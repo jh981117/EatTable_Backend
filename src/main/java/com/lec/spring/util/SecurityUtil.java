@@ -1,5 +1,6 @@
 package com.lec.spring.util;
 
+import com.lec.spring.config.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -38,6 +39,7 @@ public class SecurityUtil {
 
         return Optional.ofNullable(username);
     }
+
 }
 
 

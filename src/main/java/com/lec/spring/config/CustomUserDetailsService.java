@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 
-    private org.springframework.security.core.userdetails.User createUser(String username, User user) {
+    private UserDetails createUser(String username, User user) {
         if (!user.isActivated()) {
             throw new RuntimeException(username + " -> 활성화되어 있지 않습니다.");
         }
@@ -41,8 +41,17 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .map(authority -> new SimpleGrantedAuthority(authority.getRoleName().name()))
                 .collect(Collectors.toList());
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+
+        // CustomUserDetails 객체 생성 및 반환
+        return new CustomUserDetails(
+                user.getUsername(),
                 user.getPassword(),
-                grantedAuthorities);
+                grantedAuthorities,
+                user.getNickName(), // 사용자 닉네임 추가
+                user.getId()
+
+
+        );
     }
+
 }

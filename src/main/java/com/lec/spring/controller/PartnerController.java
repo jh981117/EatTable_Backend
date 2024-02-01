@@ -43,7 +43,7 @@ public class PartnerController {
     }
 
     //매장정보 디테일
-    @GetMapping("/detail{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<?> detail(@PathVariable Long id){
         return new ResponseEntity<>(partnerService.detail(id),HttpStatus.OK);
     }
@@ -57,7 +57,7 @@ public class PartnerController {
 
 
     //매장삭제  직접 x  신청받고 삭제가능
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         return new ResponseEntity<>(partnerService.delete(id),HttpStatus.OK);
     }

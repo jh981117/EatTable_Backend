@@ -29,3 +29,5 @@ insert into role (id, roleName) values
     (1, 'ROLE_MEMBER'),
     (2, 'ROLE_PARTNER'),
     (3, 'ROLE_ADMIN');
+
+

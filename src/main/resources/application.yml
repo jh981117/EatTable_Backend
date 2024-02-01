@@ -50,3 +50,15 @@ jwt:
   #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
   secret: a2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ==
   token-validity-in-seconds: 86400 # ttl (초)
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIA33DMWBRZRYTVLS4Y
+      secretKey: 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
+    s3:
+      bucket: eatablebucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

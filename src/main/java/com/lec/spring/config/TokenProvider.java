@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -49,21 +50,37 @@ public class TokenProvider implements InitializingBean {
 
     public String createToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
+        .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+        Long userId = null;
+        String nickName = "";
+        Object principal = authentication.getPrincipal();
 
-        // 토큰의 expire 시간을 설정
+
+
+            CustomUserDetails userDetails = (CustomUserDetails) principal;
+            userId = userDetails.getId(); // 'userId'를 추출합니다.
+        nickName = userDetails.getNickname(); // 'userNickname'을 추출합니다.
+
+
+
+
+
+        // 토큰의 만료 시간 설정
         long now = (new Date()).getTime();
         Date validity = new Date(now + this.tokenValidityInMilliseconds);
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim(AUTHORITIES_KEY, authorities) // 정보 저장
-                .signWith(key, SignatureAlgorithm.HS512) // 사용할 암호화 알고리즘과 , signature 에 들어갈 secret값 세팅
-                .setExpiration(validity) // set Expire Time 해당 옵션 안넣으면 expire안함
+                .claim(AUTHORITIES_KEY, authorities)
+                .claim("userId", userId)
+                .claim("nickName", nickName)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .setExpiration(validity)
                 .compact();
-
     }
+
+
 
 
 

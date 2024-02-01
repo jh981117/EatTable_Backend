@@ -64,7 +64,6 @@ public class UserService {
         }
 
 
-
         // 유저 정보를 만들어서 save
         User newUser = User.builder()
                 .username(user.getUsername())
@@ -139,18 +138,6 @@ public class UserService {
 
 
 
-    //유저 로그인
-    public User login(String id) {
-        // 사용자 아이디로 사용자를 찾습니다.
-        User user = userRepository.findByUsername(id);
-
-        // 사용자가 존재하고, 비밀번호가 일치하면 로그인 성공
-//        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-//            return user;
-//        } else {
-        return user;
-//        }
-    }
 
 
     // 유저,권한 정보를 가져오는 메소드
@@ -165,11 +152,6 @@ public class UserService {
         return SecurityUtil.getCurrentUsername()
                 .flatMap(userRepository::findOneWithAuthoritiesByUsername);
     }
-
-
-
-
-
 
 
 

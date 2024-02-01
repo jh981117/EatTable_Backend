@@ -2,13 +2,18 @@ package com.lec.spring.controller;
 
 
 
+import com.lec.spring.config.CustomUserDetails;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.SecurityUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -52,27 +57,8 @@ public class UserController {
         }
 
 
-        @PostMapping("/login")
-        public ResponseEntity<?> login(@RequestBody User user) {
-                // LoginRequest 클래스는 클라이언트에서 전송한 로그인 정보를 담은 DTO여야 합니다.
-                // 아래와 같이 LoginRequest 클래스를 정의하셔야 합니다.
 
-                String id = user.getUsername();
-//                String password = user.getPassword();
-
-                // 로그인 비즈니스 로직은 UserService에서 수행합니다.
-                User user1 = userService.login(id);
-
-                if (user1 != null) {
-                        // 로그인 성공 시 사용자 정보를 반환합니다.
-                        return ResponseEntity.ok(user1);
-                } else {
-                        // 로그인 실패 시 적절한 응답을 반환합니다.
-                        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
-                }
-        }
-
-        @GetMapping("/user")
+        @GetMapping("/profile")
         @PreAuthorize("hasAnyRole('MEMBER','ADMIN')")
         public ResponseEntity<User> getMyUserInfo() {
                 return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
@@ -82,4 +68,25 @@ public class UserController {
         public ResponseEntity<User> getUserInfo(@PathVariable String username) {
                 return ResponseEntity.ok(userService.getUserWithAuthorities(username).get());
         }
+
+
+
+//        @GetMapping("/profile")
+//        public ResponseEntity<?> getUserProfile() {
+//                // SecurityUtil을 사용하여 현재 사용자 정보를 가져옴
+//                Optional<CustomUserDetails> userDetails = SecurityUtil.getCurrentUserDetails();
+//
+//                if (!userDetails.isPresent()) {
+//                        // 사용자 정보가 없는 경우 오류 처리
+//                        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+//                }
+//
+//                // 데이터베이스에서 사용자 정보 조회 (예시)
+//                User user = userService.getUserById(userDetails.get().getId());
+//
+//                // 사용자 정보를 응답으로 반환
+//                return ResponseEntity.ok(user);
+//        }
+
+
 }

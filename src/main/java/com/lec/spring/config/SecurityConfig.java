@@ -1,11 +1,9 @@
 package com.lec.spring.config;
 
 
-import com.lec.spring.domain.RoleName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -64,7 +62,7 @@ public class SecurityConfig   {
                                 .requestMatchers("/api/user/login").permitAll() // 로그인 api
                                 .requestMatchers("/favicon.ico").permitAll()
 //                                .requestMatchers("/authenticate/**").hasAuthority(RoleName.ROLE_ADMIN.name())
-                                .anyRequest().permitAll()// 그 외 인증 없이 접근X
+                                .anyRequest().permitAll()//
                 )
 
                 // 예외 처리 관련 설정
