@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/req")
+@CrossOrigin
 public class PartnerReqController {
 
     private final PartnerReqService partnerReqService;
