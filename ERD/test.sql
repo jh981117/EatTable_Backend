@@ -11,7 +11,6 @@ SELECT * FROM partnerreviewattachment;
 SELECT * FROM role;
 SELECT * FROM userrole;
 SELECT * FROM user;
-SELECT * FROM userattachment;
 SELECT * FROM partnerreq;
 SELECT * FROM reviewlike;
 SELECT * FROM waiting;
@@ -29,5 +28,10 @@ insert into role (id, roleName) values
     (1, 'ROLE_MEMBER'),
     (2, 'ROLE_PARTNER'),
     (3, 'ROLE_ADMIN');
+
+
+
+
+
 
 

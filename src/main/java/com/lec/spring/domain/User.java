@@ -1,20 +1,22 @@
 package com.lec.spring.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lec.spring.domain.listener.UserEntityListener;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.util.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity
-public class User {
+@EntityListeners(value = UserEntityListener.class)
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +49,9 @@ public class User {
     @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY)
     private List<ReviewLike> reviewLikes;
 
+    // OAuth2
+    private String oauth;
+    private String oauthId;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -56,6 +61,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roleId")
     )
     private Set<Role> roles ;
+
+
+
 
 
 

@@ -9,6 +9,8 @@ import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.util.U;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,20 +33,34 @@ import java.util.Map;
 public class PartnerService {
 
 
-
+    private final PartnerAttachmentRepository partnerAttachmentRepository;
     private final PartnerRepository partnerRepository;
+    private final S3Service s3Service;
 
 
 
     //매장리스트
     @Transactional
-    public List<Partner> list (){
-        return partnerRepository.findAll();
+    public Page<Partner> list(String keyword, Pageable pageable) {
+        if (keyword != null && !keyword.isEmpty()) {
+            return partnerRepository.findByKeyword(keyword, pageable);
+        }else {
+            return partnerRepository.findAll(pageable);
+        }
     }
 
     //매장등록
     @Transactional
-    public Partner write (Partner partner){
+    public Partner write (Partner partner, MultipartFile file){
+
+
+        PartnerAttachment partnerAttachment = new PartnerAttachment();
+        String s3StoreagePath =  s3Service.uploadFile(file);
+        partnerAttachment.setPartner(partner);
+        partnerAttachment.setImageUrl(s3StoreagePath);
+        partnerAttachment.setFilename(file.getOriginalFilename());
+        partnerAttachmentRepository.save(partnerAttachment);
+
         return partnerRepository.save(partner);
     }
 
@@ -69,7 +85,7 @@ public class PartnerService {
 
         partnerUpdate.setParking(partner.getParking());
         partnerUpdate.setReserveInfo(partner.getReserveInfo());
-        partnerUpdate.setInfo(partnerUpdate.getInfo());
+        partnerUpdate.setStoreInfo(partnerUpdate.getStoreInfo());
         partnerUpdate.setFavorite(partner.getFavorite());
         partnerUpdate.setCorkCharge(partner.getCorkCharge());
         partnerUpdate.setTableCnt(partner.getTableCnt());

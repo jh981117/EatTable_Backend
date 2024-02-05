@@ -23,7 +23,7 @@ public class PartnerReqController {
     //전체리스트 ( 필요시)
     @Transactional
     @GetMapping("/totalList")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<?> totalList(){
         return new ResponseEntity<>(partnerReqService.list(), HttpStatus.OK);
     }
