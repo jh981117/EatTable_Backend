@@ -43,14 +43,14 @@ public class PartnerController {
 
     //매장등록
 
+
     @PostMapping("/write")
-    public ResponseEntity<?> write(@RequestBody PartnerWriteDto partnerWriteDto , @RequestBody MultipartFile file){
-
+    public ResponseEntity<?> write(@ModelAttribute PartnerWriteDto partnerWriteDto,
+                                   @RequestPart("files") List<MultipartFile> files) {
         Partner partner = partnerWriteDto.toEntity();
-
-
-        return new ResponseEntity<>(partnerService.write(partner, file),HttpStatus.CREATED);
+        return new ResponseEntity<>(partnerService.write(partner, files), HttpStatus.CREATED);
     }
+
 
     //매장정보 디테일
     @GetMapping("/detail/{id}")

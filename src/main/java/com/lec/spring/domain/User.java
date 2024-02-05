@@ -64,6 +64,12 @@ public class User extends BaseEntity {
 
 
 
+    @PrePersist
+    void prePersist() {
+        if (this.profileImageUrl == null) {
+            this.profileImageUrl = "https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png";
+        }
+    }
 
 
 

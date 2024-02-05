@@ -33,13 +33,12 @@ public class PartnerMenu {
     @JoinColumn(name = "partnerId")
     private Partner partner;
 
+    private String menuImageUrl;
     @PrePersist
     public void prePersist (){
         this.regDate = LocalDateTime.now();
     }
 
-    @OneToOne
-    @JoinColumn(name = "attachment_id") // DB에서 해당 컬럼명을 지정
-    private PartnerMenuAttachment attachment;
+
 
 }

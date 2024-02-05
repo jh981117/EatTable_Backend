@@ -6,6 +6,12 @@ spring:
     ansi:
       enabled: always
 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/eatable?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
@@ -51,3 +57,14 @@ jwt:
   secret: a2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ==
   token-validity-in-seconds: 86400 # ttl (초)
 
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIA33DMWBRZ64AXMVGL
+      secretKey: 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
+    s3:
+      bucket: eatablebucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

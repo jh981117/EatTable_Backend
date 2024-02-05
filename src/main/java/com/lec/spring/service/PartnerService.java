@@ -50,16 +50,17 @@ public class PartnerService {
     }
 
     //매장등록
+
     @Transactional
-    public Partner write (Partner partner, MultipartFile file){
-
-
-        PartnerAttachment partnerAttachment = new PartnerAttachment();
-        String s3StoreagePath =  s3Service.uploadFile(file);
-        partnerAttachment.setPartner(partner);
-        partnerAttachment.setImageUrl(s3StoreagePath);
-        partnerAttachment.setFilename(file.getOriginalFilename());
-        partnerAttachmentRepository.save(partnerAttachment);
+    public Partner write(Partner partner, List<MultipartFile> files) {
+        for (MultipartFile file : files) {
+            PartnerAttachment partnerAttachment = new PartnerAttachment();
+            String s3StoragePath = s3Service.uploadFile(file);
+            partnerAttachment.setImageUrl(s3StoragePath);
+            partnerAttachment.setPartner(partner);
+            partnerAttachment.setFilename(file.getOriginalFilename());
+            partnerAttachmentRepository.save(partnerAttachment);
+        }
 
         return partnerRepository.save(partner);
     }
