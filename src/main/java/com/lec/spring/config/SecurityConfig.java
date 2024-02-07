@@ -1,6 +1,7 @@
 package com.lec.spring.config;
 
 
+import com.lec.spring.domain.RoleName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,7 +62,7 @@ public class SecurityConfig   {
                                 .requestMatchers("/api/user/signup").permitAll() // 회원가입 api
                                 .requestMatchers("/api/user/login").permitAll() // 로그인 api
                                 .requestMatchers("/favicon.ico").permitAll()
-//                                .requestMatchers("/authenticate/**").hasAuthority(RoleName.ROLE_ADMIN.name())
+                                .requestMatchers("/authenticate/**").hasAuthority(RoleName.ROLE_ADMIN.name())
                                 .anyRequest().permitAll()//
                 )
 

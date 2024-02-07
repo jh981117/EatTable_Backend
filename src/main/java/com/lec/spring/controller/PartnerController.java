@@ -6,9 +6,13 @@ import com.lec.spring.domain.Partner;
 
 import com.lec.spring.service.PartnerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,23 +27,29 @@ public class PartnerController {
 
 
     //매장리스트
+//    @GetMapping("/list")
+//    public ResponseEntity<?> list (){
+//        return new ResponseEntity<>(partnerService.list(), HttpStatus.OK);
+//    }
+
     @GetMapping("/list")
-    public ResponseEntity<?> list (){
-        return new ResponseEntity<>(partnerService.list(), HttpStatus.OK);
+    public ResponseEntity<Page<Partner>> list(@RequestParam(defaultValue = "0") int page,
+                                              @RequestParam(defaultValue = "5") int size, String keyword) {
+        Pageable pageable = PageRequest.of(page, size);
+        return new ResponseEntity<>(partnerService.list(keyword,pageable), HttpStatus.OK);
     }
 
-//    //매장등록
-//    @PostMapping("/write")
-//    public ResponseEntity<?> write(@RequestBody Partner partner){
-//        return new ResponseEntity<>(partnerService.write(partner),HttpStatus.CREATED);
-//    }
+
+
     //매장등록
 
     @PostMapping("/write")
-    public ResponseEntity<?> write(@RequestBody PartnerWriteDto partnerWriteDto){
+    public ResponseEntity<?> write(@RequestBody PartnerWriteDto partnerWriteDto , @RequestBody MultipartFile file){
 
         Partner partner = partnerWriteDto.toEntity();
-        return new ResponseEntity<>(partnerService.write(partner),HttpStatus.CREATED);
+
+
+        return new ResponseEntity<>(partnerService.write(partner, file),HttpStatus.CREATED);
     }
 
     //매장정보 디테일

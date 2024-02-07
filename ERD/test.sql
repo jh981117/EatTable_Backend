@@ -11,7 +11,6 @@ SELECT * FROM partnerreviewattachment;
 SELECT * FROM role;
 SELECT * FROM userrole;
 SELECT * FROM user;
-SELECT * FROM userattachment;
 SELECT * FROM partnerreq;
 SELECT * FROM reviewlike;
 SELECT * FROM waiting;
@@ -29,6 +28,7 @@ insert into role (id, roleName) values
     (1, 'ROLE_MEMBER'),
     (2, 'ROLE_PARTNER'),
     (3, 'ROLE_ADMIN');
+
 
 
 ----------------------- 승빈 ----------------------------------------------
@@ -72,3 +72,4 @@ insert into partnerreq(id,managerName,storeName,phone,partnerReqState,regDate)
 values(24,'이름24','가게24','010-1111-2020','CLOSE_READY','2011-11-11 10:10:28');
 insert into partnerreq(id,managerName,storeName,phone,partnerReqState,regDate)
 values(25,'이름25','가게25','010-1111-2121','CLOSE_READY','2011-11-11 10:10:29');
+

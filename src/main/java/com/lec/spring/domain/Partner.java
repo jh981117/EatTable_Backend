@@ -39,7 +39,7 @@ public class Partner {
 
     private String openTime;
 
-    private String info;
+    private String storeInfo;
 
     private String reserveInfo;
 
