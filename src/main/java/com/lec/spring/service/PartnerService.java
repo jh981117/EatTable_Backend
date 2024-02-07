@@ -41,6 +41,15 @@ public class PartnerService {
 
     //매장리스트
     @Transactional
+    public List<Partner> totallist() {
+
+            return partnerRepository.findAll();
+
+    }
+
+
+    //매장리스트
+    @Transactional
     public Page<Partner> list(String keyword, Pageable pageable) {
         if (keyword != null && !keyword.isEmpty()) {
             return partnerRepository.findByKeyword(keyword, pageable);

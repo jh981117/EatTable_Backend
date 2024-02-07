@@ -3,10 +3,9 @@ package com.lec.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lec.spring.domain.listener.UserEntityListener;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
@@ -15,6 +14,10 @@ import java.util.List;
 
 @Data
 @Entity
+
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Partner {
 
 
@@ -46,8 +49,8 @@ public class Partner {
     private String favorite;
 
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime regDate;
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    private LocalDateTime regDate;
 
     @Enumerated(value = EnumType.STRING)
     private TrueFalse parking;
@@ -74,10 +77,10 @@ public class Partner {
 
 
 
-    @PrePersist
-    public void prePersist() {
-        regDate = LocalDateTime.now();
-    }
+//    @PrePersist
+//        public void prePersist() {
+//        regDate = LocalDateTime.now();
+//    }
 
 
 }

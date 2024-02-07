@@ -70,6 +70,7 @@ public class UserService {
                 .name(user.getName())
                 .birthdate(user.getBirthdate())
                 .email(user.getEmail())
+                .phone(user.getPhone())
                 .bio(user.getBio())
                 .nickName(user.getNickName())
                 .activated(true)

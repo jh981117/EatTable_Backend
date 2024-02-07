@@ -26,11 +26,14 @@ public class PartnerController {
     private final PartnerService partnerService;
 
 
-    //매장리스트
-//    @GetMapping("/list")
-//    public ResponseEntity<?> list (){
-//        return new ResponseEntity<>(partnerService.list(), HttpStatus.OK);
-//    }
+//    매장리스트
+    @GetMapping("/totallist")
+    public ResponseEntity<?> totallist (){
+        return new ResponseEntity<>(partnerService.totallist(), HttpStatus.OK);
+    }
+
+
+
 
     @GetMapping("/list")
     public ResponseEntity<Page<Partner>> list(@RequestParam(defaultValue = "0") int page,

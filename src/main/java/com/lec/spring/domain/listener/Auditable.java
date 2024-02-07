@@ -1,4 +1,4 @@
-package com.lec.spring.listener;
+package com.lec.spring.domain.listener;
 
 import java.time.LocalDateTime;
 
