@@ -34,10 +34,10 @@ public class PartnerMenu extends BaseEntity {
     private Partner partner;
 
     private String menuImageUrl;
-    @PrePersist
-    public void prePersist (){
-        this.regDate = LocalDateTime.now();
-    }
+//    @PrePersist
+//    public void prePersist (){
+//        this.regDate = LocalDateTime.now();
+//    }
 
 
 
