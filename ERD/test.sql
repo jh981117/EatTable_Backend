@@ -5,7 +5,6 @@ SELECT * FROM follow;
 SELECT * FROM partner;
 SELECT * FROM partnerattachment;
 SELECT * FROM partnermenu;
-SELECT * FROM partnermenuattachment;
 SELECT * FROM storereview;
 SELECT * FROM partnerreviewattachment;
 SELECT * FROM role;
