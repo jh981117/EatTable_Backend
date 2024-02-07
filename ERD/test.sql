@@ -22,12 +22,20 @@ SELECT * FROM waiting;
 
 # insert into userrole (userId, roleId) values (2,1);
 insert into userrole (userId, roleId) values (1,3);
+insert into userrole (userId, roleId) values (1,1);
 
 insert into role (id, roleName) values
     (1, 'ROLE_MEMBER'),
     (2, 'ROLE_PARTNER'),
     (3, 'ROLE_ADMIN');
 
+
+#---------------------재환----------------------------------------------
+insert into partner (lat, lng, id,  userId, area, corkCharge, favorite, storeInfo, openTime, parking, partnerName, partnerPhone, partnerState, reserveInfo, storeName, storePhone, tableCnt, zipCode)
+values (37.5283169, 126.9294254, 1,  2, "서울", 'TRUE', "일식", "돈까스 판매", 2024-02-02, 'TRUE', "짱구", "010-1234-1234", 'TRUE', "이게뭐지", "돈까스집", "010-7777-7777", 20, "01241421");
+
+insert into partnerattachment (isImage, id, partnerId, description, filename, imageUrl, sourcename)
+values (1, 1, 1, '하이', '파일네임', '이미지URL', 'sourcename');
 
 
 
