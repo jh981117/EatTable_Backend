@@ -48,10 +48,9 @@ public class PartnerController {
 
 
     @PostMapping("/write")
-    public ResponseEntity<?> write(@ModelAttribute PartnerWriteDto partnerWriteDto,
-                                   @RequestPart("files") List<MultipartFile> files) {
+    public ResponseEntity<?> write(@RequestBody PartnerWriteDto partnerWriteDto){
         Partner partner = partnerWriteDto.toEntity();
-        return new ResponseEntity<>(partnerService.write(partner, files), HttpStatus.CREATED);
+        return new ResponseEntity<>(partnerService.write(partner),HttpStatus.CREATED);
     }
 
 

@@ -117,6 +117,9 @@ public class PartnerService {
         return "0";
     }
 
-
+    @Transactional
+    public Partner write(Partner partner) {
+        return partnerRepository.save(partner);
+    }
 
 }
