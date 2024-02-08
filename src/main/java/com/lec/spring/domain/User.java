@@ -70,6 +70,9 @@ public class User extends BaseEntity {
         if (this.profileImageUrl == null) {
             this.profileImageUrl = "https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png";
         }
+        if (this.temperature == 0) {
+            this.temperature = 10;
+        }
     }
 
 
