@@ -48,10 +48,9 @@ public class PartnerController {
 
 
     @PostMapping("/write")
-    public ResponseEntity<?> write(@ModelAttribute PartnerWriteDto partnerWriteDto,
-                                   @RequestPart("files") List<MultipartFile> files) {
+    public ResponseEntity<?> write(@RequestBody PartnerWriteDto partnerWriteDto){
         Partner partner = partnerWriteDto.toEntity();
-        return new ResponseEntity<>(partnerService.write(partner, files), HttpStatus.CREATED);
+        return new ResponseEntity<>(partnerService.write(partner),HttpStatus.CREATED);
     }
 
 
@@ -63,8 +62,9 @@ public class PartnerController {
 
     //매장수정
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody Partner partner){
-        return new ResponseEntity<>(partnerService.update(partner),HttpStatus.OK);
+    public ResponseEntity<?> update(@ModelAttribute Partner partner,
+                                    @RequestPart("files") List<MultipartFile> files){
+        return new ResponseEntity<>(partnerService.update(partner, files),HttpStatus.OK);
     }
 
 
