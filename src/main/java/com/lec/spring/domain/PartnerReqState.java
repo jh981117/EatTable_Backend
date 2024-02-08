@@ -4,5 +4,6 @@ public enum PartnerReqState {
     OPEN_READY ,
     OPEN ,
     CLOSE_READY ,
-    CLOSE
+    CLOSE,
+    WAIT
 }

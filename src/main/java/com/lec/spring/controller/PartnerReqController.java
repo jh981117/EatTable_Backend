@@ -52,7 +52,12 @@ public class PartnerReqController {
         return new ResponseEntity<>(partnerReqService.update(partnerReq),HttpStatus.OK);
     }
 
-
+    @Transactional
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody PartnerReq partnerReq) {
+        partnerReq.setId(id);
+        return new ResponseEntity<>(partnerReqService.update(partnerReq), HttpStatus.OK);
+    }
 
     //신청 삭제 ( 마음바뀜)
     @Transactional

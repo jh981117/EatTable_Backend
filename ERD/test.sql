@@ -81,6 +81,8 @@ values(24,'이름24','가게24','010-1111-2020','CLOSE_READY');
 insert into partnerreq(id,managerName,storeName,phone,partnerReqState)
 values(25,'이름25','가게25','010-1111-2121','CLOSE_READY');
 
-
-
+# insert into partner(id,storeName,partnerName,partnerPhone,storePhone)
+# values (1,'가게6','이름6','010-1111-1111','031-1111-1111');
+# insert into partner(id,storeName,partnerName,partnerPhone,storePhone)
+# values (2,'가게7','이름7','010-1111-2222','031-1111-2222');
 
