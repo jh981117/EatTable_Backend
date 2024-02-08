@@ -100,7 +100,7 @@ public class PartnerService {
         partnerUpdate.setCorkCharge(partner.getCorkCharge());
         partnerUpdate.setTableCnt(partner.getTableCnt());
         partnerUpdate.setOpenTime(partner.getOpenTime());
-
+        partnerUpdate.setPartnerState(partner.getPartnerState());
         return partnerUpdate;
 
     }

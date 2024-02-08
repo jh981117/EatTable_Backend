@@ -38,7 +38,10 @@ public class PartnerReqService {
         } else if ("CLOSE".equals(status)) {
             return partnerReqRepository.findByPartnerReqState(PartnerReqState.CLOSE);
 
-        } else {
+        }  else if ("WAIT".equals(status)) {
+            return partnerReqRepository.findByPartnerReqState(PartnerReqState.WAIT);
+
+        }  else {
             return null;
         }
     }
