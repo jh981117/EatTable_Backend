@@ -62,15 +62,12 @@ public class PartnerController {
 
     //매장수정
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody Partner partner){
-        return new ResponseEntity<>(partnerService.update(partner),HttpStatus.OK);
+    public ResponseEntity<?> update(@ModelAttribute Partner partner,
+                                    @RequestPart("files") List<MultipartFile> files){
+        return new ResponseEntity<>(partnerService.update(partner, files),HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody Partner partner){
-        partner.setId(id);
-        return new ResponseEntity<>(partnerService.update(partner),HttpStatus.OK);
-    }
+
 
     //매장삭제  직접 x  신청받고 삭제가능
     @DeleteMapping("/delete/{id}")

@@ -61,16 +61,7 @@ public class PartnerService {
     //매장등록
 
     @Transactional
-    public Partner write(Partner partner, List<MultipartFile> files) {
-        for (MultipartFile file : files) {
-            PartnerAttachment partnerAttachment = new PartnerAttachment();
-            String s3StoragePath = s3Service.uploadFile(file);
-            partnerAttachment.setImageUrl(s3StoragePath);
-            partnerAttachment.setPartner(partner);
-            partnerAttachment.setFilename(file.getOriginalFilename());
-            partnerAttachmentRepository.save(partnerAttachment);
-        }
-
+    public Partner write(Partner partner) {
         return partnerRepository.save(partner);
     }
 
@@ -83,26 +74,38 @@ public class PartnerService {
 
     //매장정보 수정  ( 이미지추후 추가, 고민중)
     @Transactional
-    public Partner update(Partner partner) {
-        Partner partnerUpdate = partnerRepository.findById(partner.getId()).orElse(null);
+    public Partner update(Partner partner, List<MultipartFile> files) {
+        // 파트너 ID로 해당 파트너를 찾아옴
+        Partner partnerUpdate = partnerRepository.findById(partner.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Partner not found with id: " + partner.getId()));
 
-        //수정가능한것  :  주차,예약정보,매장정보,업종(category),콜키지,테이블수,오픈정보
-        //나머진 불가
+        // 파일 저장 로직 추가
+        for (MultipartFile file : files) {
+            PartnerAttachment partnerAttachment = new PartnerAttachment();
+            String s3StoragePath = s3Service.uploadFile(file);
+            partnerAttachment.setImageUrl(s3StoragePath);
+            partnerAttachment.setPartner(partner);
+            partnerAttachment.setFilename(file.getOriginalFilename());
+            partnerAttachment.setImage(true);
+            partnerAttachmentRepository.save(partnerAttachment);
+        }
+
+        // 파트너 정보 업데이트
         partnerUpdate.setStoreName(partner.getStoreName());
         partnerUpdate.setPartnerName(partner.getPartnerName());
         partnerUpdate.setPartnerPhone(partner.getPartnerPhone());
         partnerUpdate.setStorePhone(partner.getStorePhone());
-
         partnerUpdate.setParking(partner.getParking());
         partnerUpdate.setReserveInfo(partner.getReserveInfo());
-        partnerUpdate.setStoreInfo(partnerUpdate.getStoreInfo());
+        partnerUpdate.setStoreInfo(partner.getStoreInfo());
+        partnerUpdate.setDog(partner.getDog());
         partnerUpdate.setFavorite(partner.getFavorite());
         partnerUpdate.setCorkCharge(partner.getCorkCharge());
         partnerUpdate.setTableCnt(partner.getTableCnt());
         partnerUpdate.setOpenTime(partner.getOpenTime());
-        partnerUpdate.setPartnerState(partner.getPartnerState());
-        return partnerUpdate;
 
+        // 업데이트된 파트너 정보를 반환
+        return partnerUpdate;
     }
 
 
@@ -117,9 +120,6 @@ public class PartnerService {
         return "0";
     }
 
-    @Transactional
-    public Partner write(Partner partner) {
-        return partnerRepository.save(partner);
-    }
+
 
 }

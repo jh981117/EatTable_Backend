@@ -3,7 +3,7 @@ package com.lec.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.lec.spring.domain.listener.UserEntityListener;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -14,11 +14,12 @@ import java.util.List;
 
 @Data
 @Entity
-
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Partner {
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+@Builder
+public class Partner extends BaseEntity{
 
 
     @Id
@@ -59,6 +60,8 @@ public class Partner {
     @Enumerated(value = EnumType.STRING)
     private TrueFalse corkCharge;
 
+    @Enumerated(value = EnumType.STRING)
+    private TrueFalse  dog;
 
     @Enumerated(value = EnumType.STRING)
     private TrueFalse partnerState;

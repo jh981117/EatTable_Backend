@@ -1,7 +1,6 @@
 package com.lec.spring.domain;
 
 
-import com.lec.spring.domain.listener.UserEntityListener;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -15,7 +14,6 @@ import java.util.*;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity
-@EntityListeners(value = UserEntityListener.class)
 public class User extends BaseEntity {
 
     @Id
@@ -71,6 +69,9 @@ public class User extends BaseEntity {
     void prePersist() {
         if (this.profileImageUrl == null) {
             this.profileImageUrl = "https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png";
+        }
+        if (this.temperature == 0) {
+            this.temperature = 10;
         }
     }
 
