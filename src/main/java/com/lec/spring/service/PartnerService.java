@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -70,9 +72,8 @@ public class PartnerService {
             partnerAttachment.setImageUrl(s3StoragePath);
             partnerAttachment.setPartner(partner);
             partnerAttachment.setFilename(file.getOriginalFilename());
-//            partnerAttachment.setImage(true);
             partnerAttachmentRepository.save(partnerAttachment);
-        }
+            }
 
         // 파트너 정보 업데이트
         partnerUpdate.setStoreName(partner.getStoreName());
@@ -113,20 +114,17 @@ public class PartnerService {
         return "0";
     }
 
-    public PartnerAttachment update(Long imageId, List<MultipartFile> files) {
-        PartnerAttachment partnerupdate = partnerAttachmentRepository.findById(imageId).orElse(null);
-        partnerupdate.setId(partnerupdate.getId());
-        partnerupdate.setImageUrl(partnerupdate.getImageUrl());
-        return partnerupdate;
-    }
-
-
-//    public PartnerAttachment updateImg(Long imageId, PartnerAttachment partnerAttachment) {
-//        PartnerAttachment partnerupdate = partnerAttachmentRepository.findById(imageId).orElse(null);
-//        partnerupdate.setImageUrl(partnerAttachment.getImageUrl());
-//        partnerupdate.setId(partnerAttachment.getId());
-//        return partnerupdate;
+//    @Transactional
+//    public void updateImage(Long imageId, MultipartFile file) {
+//        // 이미지 ID로 해당 이미지를 조회합니다.
+//        PartnerAttachment attachment = partnerAttachmentRepository.findById(imageId)
+//                .orElseThrow(() -> new IllegalArgumentException("해당 이미지를 찾을 수 없습니다: " + imageId));
+//
+//        // S3에 파일을 업로드하고 이미지 URL을 업데이트합니다.
+//        String s3StoragePath = s3Service.uploadFile(file);
+//        attachment.setImageUrl(s3StoragePath);
+//        attachment.setFilename(file.getOriginalFilename());
+//        partnerAttachmentRepository.save(attachment);
 //    }
-
 
 }
