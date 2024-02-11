@@ -3,7 +3,6 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.DTO.PartnerWriteDto;
 import com.lec.spring.domain.Partner;
-
 import com.lec.spring.service.PartnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -45,8 +45,6 @@ public class PartnerController {
 
 
     //매장등록
-
-
     @PostMapping("/write")
     public ResponseEntity<?> write(@RequestBody PartnerWriteDto partnerWriteDto){
         Partner partner = partnerWriteDto.toEntity();
@@ -63,11 +61,13 @@ public class PartnerController {
     //매장수정
     @PutMapping("/update")
     public ResponseEntity<?> update(@ModelAttribute Partner partner,
-                                    @RequestPart("files") List<MultipartFile> files){
+                                    @RequestParam(value = "files", required = false) List<MultipartFile> files){
+        if (files == null) {
+            // files가 null인 경우, 파일이 전송되지 않은 것으로 간주하고 빈 리스트로 초기화합니다.
+            files = new ArrayList<>();
+        }
         return new ResponseEntity<>(partnerService.update(partner, files),HttpStatus.OK);
     }
-
-
 
     //매장삭제  직접 x  신청받고 삭제가능
     @DeleteMapping("/delete/{id}")
@@ -75,6 +75,26 @@ public class PartnerController {
         return new ResponseEntity<>(partnerService.delete(id),HttpStatus.OK);
     }
 
+    @DeleteMapping("/remove/{imageId}")
+    public ResponseEntity<?> remove(@PathVariable Long imageId){
+        return new ResponseEntity<>(partnerService.remove(imageId),HttpStatus.OK);
+    }
+
+//    @PutMapping("/updateImageUrl/{imageId}")
+//    public ResponseEntity<?> updateImg(@PathVariable Long imageId, PartnerAttachment partnerAttachment) {
+//        return new ResponseEntity<>(partnerService.updateImg(imageId, partnerAttachment), HttpStatus.OK);
+//    }
+@PutMapping("/updateImageUrl/{imageId}")
+public ResponseEntity<?> updateImg(
+        @PathVariable Long imageId,
+        @RequestParam(value = "file", required = false) List<MultipartFile> files
+) {
+    if (files == null) {
+        // files가 null인 경우, 파일이 전송되지 않은 것으로 간주하고 빈 리스트로 초기화합니다.
+        files = new ArrayList<>();
+    }
+    return new ResponseEntity<>(partnerService.update(imageId, files), HttpStatus.OK);
+}
 
 
 }

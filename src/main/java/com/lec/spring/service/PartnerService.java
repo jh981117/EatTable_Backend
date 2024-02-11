@@ -2,31 +2,16 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.PartnerAttachment;
-import com.lec.spring.domain.PartnerReqState;
-import com.lec.spring.domain.User;
 import com.lec.spring.repository.PartnerAttachmentRepository;
 import com.lec.spring.repository.PartnerRepository;
-import com.lec.spring.util.U;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -38,12 +23,11 @@ public class PartnerService {
     private final S3Service s3Service;
 
 
-
     //매장리스트
     @Transactional
     public List<Partner> totallist() {
 
-            return partnerRepository.findAll();
+        return partnerRepository.findAll();
 
     }
 
@@ -53,7 +37,7 @@ public class PartnerService {
     public Page<Partner> list(String keyword, Pageable pageable) {
         if (keyword != null && !keyword.isEmpty()) {
             return partnerRepository.findByKeyword(keyword, pageable);
-        }else {
+        } else {
             return partnerRepository.findAll(pageable);
         }
     }
@@ -67,7 +51,7 @@ public class PartnerService {
 
     //매장디테일 정보
     @Transactional
-    public Partner detail(Long id){
+    public Partner detail(Long id) {
         return partnerRepository.findById(id).orElse(null);
     }
 
@@ -86,7 +70,7 @@ public class PartnerService {
             partnerAttachment.setImageUrl(s3StoragePath);
             partnerAttachment.setPartner(partner);
             partnerAttachment.setFilename(file.getOriginalFilename());
-            partnerAttachment.setImage(true);
+//            partnerAttachment.setImage(true);
             partnerAttachmentRepository.save(partnerAttachment);
         }
 
@@ -108,18 +92,41 @@ public class PartnerService {
         return partnerUpdate;
     }
 
-
     //직접 삭제불사  삭제신청만가능 삭제신청은 partnerReq 에서
     @Transactional
-    public String delete(Long id){
+    public String delete(Long id) {
         Partner partnerDelete = partnerRepository.findById(id).orElse(null);
-        if(partnerDelete != null){
+        if (partnerDelete != null) {
             partnerRepository.deleteById(id);
             return "1";
         }
         return "0";
     }
 
+
+    public String remove(Long imageId) {
+        PartnerAttachment partnerRemove = partnerAttachmentRepository.findById(imageId).orElse(null);
+        if (partnerRemove != null) {
+            partnerAttachmentRepository.deleteById(imageId);
+            return "1";
+        }
+        return "0";
+    }
+
+    public PartnerAttachment update(Long imageId, List<MultipartFile> files) {
+        PartnerAttachment partnerupdate = partnerAttachmentRepository.findById(imageId).orElse(null);
+        partnerupdate.setId(partnerupdate.getId());
+        partnerupdate.setImageUrl(partnerupdate.getImageUrl());
+        return partnerupdate;
+    }
+
+
+//    public PartnerAttachment updateImg(Long imageId, PartnerAttachment partnerAttachment) {
+//        PartnerAttachment partnerupdate = partnerAttachmentRepository.findById(imageId).orElse(null);
+//        partnerupdate.setImageUrl(partnerAttachment.getImageUrl());
+//        partnerupdate.setId(partnerAttachment.getId());
+//        return partnerupdate;
+//    }
 
 
 }
