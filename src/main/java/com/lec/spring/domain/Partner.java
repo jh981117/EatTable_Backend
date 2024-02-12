@@ -49,6 +49,8 @@ public class Partner extends BaseEntity{
 
     private String favorite;
 
+    private String viewCnt;
+
 
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 //    private LocalDateTime regDate;
@@ -79,11 +81,12 @@ public class Partner extends BaseEntity{
     private User user;
 
 
-
-//    @PrePersist
-//        public void prePersist() {
-//        regDate = LocalDateTime.now();
-//    }
+    @PrePersist
+    public void prePersist() {
+        if (partnerState == null) {
+            partnerState = TrueFalse.TRUE;
+        }
+    }
 
 
 }

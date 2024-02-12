@@ -61,8 +61,12 @@ public class User extends BaseEntity {
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId")
     )
-    private Set<Role> roles ;
+    private Set<Role> roles = new HashSet<>();
 
+    // 새로운 Role을 추가하는 메서드
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
 
 
     @PrePersist

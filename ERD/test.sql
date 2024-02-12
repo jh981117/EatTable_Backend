@@ -22,12 +22,14 @@ SELECT * FROM waiting;
 
 # insert into userrole (userId, roleId) values (2,1);
 insert into userrole (userId, roleId) values (1,3);
-insert into userrole (userId, roleId) values (1,1);
+
+insert into userrole (userId, roleId) values (3,2);
 
 insert into role (id, roleName) values
     (1, 'ROLE_MEMBER'),
     (2, 'ROLE_PARTNER'),
     (3, 'ROLE_ADMIN');
+
 
 
 #---------------------재환----------------------------------------------

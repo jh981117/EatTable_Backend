@@ -47,6 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 user.getUsername(),
                 user.getPassword(),
                 grantedAuthorities,
+                user.getName(),
                 user.getNickName(), // 사용자 닉네임 추가
                 user.getId()
 

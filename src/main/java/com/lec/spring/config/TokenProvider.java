@@ -54,13 +54,15 @@ public class TokenProvider implements InitializingBean {
                 .collect(Collectors.joining(","));
         Long userId = null;
         String nickName = "";
+        String name = "";
         Object principal = authentication.getPrincipal();
 
 
 
             CustomUserDetails userDetails = (CustomUserDetails) principal;
             userId = userDetails.getId(); // 'userId'를 추출합니다.
-        nickName = userDetails.getNickname(); // 'userNickname'을 추출합니다.
+            nickName = userDetails.getNickname(); // 'userNickname'을 추출합니다.
+            name = userDetails.getName();
 
 
 
@@ -75,6 +77,7 @@ public class TokenProvider implements InitializingBean {
                 .claim(AUTHORITIES_KEY, authorities)
                 .claim("userId", userId)
                 .claim("nickName", nickName)
+                .claim("name", name)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
                 .compact();

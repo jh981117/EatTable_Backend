@@ -1,5 +1,6 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.DTO.PartnerDto;
 import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.PartnerAttachment;
 import com.lec.spring.domain.PartnerReqState;
@@ -67,8 +68,31 @@ public class PartnerService {
 
     //매장디테일 정보
     @Transactional
-    public Partner detail(Long id){
-        return partnerRepository.findById(id).orElse(null);
+    public PartnerDto detail(Long id){
+        Partner partner = partnerRepository.findById(id).orElse(null);
+
+        PartnerDto partnerDto = PartnerDto.builder()
+                .id(partner.getId())
+                .storeName(partner.getStoreName())
+                .partnerName(partner.getPartnerName())
+                .userId(partner.getUser().getId())
+                .storePhone(partner.getStorePhone())
+                .partnerPhone(partner.getPartnerPhone())
+                .address(partner.getAddress())
+                .tableCnt(partner.getTableCnt())
+                .openTime(partner.getOpenTime())
+                .storeInfo(partner.getStoreInfo())
+                .reserveInfo(partner.getReserveInfo())
+                .favorite(partner.getFavorite())
+                .viewCnt(partner.getViewCnt())
+                .parking(partner.getParking())
+                .corkCharge(partner.getCorkCharge())
+                .dog(partner.getDog())
+                .partnerState(partner.getPartnerState())
+                .fileList(partner.getFileList())
+                .build();
+
+        return partnerDto;
     }
 
 
@@ -121,5 +145,8 @@ public class PartnerService {
     }
 
 
+    public List<Partner> getPartnersByUserId(Long userId) {
 
+        return partnerRepository.findByUserId(userId);
+    }
 }

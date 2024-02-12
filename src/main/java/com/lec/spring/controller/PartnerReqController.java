@@ -1,7 +1,9 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.domain.DTO.PartnerReqDto;
 import com.lec.spring.domain.PartnerReq;
+import com.lec.spring.domain.PartnerReqState;
 import com.lec.spring.service.PartnerReqService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,11 +42,26 @@ public class PartnerReqController {
     //신청작성
     @Transactional
     @PostMapping("/write")
-    public ResponseEntity<?> write(@RequestBody PartnerReq partnerReq){
-        return new ResponseEntity<>(partnerReqService.write(partnerReq),HttpStatus.CREATED);
+    public ResponseEntity<?> write(@RequestBody PartnerReqDto partnerReqDto){
+
+        Long userId = partnerReqDto.getUserId();
+        PartnerReq partnerReq = partnerReqDto (partnerReqDto);
+        // 서비스 메서드 호출
+        PartnerReq savedPartnerReq = partnerReqService.write(partnerReq, userId);
+
+        return new ResponseEntity<>(savedPartnerReq, HttpStatus.CREATED);
     }
 
-
+    private PartnerReq partnerReqDto(PartnerReqDto partnerReqDto) {
+        return PartnerReq.builder()
+                .managerName(partnerReqDto.getManagerName())
+                .storeName(partnerReqDto.getStoreName())
+                .phone(partnerReqDto.getPhone())
+                .memo(partnerReqDto.getMemo())
+                .partnerReqState(PartnerReqState.OPEN_READY)
+                // 나머지 필드 설정은 각 필드에 대한 빌더 메서드를 호출하여 추가
+                .build();
+    }
     //작성 수정?? 상의
     @Transactional
     @PutMapping("/update")
