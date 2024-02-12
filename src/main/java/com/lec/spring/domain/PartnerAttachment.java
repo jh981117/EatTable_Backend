@@ -18,12 +18,14 @@ public class PartnerAttachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String sourcename; // 원본 파일명
+//    private String sourcename; // 원본 파일명
     private String filename;   // 저장된 파일명 (rename 된 파일명)
     private String imageUrl;
-    private String description;
+//    private String description;
 
-    private boolean isImage;   // 이미지
+
+
+//    private boolean isImage;   // 이미지
 
     @ManyToOne
     @ToString.Exclude
