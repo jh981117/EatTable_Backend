@@ -1,23 +1,20 @@
 package com.lec.spring.domain.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lec.spring.domain.Address;
 import com.lec.spring.domain.PartnerAttachment;
 import com.lec.spring.domain.TrueFalse;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class PartnerDto {
+public class PartnerDto  {
     private Long id;
     private String storeName;
 
@@ -50,6 +47,14 @@ public class PartnerDto {
     private TrueFalse  dog;
 
     private TrueFalse partnerState;
+
+    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH시 mm분")
+    private LocalDateTime createdAt;
+
+    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH시 mm분")
+    private LocalDateTime updatedAt;
+
+
 
 
 

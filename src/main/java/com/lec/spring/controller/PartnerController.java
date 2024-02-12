@@ -1,6 +1,7 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.domain.DTO.PartnerDto;
 import com.lec.spring.domain.DTO.PartnerWriteDto;
 import com.lec.spring.domain.Partner;
 
@@ -9,7 +10,6 @@ import com.lec.spring.domain.RoleName;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.RoleRepository;
 import com.lec.spring.repository.UserRepository;
-import com.lec.spring.domain.PartnerAttachment;
 import com.lec.spring.service.PartnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +114,7 @@ public class PartnerController {
 //    }
 
     @PostMapping("/by-user")
-    public ResponseEntity<List<Partner>> getPartnersByUser(@RequestBody Map<String, Long> requestBody) {
+    public ResponseEntity<List<PartnerDto>> getPartnersByUser(@RequestBody Map<String, Long> requestBody) {
         Long userId = requestBody.get("userId");
         return new ResponseEntity<>(partnerService.getPartnersByUserId(userId), HttpStatus.OK);
     }

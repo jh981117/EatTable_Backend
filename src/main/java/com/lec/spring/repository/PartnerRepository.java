@@ -1,6 +1,7 @@
 package com.lec.spring.repository;
 
 
+import com.lec.spring.domain.DTO.PartnerDto;
 import com.lec.spring.domain.Partner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

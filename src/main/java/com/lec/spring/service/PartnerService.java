@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -151,8 +152,30 @@ public class PartnerService {
 //        attachment.setFilename(file.getOriginalFilename());
 //        partnerAttachmentRepository.save(attachment);
 //    }
-    public List<Partner> getPartnersByUserId(Long userId) {
-
-        return partnerRepository.findByUserId(userId);
-    }
+public List<PartnerDto> getPartnersByUserId(Long userId) {
+    List<Partner> partners = partnerRepository.findByUserId(userId); // 사용자 ID로 파트너 목록 조회
+    return partners.stream().map(partner -> PartnerDto.builder()
+                    .id(partner.getId())
+                    .storeName(partner.getStoreName())
+                    .partnerName(partner.getPartnerName())
+                    .userId(userId) // userId 설정
+                    .partnerPhone(partner.getPartnerPhone())
+                    .storePhone(partner.getStorePhone())
+                    .address(partner.getAddress())
+                    .tableCnt(partner.getTableCnt())
+                    .openTime(partner.getOpenTime())
+                    .storeInfo(partner.getStoreInfo())
+                    .reserveInfo(partner.getReserveInfo())
+                    .favorite(partner.getFavorite())
+                    .viewCnt(partner.getViewCnt())
+                    .parking(partner.getParking())
+                    .createdAt(partner.getCreatedAt()) // BaseEntity 필드 설정
+                    .updatedAt(partner.getUpdatedAt()) // BaseEntity 필드 설정
+                    .corkCharge(partner.getCorkCharge())
+                    .dog(partner.getDog())
+                    .partnerState(partner.getPartnerState())
+                    .fileList(new ArrayList<>(partner.getFileList())) // 이 부분은 실제 PartnerAttachment 객체 리스트를 PartnerDto의 리스트 형태로 변환하는 로직이 필요할 수 있습니다.
+                    .build())
+            .collect(Collectors.toList());
+}
 }

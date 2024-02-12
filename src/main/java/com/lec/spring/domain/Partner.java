@@ -68,10 +68,9 @@ public class Partner extends BaseEntity{
     @Enumerated(value = EnumType.STRING)
     private TrueFalse partnerState;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "partnerId")
-    @ToString.Exclude
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "partner")
     private List<PartnerAttachment> fileList = new ArrayList<>();
+
 
 
     @ManyToOne
@@ -81,12 +80,26 @@ public class Partner extends BaseEntity{
     private User user;
 
 
+
     @PrePersist
     public void prePersist() {
         if (partnerState == null) {
             partnerState = TrueFalse.TRUE;
         }
+        if (fileList.isEmpty()) {
+            PartnerAttachment defaultAttachment = new PartnerAttachment();
+            defaultAttachment.setImageUrl("https://eatablebucket.s3.ap-northeast-2.amazonaws.com/1707717950973-eatabel-1.png");
+            defaultAttachment.setFilename("default-image.png"); // 파일 이름 설정
+            defaultAttachment.setPartner(this); // PartnerAttachment 객체에 현재 Partner 객체를 참조하도록 설정
+
+            // 이미지 파일로 설정
+            defaultAttachment.setImage(true);
+
+            fileList.add(defaultAttachment);
+        }
     }
+
+
 
 
 }
