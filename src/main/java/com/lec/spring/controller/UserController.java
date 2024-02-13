@@ -8,9 +8,11 @@ import com.lec.spring.service.UserService;
 import com.lec.spring.util.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -87,6 +89,16 @@ public class UserController {
 //                // 사용자 정보를 응답으로 반환
 //                return ResponseEntity.ok(user);
 //        }
+
+
+        @Autowired
+        private PasswordEncoder passwordEncoder;
+
+
+        @GetMapping("/pw")
+        public String password (String pw) {
+                return passwordEncoder.encode(pw);
+        }
 
 
 }

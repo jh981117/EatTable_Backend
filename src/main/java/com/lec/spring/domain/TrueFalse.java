@@ -4,5 +4,6 @@ public enum TrueFalse {
 
     TRUE,
 
+    WAITING,
     FALSE
 }

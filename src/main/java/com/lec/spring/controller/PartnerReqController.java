@@ -12,6 +12,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/req")
@@ -36,6 +38,8 @@ public class PartnerReqController {
     @GetMapping("/stateList/{state}")
     public ResponseEntity<?> stateList(@PathVariable String state){
         return new ResponseEntity<>(partnerReqService.listByStatus(state),HttpStatus.OK);
+
+
     }
 
 
@@ -81,5 +85,15 @@ public class PartnerReqController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         return new ResponseEntity<>(partnerReqService.delete(id),HttpStatus.OK);
+    }
+
+
+
+    @PostMapping("/cancelPartner")
+    public ResponseEntity<?> cancelPatner(@RequestBody Map<String, Long> requestBody){
+        Long id = requestBody.get("userId");
+
+        return new ResponseEntity<>(partnerReqService.cancelPartner(id), HttpStatus.CREATED);
+
     }
 }

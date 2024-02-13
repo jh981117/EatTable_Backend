@@ -8,8 +8,10 @@ import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.Role;
 import com.lec.spring.domain.RoleName;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.repository.RoleRepository;
 import com.lec.spring.repository.UserRepository;
+import com.lec.spring.service.PartnerReqService;
 import com.lec.spring.service.PartnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,6 +36,8 @@ public class PartnerController {
     private final PartnerService partnerService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PartnerRepository partnerRepository;
+    private final PartnerReqService partnerReqService;
 
 
     //    매장리스트
@@ -47,7 +51,7 @@ public class PartnerController {
 
     @GetMapping("/list")
     public ResponseEntity<Page<Partner>> list(@RequestParam(defaultValue = "0") int page,
-                                              @RequestParam(defaultValue = "5") int size, String keyword) {
+                                              @RequestParam(defaultValue = "10") int size, String keyword) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>(partnerService.list(keyword,pageable), HttpStatus.OK);
     }
@@ -66,6 +70,7 @@ public class PartnerController {
         userRepository.save(user);
         return new ResponseEntity<>(partnerService.write(partner),HttpStatus.CREATED);
     }
+
 
 
     //매장정보 디테일

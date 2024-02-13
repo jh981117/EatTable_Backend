@@ -3,8 +3,10 @@ package com.lec.spring.service;
 import com.lec.spring.domain.DTO.PartnerDto;
 import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.PartnerAttachment;
+import com.lec.spring.domain.PartnerReq;
 import com.lec.spring.repository.PartnerAttachmentRepository;
 import com.lec.spring.repository.PartnerRepository;
+import com.lec.spring.repository.PartnerReqRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,7 @@ public class PartnerService {
     private final PartnerAttachmentRepository partnerAttachmentRepository;
     private final PartnerRepository partnerRepository;
     private final S3Service s3Service;
+    private final PartnerReqRepository partnerReqRepository;
 
 
     //매장리스트
@@ -131,10 +134,12 @@ public class PartnerService {
     }
 
 
+    
     public String remove(Long imageId) {
         PartnerAttachment partnerRemove = partnerAttachmentRepository.findById(imageId).orElse(null);
         if (partnerRemove != null) {
             partnerAttachmentRepository.deleteById(imageId);
+            System.out.println(imageId);
             return "1";
         }
         return "0";
@@ -178,4 +183,6 @@ public List<PartnerDto> getPartnersByUserId(Long userId) {
                     .build())
             .collect(Collectors.toList());
 }
+
+
 }

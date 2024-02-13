@@ -18,10 +18,10 @@ public class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH시 mm분")
+//    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH시 mm분")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH시 mm분")
+//    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH시 mm분")
     private LocalDateTime updatedAt;
 }

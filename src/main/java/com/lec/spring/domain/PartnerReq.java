@@ -28,8 +28,6 @@ public class PartnerReq extends BaseEntity {
 
     private String memo;
 
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    private LocalDateTime regDate;
 
     @Enumerated(value = EnumType.STRING)
     private PartnerReqState partnerReqState;
@@ -40,13 +38,5 @@ public class PartnerReq extends BaseEntity {
     @JoinColumn(name = "userId")
     private User user;
 
-//    @ManyToOne
-//    @JoinColumn(name = "partnerId")
-//    private Partner partner;
 
-
-//    @PrePersist
-//    public void prePersist (){
-//        this.regDate = LocalDateTime.now();
-//    }
 }

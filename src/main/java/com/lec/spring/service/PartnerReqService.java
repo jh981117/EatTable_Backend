@@ -1,9 +1,8 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.*;
 import com.lec.spring.domain.DTO.PartnerReqDto;
-import com.lec.spring.domain.PartnerReq;
-import com.lec.spring.domain.PartnerReqState;
-import com.lec.spring.domain.User;
+import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.repository.PartnerReqRepository;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +20,7 @@ public class PartnerReqService {
 
     private final PartnerReqRepository partnerReqRepository;
     private final UserRepository userRepository;
+    private final PartnerRepository partnerRepository;
 
 
     //전체 리스트
@@ -60,6 +60,7 @@ public class PartnerReqService {
                         .memo(req.getMemo())
                         .phone(req.getPhone())
                         .partnerReqState(req.getPartnerReqState())
+                .createdAt(req.getCreatedAt())
                          .build()
         ).collect(Collectors.toList());
     }
@@ -106,6 +107,29 @@ public class PartnerReqService {
             return "1";
         }
         return "0";
+
+    }
+
+
+    @Transactional
+    public PartnerReq cancelPartner(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        List<Partner> partners = partnerRepository.findByUser(user);
+
+        Partner partner = partners.get(0);
+        PartnerReq partnerReq = PartnerReq.builder()
+                .user(user)
+                .managerName(partner.getPartnerName())
+                .storeName(partner.getStoreName())
+                .phone(partner.getPartnerPhone())
+                .partnerReqState(PartnerReqState.CLOSE_READY)
+                .build();
+        partnerReqRepository.save(partnerReq);
+        partner.setPartnerState(TrueFalse.WAITING);
+        partnerRepository.save(partner);
+
+        return partnerReq;
 
     }
 
