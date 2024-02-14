@@ -6,6 +6,7 @@ import com.lec.spring.domain.PartnerReq;
 import com.lec.spring.domain.PartnerReqState;
 import com.lec.spring.service.PartnerReqService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

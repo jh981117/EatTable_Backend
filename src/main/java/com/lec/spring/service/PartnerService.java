@@ -49,6 +49,14 @@ public class PartnerService {
         }
     }
 
+    @Transactional
+    public Page<Partner> homeList( Pageable pageable) {
+
+
+            return partnerRepository.findAll(pageable);
+
+    }
+
     //매장등록
 
     @Transactional

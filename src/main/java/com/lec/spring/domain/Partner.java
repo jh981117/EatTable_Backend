@@ -49,7 +49,9 @@ public class Partner extends BaseEntity{
 
     private String favorite;
 
-    private String viewCnt;
+
+    @ColumnDefault("0")
+    private Long viewCnt;
 
 
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

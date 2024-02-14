@@ -38,7 +38,7 @@ public class PartnerDto  {
 
     private String favorite;
 
-    private String viewCnt;
+    private Long viewCnt;
 
     private TrueFalse parking;
 
