@@ -97,6 +97,10 @@ public class PartnerController {
         return new ResponseEntity<>(partnerService.update(partner, files), HttpStatus.OK);
     }
 
+    @PutMapping("/stateUpdate/{id}")
+    public ResponseEntity<?> stateUpdate(@PathVariable Long id){
+        return new ResponseEntity<>(partnerService.stateUpdate(id),HttpStatus.OK);
+    }
 
 
     //매장삭제  직접 x  신청받고 삭제가능

@@ -4,6 +4,7 @@ import com.lec.spring.domain.DTO.PartnerDto;
 import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.PartnerAttachment;
 import com.lec.spring.domain.PartnerReq;
+import com.lec.spring.domain.TrueFalse;
 import com.lec.spring.repository.PartnerAttachmentRepository;
 import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.repository.PartnerReqRepository;
@@ -193,4 +194,10 @@ public List<PartnerDto> getPartnersByUserId(Long userId) {
 }
 
 
+    public Partner stateUpdate(Long id) {
+        List<Partner> partners = partnerRepository.findByUserId(id);
+        Partner partner = partners.get(0); // 여기서는 첫 번째 파트너만 가져옵니다.
+        partner.setPartnerState(TrueFalse.FALSE);
+        return partnerRepository.save(partner); //
+    }
 }

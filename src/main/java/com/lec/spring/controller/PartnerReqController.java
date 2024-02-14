@@ -6,6 +6,8 @@ import com.lec.spring.domain.PartnerReq;
 import com.lec.spring.domain.PartnerReqState;
 import com.lec.spring.service.PartnerReqService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,15 +35,24 @@ public class PartnerReqController {
         return new ResponseEntity<>(partnerReqService.list(), HttpStatus.OK);
     }
 
-
-    //특정상태 리스트
     @Transactional
-    @GetMapping("/stateList/{state}")
-    public ResponseEntity<?> stateList(@PathVariable String state){
-        return new ResponseEntity<>(partnerReqService.listByStatus(state),HttpStatus.OK);
-
-
+    @GetMapping("/totalListPage")
+// @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<?> totalList(@RequestParam(defaultValue = "0") int page) {
+        Pageable pageable = Pageable.unpaged(); // 페이지 크기를 지정하지 않음
+        return new ResponseEntity<>(partnerReqService.pageList(pageable), HttpStatus.OK);
     }
+
+
+
+//    //특정상태 리스트
+//    @Transactional
+//    @GetMapping("/stateList/{state}")
+//    public ResponseEntity<?> stateList(@PathVariable String state){
+//        return new ResponseEntity<>(partnerReqService.listByStatus(state),HttpStatus.OK);
+//
+//
+//    }
 
 
     //신청작성
