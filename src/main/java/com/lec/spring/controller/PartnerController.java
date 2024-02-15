@@ -103,6 +103,7 @@ public class PartnerController {
     }
 
 
+
     //매장삭제  직접 x  신청받고 삭제가능
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
@@ -114,7 +115,7 @@ public class PartnerController {
         return new ResponseEntity<>(partnerService.remove(imageId), HttpStatus.OK);
     }
 
-//    @PutMapping("/updateImageUrl/{imageId}")
+//    @PatchMapping("/updateImageUrl/{imageId}")
 //    public ResponseEntity<String> updateImageUrl(
 //            @PathVariable Long imageId,
 //            @RequestParam("file") MultipartFile file

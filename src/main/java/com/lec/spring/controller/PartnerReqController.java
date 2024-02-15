@@ -45,14 +45,6 @@ public class PartnerReqController {
 
 
 
-//    //특정상태 리스트
-//    @Transactional
-//    @GetMapping("/stateList/{state}")
-//    public ResponseEntity<?> stateList(@PathVariable String state){
-//        return new ResponseEntity<>(partnerReqService.listByStatus(state),HttpStatus.OK);
-//
-//
-//    }
 
 
     //신청작성

@@ -6,6 +6,7 @@ import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.repository.PartnerReqRepository;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ public class PartnerReqService {
     }
 
 
+    //상태에 따른 리스트  접수대기, 오픈, 취소대기, 닫음
     @Transactional
     public Page<PartnerReqDto> pageList(Pageable pageable) {
         Page<PartnerReq> reqs = partnerReqRepository.findAll(pageable);
