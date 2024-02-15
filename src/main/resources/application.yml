@@ -57,4 +57,14 @@ jwt:
   secret: a2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ==
   token-validity-in-seconds: 86400 # ttl (초)
 
-
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIA33DMWBRZRCSRRGPP
+      secretKey: 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
+    s3:
+      bucket: eatablebucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

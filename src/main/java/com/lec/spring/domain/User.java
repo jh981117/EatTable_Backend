@@ -1,6 +1,7 @@
 package com.lec.spring.domain;
 
 
+import com.lec.spring.domain.listener.UserEntityListener;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -14,6 +15,7 @@ import java.util.*;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity
+@EntityListeners(value = UserEntityListener.class)
 public class User extends BaseEntity {
 
     @Id
@@ -78,6 +80,11 @@ public class User extends BaseEntity {
             this.temperature = 10;
         }
     }
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id",insertable = false,updatable = false)
+    @ToString.Exclude
+    private  List<UserHistory> userHistories = new ArrayList<>();
 
 
 
