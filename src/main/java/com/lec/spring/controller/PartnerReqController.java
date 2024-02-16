@@ -2,16 +2,15 @@ package com.lec.spring.controller;
 
 
 import com.lec.spring.domain.DTO.PartnerReqDto;
-import com.lec.spring.domain.PartnerReq;
-import com.lec.spring.domain.PartnerReqState;
+import com.lec.spring.domain.*;
+import com.lec.spring.domain.DTO.PartnerWriteDto;
+import com.lec.spring.repository.UserHistoryRepository;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.PartnerReqService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,8 @@ import java.util.Map;
 public class PartnerReqController {
 
     private final PartnerReqService partnerReqService;
-
+    private final UserRepository userRepository;
+    private final UserHistoryRepository userHistoryRepository;
 
 
     //전체리스트 ( 필요시)
@@ -56,6 +56,12 @@ public class PartnerReqController {
         PartnerReq partnerReq = partnerReqDto (partnerReqDto);
         // 서비스 메서드 호출
         PartnerReq savedPartnerReq = partnerReqService.write(partnerReq, userId);
+
+        User user = userRepository.findById(partnerReqDto.getUserId()).orElse(null);
+        UserHistory userHistory = new UserHistory();
+        userHistory.setName(String.format("%s님이 업체 등록을 신청하였습니다.", user.getUsername()));
+
+        userHistoryRepository.save(userHistory);
 
         return new ResponseEntity<>(savedPartnerReq, HttpStatus.CREATED);
     }

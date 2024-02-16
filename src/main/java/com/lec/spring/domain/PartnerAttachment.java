@@ -27,7 +27,7 @@ public class PartnerAttachment {
 
     private boolean isImage;   // 이미지
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
     @JoinColumn(name = "partnerId")

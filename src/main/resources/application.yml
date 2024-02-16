@@ -25,7 +25,7 @@ spring:
         format_sql: true
 
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
@@ -58,16 +58,5 @@ jwt:
   token-validity-in-seconds: 86400 # ttl (초)
 
 
-cloud:
-  aws:
-    credentials:
-      accessKey: AKIA33DMWBRZ5WFRKXK7
-      secretKey: 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
-    s3:
-      bucket: eatablebucket
-    region:
-      static: ap-northeast-2
-    stack:
 
-      auto: false
 

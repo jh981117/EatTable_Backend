@@ -5,7 +5,12 @@ import com.lec.spring.config.TokenProvider;
 import com.lec.spring.domain.DTO.LoginDto;
 import com.lec.spring.domain.DTO.PasswordChangeRequest;
 import com.lec.spring.domain.DTO.TokenDto;
+import com.lec.spring.domain.User;
+import com.lec.spring.domain.UserHistory;
+import com.lec.spring.repository.UserHistoryRepository;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -30,7 +35,10 @@ public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final UserHistoryRepository userHistoryRepository;
 
+    //history 완료
     @PostMapping("/authenticate")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
 
@@ -48,10 +56,17 @@ public class AuthController {
         // response header에 jwt token에 넣어줌
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
-        // tokenDto를 이용해 response body에도 넣어서 리턴
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        ResponseEntity<TokenDto> responseEntity = new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+
+        User user = userRepository.findByUsername(loginDto.getUsername());
+        UserHistory userHistory = new UserHistory();
+        userHistory.setName(String.format("%s가 로그인을 하였습니다.",user.getUsername()));
+        userHistoryRepository.save(userHistory);
+
+        return responseEntity;
     }
 
+    //history 완료
     @PostMapping("/user/change-password")
     public ResponseEntity<?> changePassword(@Valid @RequestBody PasswordChangeRequest request) {
         boolean isAuthenticated = userService.authenticateUser(request.getUsername(), request.getOldPassword());
@@ -72,7 +87,15 @@ public class AuthController {
         // 새 JWT 토큰 생성
         String newToken = tokenProvider.createToken(authentication);
         System.out.println(newToken);
-        return ResponseEntity.ok(new TokenDto(newToken)); // TokenDto는 토큰을 담아 반환할 DTO
+
+        ResponseEntity<?> responseEntity = ResponseEntity.ok(new TokenDto(newToken));
+
+        User user = userRepository.findByUsername(request.getUsername());
+        UserHistory userHistory = new UserHistory();
+        userHistory.setName(String.format("%s가 비밀번호를 변경하였습니다.", user.getUsername()));
+        userHistoryRepository.save(userHistory);
+
+        return responseEntity; // TokenDto는 토큰을 담아 반환할 DTO
     }
 
 
