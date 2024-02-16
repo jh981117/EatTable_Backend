@@ -1,15 +1,13 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.domain.*;
 import com.lec.spring.domain.DTO.PartnerDto;
 import com.lec.spring.domain.DTO.PartnerWriteDto;
-import com.lec.spring.domain.Partner;
 
-import com.lec.spring.domain.Role;
-import com.lec.spring.domain.RoleName;
-import com.lec.spring.domain.User;
 import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.repository.RoleRepository;
+import com.lec.spring.repository.UserHistoryRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.PartnerReqService;
 import com.lec.spring.service.PartnerService;
@@ -38,7 +36,7 @@ public class PartnerController {
     private final RoleRepository roleRepository;
     private final PartnerRepository partnerRepository;
     private final PartnerReqService partnerReqService;
-
+    private final UserHistoryRepository userHistoryRepository;
 
     //    매장리스트
     @GetMapping("/totallist")
@@ -72,6 +70,10 @@ public class PartnerController {
     public ResponseEntity<?> write(@RequestBody PartnerWriteDto partnerWriteDto){
         User user = userRepository.findById(partnerWriteDto.getUserId()).orElse(null);
         Partner partner = partnerWriteDto.toEntity(user);
+        UserHistory userHistory = new UserHistory();
+        userHistory.setName(String.format("%s님이 %s 업체를 등록하였습니다.", partner.getPartnerName(), partner.getStoreName()));
+
+        userHistoryRepository.save(userHistory);
         Role partnerrole = roleRepository.findByRoleName(RoleName.ROLE_PARTNER);
         user.addRole(partnerrole);
         userRepository.save(user);
