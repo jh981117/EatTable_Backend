@@ -27,7 +27,8 @@ public class StoreReview extends BaseEntity{
 //    private LocalDateTime regDate;
 
     @ColumnDefault(value = "0")
-    private int score;
+    private int rating;
+    ;
 
     @ManyToOne
     @ToString.Exclude

@@ -61,8 +61,8 @@ jwt:
 cloud:
   aws:
     credentials:
-      accessKey: AKIA33DMWBRZRCSRRGPP
-      secretKey: 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
+      accessKey: AKIA33DMWBRZ5WFRKXK7
+      secretKey: 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
     s3:
       bucket: eatablebucket
     region:
