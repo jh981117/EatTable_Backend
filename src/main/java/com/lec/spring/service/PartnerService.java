@@ -113,6 +113,7 @@ public class PartnerService {
             partnerAttachmentRepository.save(partnerAttachment);
             }
 
+        //변경감지  -- getter
         // 파트너 정보 업데이트
         partnerUpdate.setStoreName(partner.getStoreName());
         partnerUpdate.setPartnerName(partner.getPartnerName());

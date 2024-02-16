@@ -57,6 +57,7 @@ jwt:
   secret: a2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ==
   token-validity-in-seconds: 86400 # ttl (초)
 
+
 cloud:
   aws:
     credentials:
@@ -67,4 +68,6 @@ cloud:
     region:
       static: ap-northeast-2
     stack:
+
       auto: false
+

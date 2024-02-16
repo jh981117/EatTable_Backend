@@ -50,23 +50,23 @@ public class TokenProvider implements InitializingBean {
 
     public String createToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
-        .map(GrantedAuthority::getAuthority)
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
         Long userId = null;
         String nickName = "";
         String name = "";
+
         Object principal = authentication.getPrincipal();
-
-
-
+        if (principal instanceof CustomUserDetails) {
             CustomUserDetails userDetails = (CustomUserDetails) principal;
             userId = userDetails.getId(); // 'userId'를 추출합니다.
-            nickName = userDetails.getNickname(); // 'userNickname'을 추출합니다.
-            name = userDetails.getName();
-
-
-
-
+            nickName = userDetails.getNickname(); // 'nickName'을 추출합니다.
+            name = userDetails.getName(); // 'name'을 추출합니다.
+        } else if (principal instanceof String) {
+            // 여기서 principal이 String 타입인 경우, 즉 username인 경우의 처리를 할 수 있습니다.
+            // 이 예제에서는 username을 사용하지 않으므로 별도의 처리를 하지 않습니다.
+            // 필요에 따라 username을 사용하는 로직을 추가할 수 있습니다.
+        }
 
         // 토큰의 만료 시간 설정
         long now = (new Date()).getTime();

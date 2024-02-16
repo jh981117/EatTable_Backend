@@ -135,7 +135,27 @@ public class UserService {
 
 
 
+    // 사용자 인증
+    @Transactional
+    public boolean authenticateUser(String username, String oldPassword) {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            // passwordEncoder를 사용하여 입력된 이전 비밀번호와 저장된 비밀번호를 비교
+            return passwordEncoder.matches(oldPassword, user.getPassword());
+        }
+        return false;
+    }
 
+    // 비밀번호 업데이트
+    @Transactional
+    public void updatePassword(String username, String newPassword) {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            // 새 비밀번호를 암호화하여 저장
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+        }
+    }
 
 
 
