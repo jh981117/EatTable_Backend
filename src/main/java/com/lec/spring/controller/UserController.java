@@ -25,39 +25,35 @@ import java.util.Optional;
 public class UserController {
 
 
-
         private final UserService userService;
 
 
-
         @GetMapping("/list")
-        public ResponseEntity<?> list () {
+        public ResponseEntity<?> list() {
                 return new ResponseEntity<>(userService.list(), HttpStatus.OK);
         }
 
         @PostMapping("/signup")
-        public ResponseEntity<?> signup(@RequestBody User user){
-                return new ResponseEntity<>(userService.signup(user),HttpStatus.CREATED);
+        public ResponseEntity<?> signup(@RequestBody User user) {
+                return new ResponseEntity<>(userService.signup(user), HttpStatus.CREATED);
         }
 
 
         @GetMapping("/mypage/{id}")
-        public ResponseEntity<?> detail(@PathVariable Long id){
-                return new ResponseEntity<>(userService.detail(id),HttpStatus.OK);
+        public ResponseEntity<?> detail(@PathVariable Long id) {
+                return new ResponseEntity<>(userService.detail(id), HttpStatus.OK);
         }
-
 
 
         @PutMapping("/update")
-        public ResponseEntity<?> update(@RequestBody User user){
-                return new ResponseEntity<>(userService.update(user),HttpStatus.OK);
+        public ResponseEntity<?> update(@RequestBody User user) {
+                return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
         }
 
         @DeleteMapping("/userout/{id}")
-        public ResponseEntity<?> delete(@PathVariable Long id){
-                return new ResponseEntity<>(userService.delete(id),HttpStatus.OK);
+        public ResponseEntity<?> delete(@PathVariable Long id) {
+                return new ResponseEntity<>(userService.delete(id), HttpStatus.OK);
         }
-
 
 
         @GetMapping("/profile")
@@ -65,11 +61,19 @@ public class UserController {
         public ResponseEntity<User> getMyUserInfo() {
                 return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
         }
+
         @GetMapping("/{username}")
         @PreAuthorize("hasAnyRole('ADMIN')")
         public ResponseEntity<User> getUserInfo(@PathVariable String username) {
                 return ResponseEntity.ok(userService.getUserWithAuthorities(username).get());
         }
+
+
+
+
+
+
+
 
 
 

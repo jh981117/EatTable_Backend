@@ -9,20 +9,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class ReviewLike {
+public class PartnerLike {
 
     @EmbeddedId
-    private ReviewLikeId id;
+    private PartnerLikeId id;
 
     @ManyToOne
-    @MapsId("userId")
-    @JoinColumn(name = "userId")
-    private User user;
+    @MapsId("fromId")
+    @JoinColumn(name = "fromId")
+    private User fromId;
 
     @ManyToOne
-    @MapsId("storeReviewId")
-    @JoinColumn(name = "reviewId")
-    private StoreReview storeReview;
-
+    @MapsId("toId")
+    @JoinColumn(name = "toId")
+    private Partner toId;
 
 }

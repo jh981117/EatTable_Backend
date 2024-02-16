@@ -1,11 +1,10 @@
 package com.lec.spring.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.lec.spring.domain.listener.UserEntityListener;
+import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.context.event.EventListener;
 
 @Data
 @NoArgsConstructor
@@ -20,4 +19,7 @@ public class UserHistory extends BaseEntity {
     private Long Id;
 
     private String name;
+
+    @ManyToOne
+    private  User user;
 }

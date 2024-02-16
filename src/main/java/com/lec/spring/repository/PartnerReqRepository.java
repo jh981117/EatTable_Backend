@@ -9,6 +9,8 @@ import java.util.List;
 public interface PartnerReqRepository extends JpaRepository<PartnerReq,Long> {
 
 
+//    Page<PartnerReq> findByPartnerReqState(String state,Pageable pageable);
 
-    List<PartnerReq> findByPartnerReqState(PartnerReqState partnerReqState);
+//    List<PartnerReq> findByPartnerReqState(PartnerReqState partnerReqState);
+
 }
