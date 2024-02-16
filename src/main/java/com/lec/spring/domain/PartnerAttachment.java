@@ -27,10 +27,10 @@ public class PartnerAttachment {
 
     private boolean isImage;   // 이미지
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    @JoinColumn(name = "partnerId")
+    @JoinColumn(name = "partnerId" )
     private Partner partner;
 
 

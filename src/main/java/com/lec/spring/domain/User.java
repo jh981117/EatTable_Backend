@@ -1,6 +1,7 @@
 package com.lec.spring.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lec.spring.domain.listener.UserEntityListener;
 import jakarta.persistence.*;
 import lombok.*;
@@ -49,6 +50,7 @@ public class User extends BaseEntity {
     private String bio;
 
     // 좋아요 목록
+    @JsonIgnore
     @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY)
     private List<ReviewLike> reviewLikes;
 
@@ -83,6 +85,7 @@ public class User extends BaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id",insertable = false,updatable = false)
+    @JsonIgnore
     @ToString.Exclude
     private  List<UserHistory> userHistories = new ArrayList<>();
 
