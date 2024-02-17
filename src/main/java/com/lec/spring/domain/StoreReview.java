@@ -23,8 +23,6 @@ public class StoreReview extends BaseEntity{
 
     private String content;
 
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    private LocalDateTime regDate;
 
     @ColumnDefault(value = "0")
     private int avg;
@@ -45,14 +43,16 @@ public class StoreReview extends BaseEntity{
 
     // 좋아요 목록
     @OneToMany(mappedBy = "storeReview")
+    @ToString.Exclude
+    @JsonIgnore
     private List<ReviewLike> reviewLikes;
 
 
-//    @PrePersist
-//    public void prePersist (){
-//        this.regDate = LocalDateTime.now();
-//    }
-
+    //이미지
+    @OneToMany(mappedBy = "storeReview")
+    @ToString.Exclude
+    @JsonIgnore
+    private List<PartnerReviewAttachment> partnerReviewAttachments;
 
 
 

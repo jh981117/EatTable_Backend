@@ -18,7 +18,7 @@ public class ReviewLike {
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "userId")
-    @JsonIgnore
+
     private User user;
 
     @ManyToOne

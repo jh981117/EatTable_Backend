@@ -35,8 +35,6 @@ public class PartnerController {
     private final PartnerService partnerService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final PartnerRepository partnerRepository;
-    private final PartnerReqService partnerReqService;
     private final UserHistoryRepository userHistoryRepository;
 
     //    매장리스트

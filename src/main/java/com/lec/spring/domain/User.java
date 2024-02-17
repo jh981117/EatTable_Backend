@@ -49,15 +49,9 @@ public class User extends BaseEntity {
     private String profileImageUrl;
     private String bio;
 
-    // 좋아요 목록
-    @JsonIgnore
-    @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY)
-    private List<ReviewLike> reviewLikes;
-
     // OAuth2
     private String oauth;
     private String oauthId;
-
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -67,7 +61,7 @@ public class User extends BaseEntity {
     )
     private Set<Role> roles = new HashSet<>();
 
-    // 새로운 Role을 추가하는 메서드
+    // 새로운 Role을 추가하는 메서드  권한 추가
     public void addRole(Role role) {
         this.roles.add(role);
     }
