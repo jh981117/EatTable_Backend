@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,13 +66,13 @@ public class PartnerController {
 
     //매장등록
 
-
+    //history완료
     @PostMapping("/write")
     public ResponseEntity<?> write(@RequestBody PartnerWriteDto partnerWriteDto){
         User user = userRepository.findById(partnerWriteDto.getUserId()).orElse(null);
         Partner partner = partnerWriteDto.toEntity(user);
         UserHistory userHistory = new UserHistory();
-        userHistory.setName(String.format("%s님이 %s 업체를 등록하였습니다.", partner.getPartnerName(), partner.getStoreName()));
+        userHistory.setName(String.format("관리자가 %s님의 %s 업체 등록을 승인하였습니다.", partner.getPartnerName(), partner.getStoreName()));
 
         userHistoryRepository.save(userHistory);
         Role partnerrole = roleRepository.findByRoleName(RoleName.ROLE_PARTNER);
@@ -85,32 +86,54 @@ public class PartnerController {
     //매장정보 디테일
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> detail(@PathVariable Long id) {
-        return new ResponseEntity<>(partnerService.detail(id), HttpStatus.OK);
+               return new ResponseEntity<>(partnerService.detail(id), HttpStatus.OK);
     }
 
-    //매장수정
+    //매장수정  //history 완료
     @PutMapping("/update")
     public ResponseEntity<?> update(@ModelAttribute Partner partner,
-                                    @RequestParam(value = "files", required = false) List<MultipartFile> files) {
+                                    @RequestParam(value = "files", required = false) List<MultipartFile> files
+                                    ) {
         if (files == null) {
             // files가 null인 경우, 파일이 전송되지 않은 것으로 간주하고 빈 리스트로 초기화합니다.
             files = new ArrayList<>();
         }
-        return new ResponseEntity<>(partnerService.update(partner, files), HttpStatus.OK);
+
+        ResponseEntity<?> responseEntity = new ResponseEntity<>(partnerService.update(partner, files), HttpStatus.OK);
+
+        User user = userRepository.findById(partner.getId()).orElse(null);
+        UserHistory userHistory = new UserHistory();
+        userHistory.setName(String.format("%s님이 업체 정보를 수정 하였습니다.", user.getUsername()));
+        userHistoryRepository.save(userHistory);
+
+        return responseEntity;
     }
 
+    //history 완료
     @PutMapping("/stateUpdate/{id}")
     public ResponseEntity<?> stateUpdate(@PathVariable Long id){
+        User user = userRepository.findById(id).orElse(null);
+        UserHistory userHistory = new UserHistory();
+        userHistory.setName(String.format("관리자가 %s님의 업체 취소를 승인하였습니다.", user.getUsername()));
+
+        userHistoryRepository.save(userHistory);
         return new ResponseEntity<>(partnerService.stateUpdate(id),HttpStatus.OK);
     }
 
 
 
-    //매장삭제  직접 x  신청받고 삭제가능
+    //매장삭제  직접 x  신청받고 삭제가능 //history 완료
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
+        System.out.println(id);
+        User user = userRepository.findById(id).orElse(null);
+        UserHistory userHistory = new UserHistory();
+        userHistory.setName(String.format("관리자가 %s님의 업체 등록을 삭제하였습니다.", user.getUsername()));
+
+        userHistoryRepository.save(userHistory);
         return new ResponseEntity<>(partnerService.delete(id), HttpStatus.OK);
     }
+
 
     @DeleteMapping("/remove/{imageId}")
     public ResponseEntity<?> remove(@PathVariable Long imageId) {
