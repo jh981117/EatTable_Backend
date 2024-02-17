@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface PartnerMenuRepository extends JpaRepository<PartnerMenu,Long> {
 
-        List<PartnerMenu> findByPartner(Partner partner);
+
+
+        List<PartnerMenu> findByPartnerId(Long partenrId);
 
 
 }
