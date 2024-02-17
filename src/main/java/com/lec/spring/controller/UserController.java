@@ -3,7 +3,12 @@ package com.lec.spring.controller;
 
 
 import com.lec.spring.config.CustomUserDetails;
+import com.lec.spring.domain.DTO.PartnerWriteDto;
+import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.UserHistory;
+import com.lec.spring.repository.UserHistoryRepository;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.UserService;
 import com.lec.spring.util.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,16 +31,24 @@ public class UserController {
 
 
         private final UserService userService;
-
+        private final UserRepository userRepository;
+        private final UserHistoryRepository userHistoryRepository;
 
         @GetMapping("/list")
         public ResponseEntity<?> list() {
                 return new ResponseEntity<>(userService.list(), HttpStatus.OK);
         }
 
+        //history완료
         @PostMapping("/signup")
         public ResponseEntity<?> signup(@RequestBody User user) {
-                return new ResponseEntity<>(userService.signup(user), HttpStatus.CREATED);
+                ResponseEntity<?> responseEntity = new ResponseEntity<>(userService.signup(user), HttpStatus.CREATED);
+
+                UserHistory userHistory = new UserHistory();
+                userHistory.setName(String.format("%s님이 %s 아이디로 회원가입하였습니다.", user.getName(), user.getNickName()));
+                userHistoryRepository.save(userHistory);
+
+                return responseEntity;
         }
 
 
@@ -44,17 +57,38 @@ public class UserController {
                 return new ResponseEntity<>(userService.detail(id), HttpStatus.OK);
         }
 
-
+        //history완료
         @PutMapping("/update")
         public ResponseEntity<?> update(@RequestBody User user) {
-                return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
+
+                User userInfo = userRepository.findById(user.getId()).orElse(null);
+                UserHistory userHistory = new UserHistory();
+
+                if (!user.getNickName().equals(userInfo.getNickName())) {
+                        userHistory.setName(String.format("%s님이 회원 정보 닉네임을 수정하였습니다.", user.getUsername() ));
+                        userHistoryRepository.save(userHistory);
+                } else if (!user.getPhone().equals(userInfo.getPhone())) {
+                        userHistory.setName(String.format("%s님이 회원 정보 전화번호를 수정하였습니다.", user.getUsername() ));
+                        userHistoryRepository.save(userHistory);
+                }
+
+                ResponseEntity<?> responseEntity = new ResponseEntity<>(userService.update(user), HttpStatus.OK);
+
+                return responseEntity;
         }
 
+        // 아직 history 대기중
         @DeleteMapping("/userout/{id}")
         public ResponseEntity<?> delete(@PathVariable Long id) {
+
+//                User user = userRepository.findById(id).orElse(null);
+//
+//                UserHistory userHistory = new UserHistory();
+//                userHistory.setName(String.format("%s님이 회원 탈퇴를 하였습니다.", user.getNickName()));
+//                userHistoryRepository.save(userHistory);
+
                 return new ResponseEntity<>(userService.delete(id), HttpStatus.OK);
         }
-
 
         @GetMapping("/profile")
         @PreAuthorize("hasAnyRole('MEMBER','ADMIN')")
