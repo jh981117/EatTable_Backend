@@ -114,6 +114,7 @@ public class PartnerController {
 
     @DeleteMapping("/remove/{imageId}")
     public ResponseEntity<?> remove(@PathVariable Long imageId) {
+
         return new ResponseEntity<>(partnerService.remove(imageId), HttpStatus.OK);
     }
 

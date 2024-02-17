@@ -17,7 +17,6 @@ public class PartnerReviewAttachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String sourcename; // 원본 파일명
     private String filename;   // 저장된 파일명 (rename 된 파일명)
     private String imageUrl;
     private String description;

@@ -27,7 +27,7 @@ public class StoreReview extends BaseEntity{
 //    private LocalDateTime regDate;
 
     @ColumnDefault(value = "0")
-    private int rating;
+    private int avg;
     ;
 
     @ManyToOne
