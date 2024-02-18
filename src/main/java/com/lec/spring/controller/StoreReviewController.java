@@ -1,6 +1,7 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.domain.DTO.StoreReviewAttchmentDto;
 import com.lec.spring.domain.DTO.StoreReviewDto;
 import com.lec.spring.domain.StoreReview;
 import com.lec.spring.service.AttachmentService;
@@ -58,10 +59,18 @@ public class StoreReviewController {
 
 //    해당 매장 리뷰 리스트
     @GetMapping("/partner/{partnerId}")
-    public ResponseEntity<List<StoreReview>> getAllReviews(@PathVariable Long partnerId) {
+    public ResponseEntity<List<StoreReviewDto>> getAllReviews(@PathVariable Long partnerId) {
         System.out.println(partnerId);
-        List<StoreReview> reviews = storeReviewService.findReviewsByPartnerId(partnerId);
+        List<StoreReviewDto> reviews = storeReviewService.findReviewsByPartnerId(partnerId);
         return ResponseEntity.ok(reviews);
+    }
+
+
+    @GetMapping("{storeId}/review/images")
+    public ResponseEntity<List<StoreReviewAttchmentDto>> getImagesByStoreId(@PathVariable Long storeId) {
+        System.out.println(storeId);
+        List<StoreReviewAttchmentDto> attachmentDtos = attachmentService.findByStoreImg(storeId);
+        return ResponseEntity.ok(attachmentDtos);
     }
 
 }

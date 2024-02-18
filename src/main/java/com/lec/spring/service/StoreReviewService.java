@@ -21,8 +21,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -52,17 +54,33 @@ public class StoreReviewService {
     }
 
 
-    public List<StoreReview> findReviewsByPartnerId(Long partnerId) {
-        // partnerId에 해당하는 리뷰 목록을 조회하는 코드
-
-        // 예시로 각 리뷰의 User 및 Partner 정보를 함께 조회하는 코드
+    public List<StoreReviewDto> findReviewsByPartnerId(Long partnerId) {
         List<StoreReview> reviews = storeReviewRepository.findByPartnerId(partnerId);
-        for (StoreReview review : reviews) {
-            User user = review.getUser();
-            Partner partner = review.getPartner();
-            // User 및 Partner 정보 활용
-        }
 
-        return reviews;
+        return reviews.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
+
+    private StoreReviewDto toDto(StoreReview review) {
+        List<String> imageUrls = review.getPartnerReviewAttachments()
+                .stream()
+                .map(PartnerReviewAttachment::getImageUrl)
+                .collect(Collectors.toList());
+
+        return StoreReviewDto.builder()
+                .storeReviewId(review.getId())
+                .content(review.getContent())
+                .avg(review.getAvg())
+                .userId(review.getUser().getId())
+                .nickname(review.getUser().getNickName())
+                .profileImageUrl(review.getUser().getProfileImageUrl())
+                .temperature(review.getUser().getTemperature())
+                .storeName(review.getPartner().getStoreName())
+                .partnerReviewAttachments(imageUrls)
+                .createdAt(review.getCreatedAt())
+                .updatedAt(review.getUpdatedAt())
+                .build();
+    }
+
 }

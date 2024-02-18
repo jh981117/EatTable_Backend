@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.DTO.StoreReviewAttchmentDto;
+import com.lec.spring.domain.PartnerAttachment;
 import com.lec.spring.domain.PartnerReviewAttachment;
 import com.lec.spring.domain.StoreReview;
 import com.lec.spring.repository.PartnerReviewAttachmentRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -57,4 +59,22 @@ public class AttachmentService {
             partnerReviewAttachmentRepository.save(attachment);
         }
     }
+
+
+
+    public List<StoreReviewAttchmentDto> findByStoreImg (Long storeId){
+        List<PartnerReviewAttachment> attachments = partnerReviewAttachmentRepository.findByStoreReviewId(storeId);
+        List<StoreReviewAttchmentDto> attachmentDtos = new ArrayList<>();
+        for (PartnerReviewAttachment attachment : attachments) {
+            StoreReviewAttchmentDto attachmentDto = StoreReviewAttchmentDto.builder()
+                    .storeId(storeId)
+                    .filename(attachment.getFilename())
+                    .imageUrl(attachment.getImageUrl())
+                    .isImage(attachment.isImage())
+                    .build();
+            attachmentDtos.add(attachmentDto);
+        }
+        return attachmentDtos;
+    }
+
 }
