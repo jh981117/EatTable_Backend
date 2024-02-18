@@ -42,84 +42,38 @@ public class PartnerMenuService {
     }
 
 
-    //해당 업체 메뉴리스트 가져오기
-    public List<PartnerMenu> getMenuListByPartner(Partner partner){
-        return partnerMenuRepository.findByPartner(partner);
+
+    // 해당 업체 아이디로 메뉴리스트 찾아오기
+    public List<PartnerMenu> getMenuListByPartnerId(Long partnerId){
+        return partnerMenuRepository.findByPartnerId(partnerId);
     }
 
 
     // 메뉴 저장
-    public int write(PartnerMenu partnerMenu, Map<String, MultipartFile> files){
+    public PartnerMenu saveMenu(Long partnerId, String name, String price, String imageURL) {
+        PartnerMenu menu = new PartnerMenu();
+        menu.setName(name);
+        menu.setPrice(price);
+        menu.setMenuImageUrl(imageURL); // 이미지 URL 저장
 
-        PartnerMenu partnerMenu1 = partnerMenuRepository.save(partnerMenu);
-        int cnt = (partnerMenu1 != null) ? 1 : 0;
-
-
-
-        return cnt;
+        return partnerMenuRepository.save(menu);
     }
 
+    public PartnerMenu updateMenu(Long id, String name, String price, String imageURL) {
+        PartnerMenu menu = partnerMenuRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Menu not found"));
 
+        menu.setName(name);
+        menu.setPrice(price);
+        menu.setMenuImageUrl(imageURL); // 이미지 URL 저장
 
-
-
-    // 물리적으로 파일 저장.  중복된 이름 rename 처리
-
-
-
-
-    //이미지 파일 여부
-
-
-    // 메뉴 수정
-    public int update(PartnerMenu partnerMenu  // <- id, subject, content
-            , Map<String, MultipartFile> files  // 새로 추가된 첨부파일들
-            , Long[] delfile) {  // 삭제될 첨부파일들의 id들
-        int result = 0;
-
-        PartnerMenu menu = partnerMenuRepository.findById(partnerMenu.getId()).orElse(null);
-
-        if(menu != null){
-            menu.setName(partnerMenu.getName());
-            menu.setPrice(partnerMenu.getPrice());
-
-
-            // userid와 레지데이터 업데이트
-
-
-
-
-
-            // 삭제할 첨부파일(들) 삭제
-            if(delfile != null){
-                for(Long fileId : delfile){
-
-
-                }
-            }
-            result = 1;
-        }
-
-        return result;
+        return partnerMenuRepository.save(menu);
     }
 
-
-
-    // 특정 메뉴(id) 삭제
-
-    public int deleteById(Long id) {
-        int result = 0;
-        PartnerMenu menu = partnerMenuRepository.findById(id).orElse(null);
-        if(menu != null){  // 존재한다면 삭제 진행.
-            // 물리적으로 저장된 첨부파일(들) 삭제
-
-
-            // 글 삭제
-            partnerMenuRepository.delete(menu);
-            result = 1;
-        }
-        return result;
+    public void deleteMenu(Long id) {
+        partnerMenuRepository.deleteById(id); // 메뉴 삭제
     }
+
 
 
 }
