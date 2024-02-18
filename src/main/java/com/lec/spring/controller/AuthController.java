@@ -22,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -65,6 +66,25 @@ public class AuthController {
 
         return responseEntity;
     }
+
+    //history 완료
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestHeader(name = HttpHeaders.AUTHORIZATION) String token) {
+        String jwtToken = token.substring(7); // "Bearer " 부분을 제외한 토큰 추출
+
+        // 토큰을 이용하여 사용자 인증 객체를 가져옴
+        UsernamePasswordAuthenticationToken authenticationToken = tokenProvider.getAuthentication(jwtToken);
+        String username = authenticationToken.getName();
+
+        User user = userRepository.findByUsername(username);
+
+        UserHistory userHistory = new UserHistory();
+        userHistory.setName(String.format("%s님이 로그아웃을 하였습니다.", user.getUsername()));
+        userHistoryRepository.save(userHistory);
+
+        return ResponseEntity.ok("로그아웃 되었습니다.");
+    }
+
 
     //history 완료
     @PostMapping("/user/change-password")
