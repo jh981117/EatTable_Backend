@@ -16,14 +16,15 @@ SELECT * FROM waiting;
 
 
 
-#
-# insert into user (id, username,birthdate,activated, password,nickName, name, bio , email)
-# values (2, 'admin', '910309','','$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi' ,'송', 'admin', 'ㅇㅇㄴ', 'mino030@naver.com');
 
-# insert into userrole (userId, roleId) values (2,1);
-# insert into userrole (userId, roleId) values (1,3);
 #
-# insert into userrole (userId, roleId) values (3,2);
+insert into user (id, username,birthdate,activated, password,nickName, name, bio , email)
+values (2, 'admin', '910309','','$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi' ,'송', 'admin', 'ㅇㅇㄴ', 'mino030@naver.com');
+
+insert into userrole (userId, roleId) values (2,1);
+insert into userrole (userId, roleId) values (1,3);
+
+insert into userrole (userId, roleId) values (3,2);
 
 insert into role (id, roleName) values
     (1, 'ROLE_MEMBER'),
@@ -40,6 +41,8 @@ insert into role (id, roleName) values
 # values (1, 1, 1, '하이', '파일네임', '이미지URL', 'sourcename');
 #
 
+insert into partnermenu (id, name, price, regDate, attachment_id, partnerId)
+VALUES (1, '김밥', '1000원', '2024-02-13 13:48:28.177494', 3, 1);
 
 
 

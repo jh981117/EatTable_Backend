@@ -28,8 +28,8 @@ public class WaitingController {
 
     // 매장 대기열 추가 (파트너 계정이 관리)
     @PostMapping("/addWaiting/{partnerId}")
-    public ResponseEntity<?> addReservation(@RequestBody Waiting waiting) {
-        Waiting saveWating = waitingService.saveWaiting(waiting);
+    public ResponseEntity<?> addReservation(@PathVariable Long partnerId, @RequestBody Waiting waiting) {
+        Waiting saveWating = waitingService.saveWaiting(waiting, partnerId);
         return new ResponseEntity<>(saveWating, HttpStatus.CREATED);
     }
 

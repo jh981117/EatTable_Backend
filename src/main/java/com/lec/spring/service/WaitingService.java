@@ -29,7 +29,7 @@ public class WaitingService {
 //    }
 
     @Transactional
-    public Waiting saveWaiting (Waiting waiting){
+    public Waiting saveWaiting (Waiting waiting, Long partnerId){
         return waitingRepository.save(waiting);
     }
 
