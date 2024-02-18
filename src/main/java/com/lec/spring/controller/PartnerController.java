@@ -43,7 +43,10 @@ public class PartnerController {
         return new ResponseEntity<>(partnerService.totallist(), HttpStatus.OK);
     }
 
-
+    @GetMapping("/search")
+    public ResponseEntity<?> search(@RequestParam String keyword){
+        return new ResponseEntity<>(partnerService.search(keyword), HttpStatus.OK);
+    }
 
 
     @GetMapping("/list")

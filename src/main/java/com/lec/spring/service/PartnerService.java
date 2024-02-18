@@ -8,6 +8,7 @@ import com.lec.spring.domain.TrueFalse;
 import com.lec.spring.repository.PartnerAttachmentRepository;
 import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.repository.PartnerReqRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +40,14 @@ public class PartnerService {
         return partnerRepository.findAll();
 
     }
+    @Transactional
+    public List<Partner> search(String keyword) {
+        if (keyword != null && !keyword.isEmpty()) {
+            return partnerRepository.search(keyword);
+        } else {
+            return Collections.emptyList();
+        }
+    }
 
 
     //매장리스트
@@ -52,7 +62,6 @@ public class PartnerService {
 
     @Transactional
     public Page<Partner> homeList( Pageable pageable) {
-
 
             return partnerRepository.findAll(pageable);
 
@@ -204,4 +213,6 @@ public List<PartnerDto> getPartnersByUserId(Long userId) {
         partner.setPartnerState(TrueFalse.FALSE);
         return partnerRepository.save(partner); //
     }
+
+
 }
