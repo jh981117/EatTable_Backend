@@ -219,3 +219,42 @@ insert into partnerattachment (filename, imageUrl, isImage, partnerId) VALUES
     ('1','https://image.toast.com/aaaaaqx/catchtable/shopinfo/snUVjSSlp0uXVetuDgQ-eWg/nuvjsslp0uxvetudgq-ewg_2352511164355747.jpg?detail750',1,18),
     ('1','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sRpUFfIelZApNTQFn7_EkTQ/rpuffielzapntqfn7_ektq_2361617333044950.jpg?detail750',1,19),
     ('1','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sqTUWbsiVKYGXcAsXwLSh1Q/qtuwbsivkygxcasxwlsh1q_236716303859638.jpeg?detail750',1,20);
+
+
+
+
+#----------------리뷰 샘플 ----------------------------------------
+
+ insert into storereview (avg, createdAt, id, partnerId, userId, updatedAt, content) values
+('5','2024-02-15 13:48:28.177494',1,1,1,'2024-02-18 13:48:28.177494','dfjdkjf'),
+('1','2024-02-15 13:48:28.177494',2,1,10,'2024-02-18 13:48:28.177494','12321'),
+('2','2024-02-15 13:48:28.177494',3,1,14,'2024-02-18 13:48:28.177494','ddfsssddf'),
+('3','2024-02-16 13:48:28.177494',4,1,4,'2024-02-18 13:48:28.177494','안녕'),
+('3','2024-02-17 13:48:28.177494',5,1,5,'2024-02-18 13:48:28.177494','졸리다'),
+('5','2024-02-18 13:48:28.177494',6,1,6,'2024-02-18 13:48:28.177494','언제끝나!!'),
+('5','2024-02-12 13:48:28.177494',7,1,7,'2024-02-18 13:48:28.177494','ㅇㄴㄹㅇㄴ'),
+('4','2024-02-13 13:48:28.177494',8,1,8,'2024-02-18 13:48:28.177494','ㄴㅇㄹㅇㄴ'),
+('3','2024-02-15 13:48:28.177494',9,1,9,'2024-02-18 13:48:28.177494','ㅇㄶㄴㅇㅎ'),
+('2','2024-02-16 13:48:28.177494',10,1,20,'2024-02-18 13:48:28.177494','ㄴㅇㅀㄹㅇㄶㅁ'),
+('4','2024-02-14 13:48:28.177494',11,1,5,'2024-02-18 13:48:28.177494','ㅇㄶㄻㄶ'),
+('3','2024-02-15 13:48:28.177494',12,1,7,'2024-02-18 13:48:28.177494','ㅇㄴㄻㅇㅁㄴ'),
+('5','2024-02-18 13:48:28.177494',13,1,9,'2024-02-18 13:48:28.177494','ㄴㅇㄹㅇㄴㄹ'),
+('5','2024-02-13 13:48:28.177494',14,1,3,'2024-02-18 13:48:28.177494','ㅐㅑ2ㅑ3ㅑ42');
+
+
+
+insert into partnerreviewattachment (isImage, createdAt, id, storeReviewId, updatedAt, filename, imageUrl) VALUES
+(1,'2024-02-15 13:48:28.177494',1,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/ab8600f444c54313a2625968c9b077c0?small220'),
+(1,'2024-02-15 13:48:28.177494',2,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/9578658354ac4c0e9c7fa5abd59bb681?small220'),
+(1,'2024-02-15 13:48:28.177494',3,1,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/221230101540989_rv.jpg?small220'),
+(1,'2024-02-16 13:48:28.177494',4,1,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/sDOnG--ipNpE0KsoSzlTm2g/23513001429436_rv.jpg?small220'),
+(1,'2024-02-17 13:48:28.177494',5,1,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/230718224130220(0).jpeg?small220'),
+(1,'2024-02-18 13:48:28.177494',6,1,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/sDOnG--ipNpE0KsoSzlTm2g/230330092038892(0).jpeg?small220'),
+(1,'2024-02-12 13:48:28.177494',7,1,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/23613140844993_rv.jpg?small220'),
+(1,'2024-02-13 13:48:28.177494',8,1,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/221225215527906(1).jpeg?small220'),
+(1,'2024-02-15 13:48:28.177494',9,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/13d0d6e634a44827934c720ec573f5d6?small220'),
+(1,'2024-02-16 13:48:28.177494',10,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/dce255e3a23040e9a6a05f539fdfdc38?small220'),
+(1,'2024-02-14 13:48:28.177494',11,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/c331cd45277f4041950346e992c9d2fb?small220'),
+(1,'2024-02-15 13:48:28.177494',12,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/6d841c4f1815402d8d92e25cfe3f73a3?small220'),
+(1,'2024-02-18 13:48:28.177494',13,1,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/221227224355079_rv.jpg?small220'),
+(1,'2024-02-13 13:48:28.177494',14,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/c85d07d4af144f9d9967e73416bd6fe3?small220');

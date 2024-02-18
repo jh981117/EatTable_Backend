@@ -25,7 +25,7 @@ public class StoreReview extends BaseEntity{
 
 
     @ColumnDefault(value = "0")
-    private int avg;
+    private Long avg;
     ;
 
     @ManyToOne
@@ -40,12 +40,6 @@ public class StoreReview extends BaseEntity{
     @JoinColumn(name ="partnerId")
     private Partner partner;
 
-
-    // 좋아요 목록
-    @OneToMany(mappedBy = "storeReview")
-    @ToString.Exclude
-    @JsonIgnore
-    private List<ReviewLike> reviewLikes;
 
 
     //이미지

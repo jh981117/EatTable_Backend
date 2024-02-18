@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class StoreReviewDto {
     private Long userId;
-    private Long pratnerId;
+    private Long partnerId;
     private String content;
     private Long avg;
 

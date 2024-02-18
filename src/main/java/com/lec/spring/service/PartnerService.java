@@ -98,6 +98,9 @@ public class PartnerService {
     //매장정보 수정  ( 이미지추후 추가, 고민중)
     @Transactional
     public Partner update(Partner partner, List<MultipartFile> files) {
+
+        System.out.println(partner + "파트너");
+        System.out.println(files + "파일");
         // 파트너 ID로 해당 파트너를 찾아옴
         Partner partnerUpdate = partnerRepository.findById(partner.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Partner not found with id: " + partner.getId()));

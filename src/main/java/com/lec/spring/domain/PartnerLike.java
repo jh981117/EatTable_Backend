@@ -15,13 +15,13 @@ public class PartnerLike {
     private PartnerLikeId id;
 
     @ManyToOne
-    @MapsId("fromId")
-    @JoinColumn(name = "fromId")
-    private User fromId;
+    @MapsId("userId")
+    @JoinColumn(name = "userId")
+    private User userId;
 
     @ManyToOne
-    @MapsId("toId")
-    @JoinColumn(name = "toId")
-    private Partner toId;
+    @MapsId("partnerId")
+    @JoinColumn(name = "partnerId")
+    private Partner partnerId;
 
 }

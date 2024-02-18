@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lec.spring.domain.StoreReview;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 public class PartnerReviewAttachment extends BaseEntity {
 
@@ -30,9 +32,9 @@ public class PartnerReviewAttachment extends BaseEntity {
     private StoreReview storeReview;
 
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+
+
+
 
 
 }

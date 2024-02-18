@@ -1,13 +1,17 @@
 package com.lec.spring.controller;
 
+
 import com.lec.spring.domain.DTO.StoreReviewDto;
-import com.lec.spring.domain.Partner;
+import com.lec.spring.domain.StoreReview;
+import com.lec.spring.service.AttachmentService;
+import com.lec.spring.service.StoreReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,27 +19,49 @@ import java.util.List;
 @CrossOrigin
 public class StoreReviewController {
 
+    private final StoreReviewService storeReviewService;
+    private final AttachmentService attachmentService;
 
 
+
+    //리뷰저장
     @PostMapping("/reviews")
     public ResponseEntity<?> createReview(@RequestBody StoreReviewDto storeReviewDto) {
-        // 리뷰 데이터를 데이터베이스에 저장하는 로직
-        return ResponseEntity.ok().body("리뷰가 성공적으로 등록되었습니다.");
+        try {
+            // DTO를 서비스 메소드에 전달
+            StoreReview createdReview = storeReviewService.write(storeReviewDto);
+            // 리뷰 생성 성공 응답
+            return ResponseEntity.ok().body(Map.of("message", "리뷰가 성공적으로 등록되었습니다.", "reviewId", createdReview.getId()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 리뷰 생성 실패 응답
+            return ResponseEntity.badRequest().body("리뷰 등록에 실패하였습니다.");
+        }
     }
 
 
-    @PostMapping("/uploadReviewImage")
-    public ResponseEntity<?> uploadReviewImage(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam("userId") Long userId,
-            @RequestParam("partnerId") Long partnerId) {
-        // 파일을 저장하는 로직 구현
-        // userId와 partnerId를 사용하여 파일이 특정 사용자와 매장 리뷰에 연결되도록 처리
 
-        // 파일 저장 후, StoreReviewAttachment 엔티티 인스턴스 생성 및 저장 로직 구현
-        // 예: 파일 메타데이터 저장, StoreReview 참조 설정 등
+    //이미지저장
+    @PostMapping("/reviews/{reviewId}/attachments")
+    public ResponseEntity<?> uploadReviewAttachments(@PathVariable Long reviewId, @RequestParam("files") List<MultipartFile> files) {
+        try {
+            attachmentService.saveAttachments(reviewId, files);
+            // 파일 업로드 성공 응답
+            return ResponseEntity.ok().body("파일이 성공적으로 업로드되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 파일 업로드 실패 응답
+            return ResponseEntity.badRequest().body("파일 업로드에 실패하였습니다.");
+        }
+    }
 
-        return ResponseEntity.ok().body("파일 업로드 및 매장 리뷰 이미지 처리 성공");
+
+//    해당 매장 리뷰 리스트
+    @GetMapping("/partner/{partnerId}")
+    public ResponseEntity<List<StoreReview>> getAllReviews(@PathVariable Long partnerId) {
+        System.out.println(partnerId);
+        List<StoreReview> reviews = storeReviewService.findReviewsByPartnerId(partnerId);
+        return ResponseEntity.ok(reviews);
     }
 
 }
