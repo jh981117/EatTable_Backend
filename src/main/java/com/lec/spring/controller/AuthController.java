@@ -47,15 +47,22 @@ public class AuthController {
 
     //history 완료
     @PostMapping("/authenticate")
-    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-
+    public ResponseEntity<?> authorize(@Valid @RequestBody LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
-        // authenticate 메소드가 실행이 될 때 CustomUserDetailsService class의 loadUserByUsername 메소드가 실행
+        // authenticate 메소드가 실행될 때 CustomUserDetailsService class의 loadUserByUsername 메소드가 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         // 해당 객체를 SecurityContextHolder에 저장하고
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // 사용자가 탈퇴한 회원인지 확인
+        User user = userRepository.findByUsername(loginDto.getUsername());
+        if (user != null && !user.isActivated()) {
+            // 탈퇴한 회원인 경우
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Collections.singletonMap("message", "탈퇴한 회원입니다."));
+        }
+
         // authentication 객체를 createToken 메소드를 통해서 JWT Token을 생성
         String jwt = tokenProvider.createToken(authentication);
 
@@ -63,16 +70,13 @@ public class AuthController {
         // response header에 jwt token에 넣어줌
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
-        ResponseEntity<TokenDto> responseEntity = new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
-
-        User user = userRepository.findByUsername(loginDto.getUsername());
+        // 로그인 기록 저장
         UserHistory userHistory = new UserHistory();
-        userHistory.setName(String.format("%s가 로그인을 하였습니다.",user.getUsername()));
+        userHistory.setName(String.format("%s가 로그인을 하였습니다.", user.getUsername()));
         userHistoryRepository.save(userHistory);
 
-        return responseEntity;
+        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
     }
-
     //history 완료
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader(name = HttpHeaders.AUTHORIZATION) String token) {
