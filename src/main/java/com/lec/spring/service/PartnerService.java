@@ -45,7 +45,8 @@ public class PartnerService {
         if (keyword != null && !keyword.isEmpty()) {
             return partnerRepository.search(keyword);
         } else {
-            return Collections.emptyList();
+            return partnerRepository.findAll();
+//            return Collections.emptyList();
         }
     }
 
