@@ -3,6 +3,7 @@ package com.lec.spring.service;
 import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.PartnerMenu;
 import com.lec.spring.repository.PartnerMenuRepository;
+import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.util.U;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,7 @@ public class PartnerMenuService {
     private String menuUploadDir;
 
     private final PartnerMenuRepository partnerMenuRepository;
+    private final PartnerRepository partnerRepository;
 
 
 
@@ -51,10 +53,14 @@ public class PartnerMenuService {
 
     // 메뉴 저장
     public PartnerMenu saveMenu(Long partnerId, String name, String price, String imageURL) {
+        Partner partner = partnerRepository.findById(partnerId)
+                .orElseThrow(() -> new IllegalArgumentException("Partner not found"));
+
         PartnerMenu menu = new PartnerMenu();
         menu.setName(name);
         menu.setPrice(price);
         menu.setMenuImageUrl(imageURL); // 이미지 URL 저장
+        menu.setPartner(partner); // Partner 객체 설정
 
         return partnerMenuRepository.save(menu);
     }

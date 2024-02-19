@@ -1,5 +1,6 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.DTO.WaitingDto;
 import com.lec.spring.domain.TrueFalse;
 import com.lec.spring.domain.Waiting;
 import com.lec.spring.service.WaitingService;
@@ -28,7 +29,9 @@ public class WaitingController {
 
     // 매장 대기열 추가 (파트너 계정이 관리)
     @PostMapping("/addWaiting/{partnerId}")
-    public ResponseEntity<?> addReservation(@PathVariable Long partnerId, @RequestBody Waiting waiting) {
+    public ResponseEntity<?> addReservation(@PathVariable Long partnerId, @RequestBody WaitingDto waiting) {
+        System.out.println(partnerId);
+        System.out.println(waiting);
         Waiting saveWating = waitingService.saveWaiting(waiting, partnerId);
         return new ResponseEntity<>(saveWating, HttpStatus.CREATED);
     }

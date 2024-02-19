@@ -1,8 +1,13 @@
 package com.lec.spring.service;
 
 
+import com.lec.spring.domain.DTO.WaitingDto;
+import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.TrueFalse;
+import com.lec.spring.domain.User;
 import com.lec.spring.domain.Waiting;
+import com.lec.spring.repository.PartnerRepository;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.repository.WaitingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +21,9 @@ public class WaitingService {
 
 
     private final WaitingRepository waitingRepository;
+    private final UserRepository userRepository;
+    private final PartnerRepository partnerRepository;
+
 
     @Transactional
     public List<Waiting> findAllWaitings() {
@@ -29,7 +37,21 @@ public class WaitingService {
 //    }
 
     @Transactional
-    public Waiting saveWaiting (Waiting waiting, Long partnerId){
+    public Waiting saveWaiting (WaitingDto waitingDto, Long partnerId){
+
+
+        User user = userRepository.findById(waitingDto.getUserId()).orElse(null);
+        Partner partner = partnerRepository.findById(waitingDto.getPartnerId()).orElse(null);
+
+        System.out.println(user);
+        System.out.println(partner);
+        Waiting waiting = Waiting.builder()
+                .people(waitingDto.getPeople())
+                .waitingState(waitingDto.getWaitingState().equals("True") ? TrueFalse.TRUE : TrueFalse.FALSE)
+                .waitingRegDate(waitingDto.getWaitingRegDate())
+                .user(user)
+                .partner(partner)
+                .build();
         return waitingRepository.save(waiting);
     }
 

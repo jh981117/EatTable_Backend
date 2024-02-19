@@ -3,13 +3,19 @@ package com.lec.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Waiting {
 
     @Id
@@ -22,8 +28,8 @@ public class Waiting {
     @Enumerated(value = EnumType.STRING)
     private TrueFalse waitingState;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime waitingRegDate;
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String waitingRegDate;
 
 
     private String Time;
@@ -40,10 +46,10 @@ public class Waiting {
     private Partner partner;
 
 
-    @PrePersist
-    public void prePersist (){
-        this.waitingRegDate = LocalDateTime.now();
-    }
+//    @PrePersist
+//    public void prePersist (){
+//        this.waitingRegDate = LocalDateTime.now();
+//    }
 
 
 }
