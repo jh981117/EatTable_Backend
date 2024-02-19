@@ -57,10 +57,11 @@ public class PartnerController {
     }
 
     @GetMapping("/homeList")
-    public ResponseEntity<Page<Partner>> homeList(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<PartnerDto>> homeList(@RequestParam(defaultValue = "0") int page,
                                               @RequestParam(defaultValue = "4") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return new ResponseEntity<>(partnerService.homeList(pageable), HttpStatus.OK);
+        Page<PartnerDto> partnerWithAverages = partnerService.homeList(pageable);
+        return ResponseEntity.ok(partnerWithAverages);
     }
 
 

@@ -85,9 +85,7 @@ public class StoreReviewService {
                 .build();
     }
 
-    @Transactional(readOnly = true)
-    public Double getStoreAvg(Long partnerId) {
-        return storeReviewRepository.findAvhPartner(partnerId);
-    }
+
+
 
 }

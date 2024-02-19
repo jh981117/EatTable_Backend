@@ -54,6 +54,8 @@ public class PartnerDto  {
     @JsonFormat(pattern = "yyyy년 MM월 dd일 HH시 mm분")
     private LocalDateTime updatedAt;
 
+    private Double averageRating;
+
 
 
 
