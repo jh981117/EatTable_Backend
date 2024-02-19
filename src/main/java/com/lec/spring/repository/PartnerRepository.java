@@ -24,6 +24,6 @@ public interface PartnerRepository extends JpaRepository<Partner,Long> {
 
     List<Partner> findByUser(User user);
 
-    @Query("SELECT e FROM Partner e WHERE e.storeName LIKE %:keyword% OR e.address.area LIKE %:keyword%")
+    @Query("SELECT e FROM Partner e WHERE e.storeName LIKE %:keyword% OR e.address.area LIKE %:keyword% OR e.favorite LIKE %:keyword%")
     List<Partner> search(@Param("keyword") String keyword);
 }
