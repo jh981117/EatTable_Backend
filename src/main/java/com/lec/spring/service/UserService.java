@@ -109,6 +109,7 @@ public class UserService {
     public String delete(Long id) {
         User userDelete = userRepository.findById(id).orElse(null);
         if(userDelete != null){
+
             userRepository.deleteById(id);
             return "1";
         }
