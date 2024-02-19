@@ -67,6 +67,7 @@ public class UserService {
         User newUser = User.builder()
                 .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
+                .activated(true)
                 .name(user.getName())
                 .birthdate(user.getBirthdate())
                 .email(user.getEmail())
@@ -146,6 +147,18 @@ public class UserService {
         }
         return false;
     }
+
+    // 사용자 상태를 FALSE로 변경하는 메소드
+    public boolean updateUserStateToFalse(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            user.setActivated(false);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
 
     // 비밀번호 업데이트
     @Transactional

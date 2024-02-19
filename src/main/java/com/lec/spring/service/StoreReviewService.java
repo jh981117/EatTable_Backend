@@ -62,7 +62,9 @@ public class StoreReviewService {
                 .collect(Collectors.toList());
     }
 
-    private StoreReviewDto toDto(StoreReview review) {
+
+    @Transactional
+    public StoreReviewDto toDto(StoreReview review) {
         List<String> imageUrls = review.getPartnerReviewAttachments()
                 .stream()
                 .map(PartnerReviewAttachment::getImageUrl)
@@ -81,6 +83,11 @@ public class StoreReviewService {
                 .createdAt(review.getCreatedAt())
                 .updatedAt(review.getUpdatedAt())
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public Double getStoreAvg(Long partnerId) {
+        return storeReviewRepository.findAvhPartner(partnerId);
     }
 
 }
