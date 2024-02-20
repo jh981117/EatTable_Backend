@@ -74,4 +74,8 @@ public class WaitingService {
     public List<Waiting> findUserWaiting(Long userId) {
         return waitingRepository.findByUserId(userId);
     }
+
+    public List<Waiting> findWaitingsByPartnerId(Long partnerId) {
+        return waitingRepository.findByPartnerId(partnerId);
+    }
 }

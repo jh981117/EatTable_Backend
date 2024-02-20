@@ -9,4 +9,6 @@ public interface WaitingRepository extends JpaRepository<Waiting , Long> {
     List<Waiting> findByUserId(Long userId);
 
     void deleteByUserId(Long userId);
+
+    List<Waiting> findByPartnerId(Long partnerId);
 }

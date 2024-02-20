@@ -22,8 +22,8 @@ public class WaitingController {
 
     // 매장 대기열 리스트 (파트너 계정이 관리)
     @GetMapping("/waitingList/{partnerId}")
-    public ResponseEntity<List<Waiting>> listWaitings() {
-        List<Waiting> waitings = waitingService.findAllWaitings();
+    public ResponseEntity<List<Waiting>> listWaitings(@PathVariable Long partnerId) {
+        List<Waiting> waitings = waitingService.findWaitingsByPartnerId(partnerId); // 해당 파트너의 대기열 목록을 조회하는 메서드를 호출합니다.
         return new ResponseEntity<>(waitings, HttpStatus.OK);
     }
 
