@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -31,17 +31,21 @@ public class PartnerMenuController {
     @PostMapping("/addMenu/{partnerId}")
     public ResponseEntity<?> addMenu(@PathVariable Long partnerId, @RequestBody Map<String, Object> menuData) {
         try {
-//            Long partnerId = Long.parseLong(menuData.get("partnerId").toString());
             String name = menuData.get("name").toString();
             String price = menuData.get("price").toString();
-            String imageURL = menuData.get("menuImageUrl").toString(); // 이미지 URL을 받습니다.
-
-            // 이미지 파일 데이터를 처리하는 방법은 클라이언트에서 선택한 방법에 따라 다릅니다.
-            // 여기서는 이미지 URL을 직접 받아서 사용합니다.
+            String imageURL = menuData.get("imageURL").toString();
 
             // PartnerMenuService의 saveMenu 메서드를 호출하여 데이터를 저장하고 응답을 반환합니다.
             PartnerMenu menu = partnerMenuService.saveMenu(partnerId, name, price, imageURL);
-            return new ResponseEntity<>(menu, HttpStatus.OK);
+
+            // 저장된 메뉴 정보를 맵에 담아 반환합니다.
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", menu.getId());
+            response.put("name", menu.getName());
+            response.put("price", menu.getPrice());
+            response.put("imageURL", menu.getMenuImageUrl());
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to add menu: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -72,10 +76,10 @@ public class PartnerMenuController {
 
             String name = menuData.get("name").toString();
             String price = menuData.get("price").toString();
-            String imageURL = menuData.get("menuImageUrl").toString(); // 이미지 URL을 받습니다.
+            String menuImageUrl = menuData.get("menuImageUrl").toString(); // 이미지 URL을 받습니다.
 
             // PartnerMenuService의 updateMenu 메서드를 호출하여 데이터를 수정하고 응답을 반환합니다.
-            PartnerMenu menu = partnerMenuService.updateMenu(id, name, price, imageURL);
+            PartnerMenu menu = partnerMenuService.updateMenu(id, name, price, menuImageUrl);
             return new ResponseEntity<>(menu, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to update menu: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
