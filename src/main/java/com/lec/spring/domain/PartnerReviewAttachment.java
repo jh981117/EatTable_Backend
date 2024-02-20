@@ -3,10 +3,7 @@ package com.lec.spring.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lec.spring.domain.StoreReview;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -29,6 +26,7 @@ public class PartnerReviewAttachment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "storeReviewId")
     @JsonIgnore
+    @ToString.Exclude
     private StoreReview storeReview;
 
 

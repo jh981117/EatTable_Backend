@@ -73,4 +73,13 @@ public class StoreReviewController {
         return ResponseEntity.ok(attachmentDtos);
     }
 
+    // 사용자 리뷰
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<?>> getAllUserReviews(@PathVariable Long userId) {
+        System.out.println(userId + "1312321313");
+        List<StoreReview> reviews = storeReviewService.findReviewsByUserId(userId);
+        return ResponseEntity.ok(reviews);
+    }
+
+
 }

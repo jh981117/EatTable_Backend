@@ -11,6 +11,7 @@ import com.lec.spring.repository.StoreReviewRepository;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,6 +36,7 @@ public class StoreReviewService {
     private final PartnerRepository partnerRepository;
     private final UserRepository userRepository;
     private final S3Service s3Service;
+
 
 
     //매장리뷰작성
@@ -86,6 +89,11 @@ public class StoreReviewService {
     }
 
 
-
-
+    public List<StoreReview> findReviewsByUserId(Long userId) {
+        List<StoreReview> reviews = storeReviewRepository.findByUserId(userId);
+        // createdAt 기준으로 내림차순으로 정렬
+        System.out.println(reviews);
+        reviews.sort(Comparator.comparing(StoreReview::getId).reversed());
+        return reviews;
+    }
 }

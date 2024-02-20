@@ -50,26 +50,26 @@ insert into role (id, roleName) values
 
 insert into user (id,username,createdAt ,password,name, nickName,birthdate,email,phone,activated,temperature,profileImageUrl) values
 
-(1,'user1','2024-02-13 13:48:28.177494','$2a$10$WiGFjlDZzzmNuFWDmv4jsOK56flmJpmWLe1ATuiiMZHChQ8UXdPfG' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(2,'user2','2024-02-13 13:48:28.177494','$2a$10$Mh6/AJAbQ29bHY.X5iZqFuZLr/JlJ7Wf1AxdsiIZgP5Y.ukLBvL0i' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(3,'user3','2024-02-14 13:48:28.177494','$2a$10$pk2f0TiYdi94YbsL7HN34ujY6A8REMn/6CusdvsbZZv2K183s/Lfq' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(4,'user4','2024-02-14 13:48:28.177494','$2a$10$mD/DNyndOu94zmvkwLGgQuG7AzfD3UirxagramZoe5YT87Ifa0.6y' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(5,'user5','2024-02-15 13:48:28.177494','$2a$10$.3rd2iOf9tVWqt.k2tHtRe0gTXUx.9Pbv.8d/al2/nnRnpVJcK.Q2' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(6,'user6','2024-02-15 13:48:28.177494','$2a$10$AbfaPhMEsMBc2UWGlwxUs.3FEEG5Ghz22AM136dz4EBMBcdHHGA2m' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(7,'user7','2024-02-15 13:48:28.177494','$2a$10$4i6V33LcygnNnTU5ygF4n.jEFFTQI2c6bOxsrfljmdnGwkM7PPIxq' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(8,'user8','2024-02-15 13:48:28.177494','$2a$10$dATltd.bTWXmN1EjMFuW5e3BS2t6irG1Vq98SHaxVAHIzE3063sd2' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(9,'user9','2024-02-16 13:48:28.177494','$2a$10$PND2lcJgIR8C2q6a01iPlenAx4UWDkzLboPOUb9HYXg7AdYBDT0yS' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(10,'user10','2024-02-16 13:48:28.177494','$2a$10$o7pAABDQ/Ghpc3GfSB3qdu9eErBDIDBHczw2SXW5v.YfMcNtFlhAu' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(11,'user11','2024-02-17 13:48:28.177494','$2a$10$k.3xPwvk3uScocdDII6pr.Nd2aoTENDzJcaeKfhdFd.1ddsoI.CS6' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(12,'user12','2024-02-18 13:48:28.177494','$2a$10$vZIFoPn572QrY5SGJwd8/ebg3XBWFrHUhy9wNIixdXcWp0ShLVE3a' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(13,'user13','2024-02-19 13:48:28.177494','$2a$10$Nb1.GGSccUbyUF24IV2sTe5oj0xgnXTRSE./mHNFobi.5j0wynISC' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(14,'user14','2024-02-19 13:48:28.177494','$2a$10$pBbo8.J3Ff2IxSebDR.v0.aSK58qnOCqqMRyjSXV4Q7kqTHSxQpLW' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(15,'user15','2024-02-20 13:48:28.177494','$2a$10$QyGEonrSoriwKneoQrdbOuWNYbM.BR8o/VWnBdldScP/OgztmdQIu' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(16,'user16','2024-02-21 13:48:28.177494','$2a$10$82KGMdI8qYjPsz0JiAt6QuAptTO9QAm1J6sBjOzLvlQVADpYHp6Fi' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(17,'user17','2024-02-21 13:48:28.177494','$2a$10$LCGhPEXqHEa/rIZThy9SOOAdtZ7xEHuoPmtIo5XCiu8FGBTRL.yWq' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(18,'user18','2024-02-21 13:48:28.177494','$2a$10$lL3X.esOof03kubHUrjE3uQ9oGxBNqntr0mMUZawhS9YyJFAR6ul2' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(19,'user19','2024-02-22 13:48:28.177494','$2a$10$FJ3095fmIqRMNPSd4OpouOWPmncVZUkyoulNg1/K5jhVFiJ/Znkfa' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
-(20,'user20','2024-02-23 13:48:28.177494','$2a$10$h6eUWnTYZJbdsHkr5fgzIO1wXLcx02bKbjrcrJxfvrjhn7WVkOcTe' , '송','송송','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(1,'user1','2024-02-13 13:48:28.177494','$2a$10$WiGFjlDZzzmNuFWDmv4jsOK56flmJpmWLe1ATuiiMZHChQ8UXdPfG' , '송','사용자1','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(2,'user2','2024-02-13 13:48:28.177494','$2a$10$Mh6/AJAbQ29bHY.X5iZqFuZLr/JlJ7Wf1AxdsiIZgP5Y.ukLBvL0i' , '송','사용자2','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(3,'user3','2024-02-14 13:48:28.177494','$2a$10$pk2f0TiYdi94YbsL7HN34ujY6A8REMn/6CusdvsbZZv2K183s/Lfq' , '송','사용자3','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(4,'user4','2024-02-14 13:48:28.177494','$2a$10$mD/DNyndOu94zmvkwLGgQuG7AzfD3UirxagramZoe5YT87Ifa0.6y' , '송','사용자4','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(5,'user5','2024-02-15 13:48:28.177494','$2a$10$.3rd2iOf9tVWqt.k2tHtRe0gTXUx.9Pbv.8d/al2/nnRnpVJcK.Q2' , '송','사용자5','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(6,'user6','2024-02-15 13:48:28.177494','$2a$10$AbfaPhMEsMBc2UWGlwxUs.3FEEG5Ghz22AM136dz4EBMBcdHHGA2m' , '송','사용자6','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(7,'user7','2024-02-15 13:48:28.177494','$2a$10$4i6V33LcygnNnTU5ygF4n.jEFFTQI2c6bOxsrfljmdnGwkM7PPIxq' , '송','사용자7','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(8,'user8','2024-02-15 13:48:28.177494','$2a$10$dATltd.bTWXmN1EjMFuW5e3BS2t6irG1Vq98SHaxVAHIzE3063sd2' , '송','사용자8','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(9,'user9','2024-02-16 13:48:28.177494','$2a$10$PND2lcJgIR8C2q6a01iPlenAx4UWDkzLboPOUb9HYXg7AdYBDT0yS' , '송','사용자9','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(10,'user10','2024-02-16 13:48:28.177494','$2a$10$o7pAABDQ/Ghpc3GfSB3qdu9eErBDIDBHczw2SXW5v.YfMcNtFlhAu' , '송','사용자10','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(11,'user11','2024-02-17 13:48:28.177494','$2a$10$k.3xPwvk3uScocdDII6pr.Nd2aoTENDzJcaeKfhdFd.1ddsoI.CS6' , '송','사용자11','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(12,'user12','2024-02-18 13:48:28.177494','$2a$10$vZIFoPn572QrY5SGJwd8/ebg3XBWFrHUhy9wNIixdXcWp0ShLVE3a' , '송','사용자12','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(13,'user13','2024-02-19 13:48:28.177494','$2a$10$Nb1.GGSccUbyUF24IV2sTe5oj0xgnXTRSE./mHNFobi.5j0wynISC' , '송','사용자13','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(14,'user14','2024-02-19 13:48:28.177494','$2a$10$pBbo8.J3Ff2IxSebDR.v0.aSK58qnOCqqMRyjSXV4Q7kqTHSxQpLW' , '송','사용자14','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(15,'user15','2024-02-20 13:48:28.177494','$2a$10$QyGEonrSoriwKneoQrdbOuWNYbM.BR8o/VWnBdldScP/OgztmdQIu' , '송','사용자15','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(16,'user16','2024-02-21 13:48:28.177494','$2a$10$82KGMdI8qYjPsz0JiAt6QuAptTO9QAm1J6sBjOzLvlQVADpYHp6Fi' , '송','사용자16','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(17,'user17','2024-02-21 13:48:28.177494','$2a$10$LCGhPEXqHEa/rIZThy9SOOAdtZ7xEHuoPmtIo5XCiu8FGBTRL.yWq' , '송','사용자17','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(18,'user18','2024-02-21 13:48:28.177494','$2a$10$lL3X.esOof03kubHUrjE3uQ9oGxBNqntr0mMUZawhS9YyJFAR6ul2' , '송','사용자18','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(19,'user19','2024-02-22 13:48:28.177494','$2a$10$FJ3095fmIqRMNPSd4OpouOWPmncVZUkyoulNg1/K5jhVFiJ/Znkfa' , '송','사용자19','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
+(20,'user20','2024-02-23 13:48:28.177494','$2a$10$h6eUWnTYZJbdsHkr5fgzIO1wXLcx02bKbjrcrJxfvrjhn7WVkOcTe' , '송','사용자20','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png'),
 (21,'admin','2024-02-23 13:48:28.177494','$2a$10$qkmCAhzHcV1zC9I2TiUz5eCWobIKTEG3Vzlej5jRAFv0JqaSuYWxS' , '관리자','관리자','910309','mino030@naver.com','01000000000',1,'10','https://eatablebucket.s3.ap-northeast-2.amazonaws.com/userdefault.png');
 
 
@@ -229,7 +229,8 @@ insert into partnerattachment (filename, imageUrl, isImage, partnerId) VALUES
 #----------------리뷰 샘플 ----------------------------------------
 
  insert into storereview (avg, createdAt, id, partnerId, userId, updatedAt, content) values
-('5','2024-02-15 13:48:28.177494',1,1,1,'2024-02-18 13:48:28.177494','dfjdkjf'),
+('5','2024-02-15 13:48:28.177494',1,1,1,'2024-02-18 13:48:28.177494','리뷰1'),
+('5','2024-02-15 13:48:28.177494',15,1,1,'2024-02-18 13:48:28.177494','리뷰15'),
 ('1','2024-02-15 13:48:28.177494',2,1,10,'2024-02-18 13:48:28.177494','12321'),
 ('2','2024-02-15 13:48:28.177494',3,1,14,'2024-02-18 13:48:28.177494','ddfsssddf'),
 ('3','2024-02-16 13:48:28.177494',4,1,4,'2024-02-18 13:48:28.177494','안녕'),

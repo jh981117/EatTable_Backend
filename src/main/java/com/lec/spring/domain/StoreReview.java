@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity
-public class StoreReview extends BaseEntity{
+public class StoreReview extends BaseSubEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +35,6 @@ public class StoreReview extends BaseEntity{
     private User user;
 
     @ManyToOne
-    @ToString.Exclude
-    @JsonIgnore
     @JoinColumn(name ="partnerId")
     private Partner partner;
 
@@ -44,8 +42,7 @@ public class StoreReview extends BaseEntity{
 
     //이미지
     @OneToMany(mappedBy = "storeReview")
-    @ToString.Exclude
-    @JsonIgnore
+
     private List<PartnerReviewAttachment> partnerReviewAttachments;
 
 
