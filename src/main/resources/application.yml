@@ -81,15 +81,4 @@ jwt:
 
 
 
-cloud:
-  aws:
-    credentials:
-      accessKey: AKIA33DMWBRZ2T4V7VT5
-      secretKey: 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
-    s3:
-      bucket: eatablebucket
-    region:
-      static: ap-northeast-2
-    stack:
 
-      auto: false
