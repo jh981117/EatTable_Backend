@@ -2,6 +2,8 @@ package com.lec.spring.config;
 
 
 import com.lec.spring.domain.RoleName;
+import com.lec.spring.oauth2.CustomSuccessHandler;
+import com.lec.spring.service.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,8 @@ public class SecurityConfig   {
 
     private final CustomUserDetailsService userDetailService;
 
+    private final OAuth2UserService oAuth2UserService;
+    private final CustomSuccessHandler customSuccessHandler;
 
 
     // PasswordEncoder는 BCryptPasswordEncoder를 사용
@@ -70,6 +74,11 @@ public class SecurityConfig   {
                 .exceptionHandling((exceptionConfig) ->
                         exceptionConfig.authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedHandler(jwtAccessDeniedHandler)
                 )
+
+                .oauth2Login((oauth2 -> oauth2.userInfoEndpoint
+                            (((userInfoEndpointConfig) -> userInfoEndpointConfig.userService(oAuth2UserService)))
+                        .successHandler(customSuccessHandler)
+                            ))
 
                 // 로그인 페이지 및 관련 설정
                 .formLogin((formLogin) ->
