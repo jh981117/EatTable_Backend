@@ -53,6 +53,10 @@ public class Partner extends BaseSubEntity{
     @ColumnDefault("0")
     private Long viewCnt;
 
+    @ColumnDefault("0")
+    private String readyTime;
+
+
 
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 //    private LocalDateTime regDate;

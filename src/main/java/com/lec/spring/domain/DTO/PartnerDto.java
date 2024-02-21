@@ -28,6 +28,7 @@ public class PartnerDto  {
 
     private Address address;
 
+    private String readyTime;
     private String tableCnt;
 
     private String openTime;
