@@ -74,6 +74,7 @@ public class StoreReviewController {
     }
 
     // 사용자 리뷰
+    // 커밋푸쉬 다시할게
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<?>> getAllUserReviews(@PathVariable Long userId) {
         System.out.println(userId + "1312321313");
