@@ -48,6 +48,11 @@ public class AuthController {
     //history 완료
     @PostMapping("/authenticate")
     public ResponseEntity<?> authorize(@Valid @RequestBody LoginDto loginDto) {
+        User user = userRepository.findByUsername(loginDto.getUsername());
+        if (user == null) {
+            // 아이디가 존재하지 않는 경우
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("message", "아이디가 존재하지 않습니다."));
+        }
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
@@ -56,9 +61,8 @@ public class AuthController {
         // 해당 객체를 SecurityContextHolder에 저장하고
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // 사용자가 탈퇴한 회원인지 확인
-        User user = userRepository.findByUsername(loginDto.getUsername());
-        if (user != null && !user.isActivated()) {
+
+        if (!user.isActivated()) {
             // 탈퇴한 회원인 경우
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Collections.singletonMap("message", "탈퇴한 회원입니다."));
         }
