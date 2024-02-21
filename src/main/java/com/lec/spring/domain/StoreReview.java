@@ -29,8 +29,6 @@ public class StoreReview extends BaseSubEntity{
     ;
 
     @ManyToOne
-    @ToString.Exclude
-    @JsonIgnore
     @JoinColumn(name = "userId")
     private User user;
 

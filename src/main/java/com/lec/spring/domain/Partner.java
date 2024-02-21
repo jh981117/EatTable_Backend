@@ -19,7 +19,7 @@ import java.util.List;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Builder
-public class Partner extends BaseEntity{
+public class Partner extends BaseSubEntity{
 
 
     @Id

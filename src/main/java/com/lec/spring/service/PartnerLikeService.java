@@ -8,6 +8,7 @@ import com.lec.spring.repository.PartnerLikeRepository;
 import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,12 @@ public class PartnerLikeService {
     public boolean checkStoreLikeState(Long userId, Long partnerId) {
         PartnerLikeId id = new PartnerLikeId(userId, partnerId);
         return partnerLikeRepository.existsById(id);
+    }
+
+
+    public ResponseEntity<?> findLength(Long partnerId) {
+        long count = partnerLikeRepository.countByPartnerId(partnerId);
+        return ResponseEntity.ok(count);
     }
 }
 

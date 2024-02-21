@@ -203,6 +203,8 @@ insert into partner (createdAt, updatedAt, area, lat, lng, zipCode, corkCharge, 
 
 insert into partnerattachment (filename, imageUrl, isImage, partnerId) VALUES
     ('1','https://image.toast.com/aaaaaqx/catchtable/shopinfo/s25377/25377_2232815282859189.png?detail750',1,1),
+    ('1','https://image.toast.com/aaaaaqx/catchtable/shopinfo/s1pE_2hl3vjLdnFYCkRmKcQ/1pe_2hl3vjldnfyckrmkcq_2361410350586042.jpg?detail750',1,1),
+    ('1','https://ugc-images.catchtable.co.kr/catchtable/shopinfo/spc8XLqQkwoPvQVvHrKby7A/c74b4710891749ba9a0c5f60e184c20d?detail750',1,1),
     ('1','https://image.toast.com/aaaaaqx/catchtable/shopinfo/s1pE_2hl3vjLdnFYCkRmKcQ/1pe_2hl3vjldnfyckrmkcq_2361410350586042.jpg?detail750',1,2),
     ('1','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sjdTkAxJi8e1X02OCeQjdOA/jdtkaxji8e1x02oceqjdoa_237512113808579.png?detail750',1,3),
     ('1','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sR1B6qa4fT537GjL6KO9bHg/r1b6qa4ft537gjl6ko9bhg_2371016411290157.jpg?detail750',1,4),
@@ -230,7 +232,7 @@ insert into partnerattachment (filename, imageUrl, isImage, partnerId) VALUES
 
  insert into storereview (avg, createdAt, id, partnerId, userId, updatedAt, content) values
 ('5','2024-02-15 13:48:28.177494',1,1,1,'2024-02-18 13:48:28.177494','리뷰1'),
-('5','2024-02-15 13:48:28.177494',15,1,1,'2024-02-18 13:48:28.177494','리뷰15'),
+('5','2024-02-15 13:48:28.177494',29,1,1,'2024-02-18 13:48:28.177494','리뷰15'),
 ('1','2024-02-15 13:48:28.177494',2,1,10,'2024-02-18 13:48:28.177494','12321'),
 ('2','2024-02-15 13:48:28.177494',3,1,14,'2024-02-18 13:48:28.177494','ddfsssddf'),
 ('3','2024-02-16 13:48:28.177494',4,1,4,'2024-02-18 13:48:28.177494','안녕'),
@@ -243,14 +245,34 @@ insert into partnerattachment (filename, imageUrl, isImage, partnerId) VALUES
 ('4','2024-02-14 13:48:28.177494',11,1,5,'2024-02-18 13:48:28.177494','ㅇㄶㄻㄶ'),
 ('3','2024-02-15 13:48:28.177494',12,1,7,'2024-02-18 13:48:28.177494','ㅇㄴㄻㅇㅁㄴ'),
 ('5','2024-02-18 13:48:28.177494',13,1,9,'2024-02-18 13:48:28.177494','ㄴㅇㄹㅇㄴㄹ'),
-('5','2024-02-13 13:48:28.177494',14,1,3,'2024-02-18 13:48:28.177494','ㅐㅑ2ㅑ3ㅑ42');
+('5','2024-02-13 13:48:28.177494',14,1,3,'2024-02-18 13:48:28.177494','ㅐㅑ2ㅑ3ㅑ42'),
+('5','2024-02-15 13:48:28.177494',15,2,1,'2024-02-18 13:48:28.177494','dfjdkjf'),
+('1','2024-02-15 13:48:28.177494',16,2,10,'2024-02-18 13:48:28.177494','12321'),
+('2','2024-02-15 13:48:28.177494',17,2,14,'2024-02-18 13:48:28.177494','ddfsssddf'),
+('3','2024-02-16 13:48:28.177494',18,2,4,'2024-02-18 13:48:28.177494','안녕'),
+('3','2024-02-17 13:48:28.177494',19,2,5,'2024-02-18 13:48:28.177494','졸리다'),
+('5','2024-02-18 13:48:28.177494',20,2,6,'2024-02-18 13:48:28.177494','언제끝나!!'),
+('5','2024-02-12 13:48:28.177494',21,2,7,'2024-02-18 13:48:28.177494','ㅇㄴㄹㅇㄴ'),
+('4','2024-02-13 13:48:28.177494',22,2,8,'2024-02-18 13:48:28.177494','ㄴㅇㄹㅇㄴ'),
+('3','2024-02-15 13:48:28.177494',23,2,9,'2024-02-18 13:48:28.177494','ㅇㄶㄴㅇㅎ'),
+('2','2024-02-16 13:48:28.177494',24,2,20,'2024-02-18 13:48:28.177494','ㄴㅇㅀㄹㅇㄶㅁ'),
+('4','2024-02-14 13:48:28.177494',25,2,5,'2024-02-18 13:48:28.177494','ㅇㄶㄻㄶ'),
+('3','2024-02-15 13:48:28.177494',26,2,7,'2024-02-18 13:48:28.177494','ㅇㄴㄻㅇㅁㄴ'),
+('5','2024-02-18 13:48:28.177494',27,2,9,'2024-02-18 13:48:28.177494','ㄴㅇㄹㅇㄴㄹ'),
+('5','2024-02-13 13:48:28.177494',28,2,3,'2024-02-18 13:48:28.177494','ㅐㅑ2ㅑ3ㅑ42');
 
 
 
 insert into partnerreviewattachment (isImage, createdAt, id, storeReviewId, updatedAt, filename, imageUrl) VALUES
 (1,'2024-02-15 13:48:28.177494',1,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/ab8600f444c54313a2625968c9b077c0?small220'),
+(1,'2024-02-15 13:48:28.177494',29,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/ab8600f444c54313a2625968c9b077c0?small220'),
+(1,'2024-02-15 13:48:28.177494',30,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/ab8600f444c54313a2625968c9b077c0?small220'),
+(1,'2024-02-15 13:48:28.177494',31,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/ab8600f444c54313a2625968c9b077c0?small220'),
 (1,'2024-02-15 13:48:28.177494',2,2,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/9578658354ac4c0e9c7fa5abd59bb681?small220'),
+(1,'2024-02-15 13:48:28.177494',33,2,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/9578658354ac4c0e9c7fa5abd59bb681?small220'),
+(1,'2024-02-15 13:48:28.177494',34,2,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/9578658354ac4c0e9c7fa5abd59bb681?small220'),
 (1,'2024-02-15 13:48:28.177494',3,3,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/221230101540989_rv.jpg?small220'),
+(1,'2024-02-15 13:48:28.177494',35,3,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/221230101540989_rv.jpg?small220'),
 (1,'2024-02-16 13:48:28.177494',4,4,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/sDOnG--ipNpE0KsoSzlTm2g/23513001429436_rv.jpg?small220'),
 (1,'2024-02-17 13:48:28.177494',5,5,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/230718224130220(0).jpeg?small220'),
 (1,'2024-02-18 13:48:28.177494',6,6,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/sDOnG--ipNpE0KsoSzlTm2g/230330092038892(0).jpeg?small220'),
@@ -261,4 +283,18 @@ insert into partnerreviewattachment (isImage, createdAt, id, storeReviewId, upda
 (1,'2024-02-14 13:48:28.177494',11,11,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/c331cd45277f4041950346e992c9d2fb?small220'),
 (1,'2024-02-15 13:48:28.177494',12,12,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/6d841c4f1815402d8d92e25cfe3f73a3?small220'),
 (1,'2024-02-18 13:48:28.177494',13,13,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/221227224355079_rv.jpg?small220'),
-(1,'2024-02-13 13:48:28.177494',14,14,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/c85d07d4af144f9d9967e73416bd6fe3?small220');
+(1,'2024-02-13 13:48:28.177494',14,14,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/c85d07d4af144f9d9967e73416bd6fe3?small220'),
+(1,'2024-02-15 13:48:28.177494',15,15,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/ab8600f444c54313a2625968c9b077c0?small220'),
+(1,'2024-02-15 13:48:28.177494',16,16,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/9578658354ac4c0e9c7fa5abd59bb681?small220'),
+(1,'2024-02-15 13:48:28.177494',17,17,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/221230101540989_rv.jpg?small220'),
+(1,'2024-02-16 13:48:28.177494',18,18,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/sDOnG--ipNpE0KsoSzlTm2g/23513001429436_rv.jpg?small220'),
+(1,'2024-02-17 13:48:28.177494',19,19,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/230718224130220(0).jpeg?small220'),
+(1,'2024-02-18 13:48:28.177494',20,20,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/sDOnG--ipNpE0KsoSzlTm2g/230330092038892(0).jpeg?small220'),
+(1,'2024-02-12 13:48:28.177494',21,21,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/23613140844993_rv.jpg?small220'),
+(1,'2024-02-13 13:48:28.177494',22,22,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/221225215527906(1).jpeg?small220'),
+(1,'2024-02-15 13:48:28.177494',23,23,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/13d0d6e634a44827934c720ec573f5d6?small220'),
+(1,'2024-02-16 13:48:28.177494',24,24,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/dce255e3a23040e9a6a05f539fdfdc38?small220'),
+(1,'2024-02-14 13:48:28.177494',25,25,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/c331cd45277f4041950346e992c9d2fb?small220'),
+(1,'2024-02-15 13:48:28.177494',26,26,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/6d841c4f1815402d8d92e25cfe3f73a3?small220'),
+(1,'2024-02-18 13:48:28.177494',27,27,'2024-02-18 13:48:28.177494','123','https://toast-images.catchtable.co.kr/aaaaaqx/rv/s7qElyOWH4iYaJoTd5P-VAw/221227224355079_rv.jpg?small220'),
+(1,'2024-02-13 13:48:28.177494',28,28,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/c85d07d4af144f9d9967e73416bd6fe3?small220');

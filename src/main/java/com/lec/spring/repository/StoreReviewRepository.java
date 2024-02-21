@@ -15,6 +15,8 @@ public interface StoreReviewRepository extends JpaRepository<StoreReview, Long> 
 
     List<StoreReview> findByPartnerId(Long partnerId);
 
+    long countByPartnerId(Long partnerId);
+
     // partnerId에 해당하는 모든 리뷰의 평점 평균을 계산하는 쿼리
 
 

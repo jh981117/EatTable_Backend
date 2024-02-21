@@ -28,19 +28,6 @@ public class AttachmentService {
 
 
     @Transactional
-    public StoreReviewAttchmentDto storeReviewWrite (List<MultipartFile> fileList,Long userId, Long partnerId, Long storeId){
-
-
-        for(MultipartFile file : fileList){
-            PartnerReviewAttachment partnerReviewAttachment = new PartnerReviewAttachment();
-            String s3StoragePath = s3Service.uploadFile(file);
-            partnerReviewAttachment.setImageUrl(s3StoragePath);
-//            partnerReviewAttachment.setPartner();
-
-        }
-        return null;
-
-    }
     public void saveAttachments(Long reviewId, List<MultipartFile> files)  {
         StoreReview storeReview = storeReviewRepository.findById(reviewId).orElse(null);
 
@@ -62,19 +49,6 @@ public class AttachmentService {
 
 
 
-    public List<StoreReviewAttchmentDto> findByStoreImg (Long storeId){
-        List<PartnerReviewAttachment> attachments = partnerReviewAttachmentRepository.findByStoreReviewId(storeId);
-        List<StoreReviewAttchmentDto> attachmentDtos = new ArrayList<>();
-        for (PartnerReviewAttachment attachment : attachments) {
-            StoreReviewAttchmentDto attachmentDto = StoreReviewAttchmentDto.builder()
-                    .storeId(storeId)
-                    .filename(attachment.getFilename())
-                    .imageUrl(attachment.getImageUrl())
-                    .isImage(attachment.isImage())
-                    .build();
-            attachmentDtos.add(attachmentDto);
-        }
-        return attachmentDtos;
-    }
+
 
 }

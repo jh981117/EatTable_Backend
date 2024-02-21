@@ -99,7 +99,7 @@ public class PartnerService {
     @Transactional
     public PartnerDto detail(Long id){
         Partner partner = partnerRepository.findById(id).orElse(null);
-
+        Double averageRating = getStoreAvg(partner.getId());
         PartnerDto partnerDto = PartnerDto.builder()
                 .id(partner.getId())
                 .storeName(partner.getStoreName())
@@ -117,12 +117,15 @@ public class PartnerService {
                 .parking(partner.getParking())
                 .corkCharge(partner.getCorkCharge())
                 .dog(partner.getDog())
+                .averageRating(averageRating)
                 .partnerState(partner.getPartnerState())
                 .fileList(partner.getFileList())
+
                 .build();
 
         return partnerDto;
     }
+
 
 
     //매장정보 수정  ( 이미지추후 추가, 고민중)

@@ -36,4 +36,12 @@ public class LikeController {
         boolean isFavorited = partnerLikeService.checkStoreLikeState(partnerLikeId.getUserId(), partnerLikeId.getPartnerId());
         return ResponseEntity.ok().body(Map.of("favorited", isFavorited));
     }
+
+
+
+    @GetMapping("/storeLike/Length/{partnerId}")
+    public ResponseEntity<?> likeLength(@PathVariable Long partnerId){
+
+        return partnerLikeService.findLength(partnerId);
+    }
 }

@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +37,8 @@ public class PartnerController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserHistoryRepository userHistoryRepository;
+    private final PartnerRepository partnerRepository;
+
 
     //    매장리스트
     @GetMapping("/totallist")
@@ -90,6 +93,16 @@ public class PartnerController {
     public ResponseEntity<?> detail(@PathVariable Long id) {
                return new ResponseEntity<>(partnerService.detail(id), HttpStatus.OK);
     }
+
+    @Transactional
+    @GetMapping("/base/detail/{id}")
+    public ResponseEntity<?> baseDetail(@PathVariable Long id) {
+        Partner partner = partnerRepository.findById(id).orElse(null);
+        partner.setViewCnt(partner.getViewCnt() + 1);
+        partnerRepository.save(partner);
+        return new ResponseEntity<>(partnerService.detail(id), HttpStatus.OK);
+    }
+
 
     //매장수정  //history 완료
     @PutMapping("/update")
