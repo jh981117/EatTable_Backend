@@ -40,6 +40,8 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String phone;
 
+
+
     //계정활성화?
     private boolean activated;
 

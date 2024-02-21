@@ -3,6 +3,8 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.DTO.StoreReviewAttchmentDto;
 import com.lec.spring.domain.DTO.StoreReviewDto;
+import com.lec.spring.domain.PartnerAttachment;
+import com.lec.spring.domain.PartnerReviewAttachment;
 import com.lec.spring.domain.StoreReview;
 import com.lec.spring.service.AttachmentService;
 import com.lec.spring.service.StoreReviewService;
@@ -59,18 +61,26 @@ public class StoreReviewController {
 
 //    해당 매장 리뷰 리스트
     @GetMapping("/partner/{partnerId}")
-    public ResponseEntity<List<StoreReviewDto>> getAllReviews(@PathVariable Long partnerId) {
+    public ResponseEntity<List<?>> getAllReviews(@PathVariable Long partnerId) {
         System.out.println(partnerId);
-        List<StoreReviewDto> reviews = storeReviewService.findReviewsByPartnerId(partnerId);
+        List<StoreReview> reviews = storeReviewService.findReviewsByPartnerId(partnerId);
         return ResponseEntity.ok(reviews);
     }
 
 
-    @GetMapping("{storeId}/review/images")
-    public ResponseEntity<List<StoreReviewAttchmentDto>> getImagesByStoreId(@PathVariable Long storeId) {
-        System.out.println(storeId);
-        List<StoreReviewAttchmentDto> attachmentDtos = attachmentService.findByStoreImg(storeId);
-        return ResponseEntity.ok(attachmentDtos);
+    @GetMapping("/Length/{partnerId}")
+    public ResponseEntity<?> reviewLikeLength(@PathVariable Long partnerId){
+        return storeReviewService.findByReviewLength(partnerId);
     }
+
+    // 사용자 리뷰
+    // 커밋푸쉬 다시할게
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<?>> getAllUserReviews(@PathVariable Long userId) {
+        System.out.println(userId + "1312321313");
+        List<StoreReview> reviews = storeReviewService.findReviewsByUserId(userId);
+        return ResponseEntity.ok(reviews);
+    }
+
 
 }

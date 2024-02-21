@@ -8,8 +8,10 @@ import com.lec.spring.domain.TrueFalse;
 import com.lec.spring.repository.PartnerAttachmentRepository;
 import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.repository.PartnerReqRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +41,15 @@ public class PartnerService {
         return partnerRepository.findAll();
 
     }
+    @Transactional
+    public List<Partner> search(String keyword) {
+        if (keyword != null && !keyword.isEmpty()) {
+            return partnerRepository.search(keyword);
+        } else {
+            return partnerRepository.findAll();
+//            return Collections.emptyList();
+        }
+    }
 
 
     //매장리스트
@@ -50,13 +62,31 @@ public class PartnerService {
         }
     }
 
-    @Transactional
-    public Page<Partner> homeList( Pageable pageable) {
+    @Transactional(readOnly = true)
+    public Page<PartnerDto> homeList(Pageable pageable) {
+        Page<Partner> partners = partnerRepository.findAll(pageable);
 
+        List<PartnerDto> dtos = partners.getContent().stream().map(partner -> {
+            Double averageRating = getStoreAvg(partner.getId());
+            return PartnerDto.builder()
+                    .id(partner.getId())
+                    .address(partner.getAddress())
+                    .corkCharge(partner.getCorkCharge())
+                    .createdAt(partner.getCreatedAt())
+                    .dog(partner.getDog())
+                    .favorite(partner.getFavorite())
+                    .fileList(partner.getFileList())
+                    .partnerState(partner.getPartnerState())
+                    .storeName(partner.getStoreName())
+                    .viewCnt(partner.getViewCnt())
+                    // Partner 엔티티의 다른 필드들을 설정...
+                    .averageRating(averageRating)
+                    .build();
+        }).collect(Collectors.toList());
 
-            return partnerRepository.findAll(pageable);
-
+        return new PageImpl<>(dtos, pageable, partners.getTotalElements());
     }
+
 
     //매장등록
 
@@ -69,7 +99,7 @@ public class PartnerService {
     @Transactional
     public PartnerDto detail(Long id){
         Partner partner = partnerRepository.findById(id).orElse(null);
-
+        Double averageRating = getStoreAvg(partner.getId());
         PartnerDto partnerDto = PartnerDto.builder()
                 .id(partner.getId())
                 .storeName(partner.getStoreName())
@@ -87,12 +117,15 @@ public class PartnerService {
                 .parking(partner.getParking())
                 .corkCharge(partner.getCorkCharge())
                 .dog(partner.getDog())
+                .averageRating(averageRating)
                 .partnerState(partner.getPartnerState())
                 .fileList(partner.getFileList())
+
                 .build();
 
         return partnerDto;
     }
+
 
 
     //매장정보 수정  ( 이미지추후 추가, 고민중)
@@ -204,4 +237,15 @@ public List<PartnerDto> getPartnersByUserId(Long userId) {
         partner.setPartnerState(TrueFalse.FALSE);
         return partnerRepository.save(partner); //
     }
+
+
+    @Transactional(readOnly = true)
+    public Double getStoreAvg(Long partnerId) {
+        Double averageRating = partnerRepository.findAvhPartner(partnerId);
+        if (averageRating == null) {
+            return null; // 평균 평점이 없는 경우, null 또는 적절한 기본값 반환
+        }
+        return Math.round(averageRating * 10) / 10.0; // 소수점 첫 번째 자리까지 반올림
+    }
+
 }

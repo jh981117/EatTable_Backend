@@ -20,9 +20,14 @@ public interface PartnerRepository extends JpaRepository<Partner,Long> {
     Page<Partner> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
 
-
-
     List<Partner> findByUserId(Long userId);
 
     List<Partner> findByUser(User user);
+
+    @Query("SELECT e FROM Partner e WHERE e.storeName LIKE %:keyword% OR e.address.area LIKE %:keyword% OR e.favorite LIKE %:keyword%")
+    List<Partner> search(@Param("keyword") String keyword);
+
+
+    @Query("SELECT AVG(r.avg) FROM StoreReview r WHERE r.partner.id = ?1")
+    Double findAvhPartner(Long partnerId);
 }
