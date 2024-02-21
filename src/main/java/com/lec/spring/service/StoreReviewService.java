@@ -68,7 +68,10 @@ public class StoreReviewService {
         return reviews;
     }
 
-
+    public ResponseEntity<?> findByReviewImgLength(Long partnerId) {
+        long count = partnerReviewAttachmentRepository.countByPartnerId(partnerId);
+        return ResponseEntity.ok(count);
+    }
 
     // 리뷰 수정
     public StoreReview findByReviewId(StoreReviewDto storeReviewDto) {
@@ -92,10 +95,6 @@ public class StoreReviewService {
             return "1";
         }
         return  "0";
-
-    public ResponseEntity<?> findByReviewImgLength(Long partnerId) {
-        long count = partnerReviewAttachmentRepository.countByPartnerId(partnerId);
-        return ResponseEntity.ok(count);
-
     }
+
 }
