@@ -44,8 +44,10 @@ public class PartnerController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> search(@RequestParam String keyword){
-        return new ResponseEntity<>(partnerService.search(keyword), HttpStatus.OK);
+    public ResponseEntity<Page<Partner>> search(@RequestParam(defaultValue = "0") int page,
+                                              @RequestParam(defaultValue = "5") int size, String keyword) {
+        Pageable pageable = PageRequest.of(page, size);
+        return new ResponseEntity<>(partnerService.search(keyword,pageable), HttpStatus.OK);
     }
 
 

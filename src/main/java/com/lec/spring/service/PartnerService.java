@@ -41,11 +41,11 @@ public class PartnerService {
 
     }
     @Transactional
-    public List<Partner> search(String keyword) {
+    public Page<Partner> search(String keyword, Pageable pageable) {
         if (keyword != null && !keyword.isEmpty()) {
-            return partnerRepository.search(keyword);
+            return partnerRepository.search(keyword,pageable);
         } else {
-            return partnerRepository.findAll();
+            return partnerRepository.findAll(pageable);
 //            return Collections.emptyList();
         }
     }
