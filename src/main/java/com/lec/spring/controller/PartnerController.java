@@ -115,7 +115,7 @@ public class PartnerController {
         }
 
         ResponseEntity<?> responseEntity = new ResponseEntity<>(partnerService.update(partner, files), HttpStatus.OK);
-
+        System.out.println(partner);
         User user = userRepository.findById(partner.getId()).orElse(null);
         UserHistory userHistory = new UserHistory();
         userHistory.setName(String.format("%s님이 업체 정보를 수정 하였습니다.", user.getUsername()));

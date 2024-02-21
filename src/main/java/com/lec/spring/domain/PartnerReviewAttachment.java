@@ -30,6 +30,9 @@ public class PartnerReviewAttachment extends BaseEntity {
     private StoreReview storeReview;
 
 
+    @ManyToOne
+    @JoinColumn(name = "partnerId")
+    private Partner partner;
 
 
 

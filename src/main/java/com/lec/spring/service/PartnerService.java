@@ -109,6 +109,7 @@ public class PartnerService {
                 .partnerPhone(partner.getPartnerPhone())
                 .address(partner.getAddress())
                 .tableCnt(partner.getTableCnt())
+                .readyTime(partner.getReadyTime())
                 .openTime(partner.getOpenTime())
                 .storeInfo(partner.getStoreInfo())
                 .reserveInfo(partner.getReserveInfo())
@@ -117,6 +118,7 @@ public class PartnerService {
                 .parking(partner.getParking())
                 .corkCharge(partner.getCorkCharge())
                 .dog(partner.getDog())
+
                 .averageRating(averageRating)
                 .partnerState(partner.getPartnerState())
                 .fileList(partner.getFileList())
@@ -160,6 +162,7 @@ public class PartnerService {
         partnerUpdate.setStoreInfo(partner.getStoreInfo());
         partnerUpdate.setDog(partner.getDog());
         partnerUpdate.setFavorite(partner.getFavorite());
+        partnerUpdate.setReadyTime(partner.getReadyTime());
         partnerUpdate.setCorkCharge(partner.getCorkCharge());
         partnerUpdate.setTableCnt(partner.getTableCnt());
         partnerUpdate.setOpenTime(partner.getOpenTime());

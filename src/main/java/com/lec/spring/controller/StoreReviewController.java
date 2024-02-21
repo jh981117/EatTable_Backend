@@ -68,6 +68,10 @@ public class StoreReviewController {
         return ResponseEntity.ok(reviews);
     }
 
+    @GetMapping("/partner/img/length/{partnerId}")
+    public ResponseEntity<?> reviewImgLength(@PathVariable Long partnerId){
+        return storeReviewService.findByReviewImgLength(partnerId);
+    }
 
     @GetMapping("/Length/{partnerId}")
     public ResponseEntity<?> reviewLikeLength(@PathVariable Long partnerId){
