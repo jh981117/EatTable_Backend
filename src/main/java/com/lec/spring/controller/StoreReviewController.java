@@ -10,6 +10,7 @@ import com.lec.spring.service.AttachmentService;
 import com.lec.spring.service.StoreReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,13 +75,24 @@ public class StoreReviewController {
     }
 
     // 사용자 리뷰
-    // 커밋푸쉬 다시할게
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<?>> getAllUserReviews(@PathVariable Long userId) {
-        System.out.println(userId + "1312321313");
+        System.out.println("사용자ID : " + userId);
         List<StoreReview> reviews = storeReviewService.findReviewsByUserId(userId);
         return ResponseEntity.ok(reviews);
     }
 
 
+    // 리뷰 수정
+    @PutMapping("/reviews/update")
+    public ResponseEntity<?> updateReview(@RequestBody StoreReviewDto storeReviewDto) { // storeReviewDto : 클라이언트단에서 body에 담아서 서버로 보내주는 필드들
+        StoreReview review =  storeReviewService.findByReviewId(storeReviewDto);    // 데이터베이스에 저장되어있는 리뷰아이디의 해당 글
+        return ResponseEntity.ok(review);
+    }
+
+    // 리뷰 삭제
+    @DeleteMapping("/reviews/delete/{reviewId}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long reviewId) {
+        return ResponseEntity.ok(storeReviewService.findByReviewId(reviewId));
+    }
 }

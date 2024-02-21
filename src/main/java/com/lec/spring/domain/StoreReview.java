@@ -39,7 +39,7 @@ public class StoreReview extends BaseSubEntity{
 
 
     //이미지
-    @OneToMany(mappedBy = "storeReview")
+    @OneToMany(mappedBy = "storeReview",cascade = CascadeType.ALL,  orphanRemoval = true)
 
     private List<PartnerReviewAttachment> partnerReviewAttachments;
 
