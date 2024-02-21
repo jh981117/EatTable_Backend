@@ -63,13 +63,39 @@ public class StoreReviewService {
     public List<StoreReview> findReviewsByUserId(Long userId) {
         List<StoreReview> reviews = storeReviewRepository.findByUserId(userId);
         // createdAt 기준으로 내림차순으로 정렬
-        System.out.println(reviews);
+
         reviews.sort(Comparator.comparing(StoreReview::getId).reversed());
         return reviews;
     }
 
+
+
+    // 리뷰 수정
+    public StoreReview findByReviewId(StoreReviewDto storeReviewDto) {
+
+        System.out.println("리뷰DTO : " + storeReviewDto);
+        StoreReview storeReview = storeReviewRepository.findById(storeReviewDto.getStoreReviewId()).orElse(null);
+
+        storeReview.setContent(storeReviewDto.getContent());
+        storeReview.setAvg(storeReviewDto.getAvg());
+
+        return storeReviewRepository.save(storeReview);
+    }
+
+
+    // 리뷰 삭제
+    public String findByReviewId(Long reviewId) {
+        System.out.println("리뷰ID : " + reviewId);
+        StoreReview review = storeReviewRepository.findById(reviewId).orElse(null);
+        if (review != null) {
+            storeReviewRepository.deleteById(reviewId);
+            return "1";
+        }
+        return  "0";
+
     public ResponseEntity<?> findByReviewImgLength(Long partnerId) {
         long count = partnerReviewAttachmentRepository.countByPartnerId(partnerId);
         return ResponseEntity.ok(count);
+
     }
 }

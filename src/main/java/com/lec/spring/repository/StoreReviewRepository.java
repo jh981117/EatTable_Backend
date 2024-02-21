@@ -6,8 +6,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StoreReviewRepository extends JpaRepository<StoreReview, Long> {
 
@@ -19,7 +21,8 @@ public interface StoreReviewRepository extends JpaRepository<StoreReview, Long> 
 
     // partnerId에 해당하는 모든 리뷰의 평점 평균을 계산하는 쿼리
 
-
     List<StoreReview> findByUserId(Long userId);
+
+
 
 }
