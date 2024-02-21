@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -52,9 +53,9 @@ public class WaitingController {
     }
 
     // 유저 대기열 삭제 (유저 마이페이지에서 개인이 삭제)
-    @DeleteMapping("/waitingDelete/{userId}")
-    public ResponseEntity<?> deleteWaiting(@PathVariable Long userId) {
-        waitingService.deleteByUserId(userId);
+    @DeleteMapping("/waitingDelete/{partnerId}/{userId}")
+    public ResponseEntity<?> deleteWaiting(@PathVariable Long partnerId, @PathVariable Long userId) {
+        waitingService.deleteByUserIdAndPartnerId(userId, partnerId);
         return ResponseEntity.noContent().build();
     }
 

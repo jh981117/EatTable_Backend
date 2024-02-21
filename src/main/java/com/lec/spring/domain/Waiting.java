@@ -46,10 +46,7 @@ public class Waiting {
     private Partner partner;
 
 
-//    @PrePersist
-//    public void prePersist (){
-//        this.waitingRegDate = LocalDateTime.now();
-//    }
+
 
 
 }

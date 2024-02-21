@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -75,7 +76,13 @@ public class WaitingService {
         return waitingRepository.findByUserId(userId);
     }
 
+    @Transactional
     public List<Waiting> findWaitingsByPartnerId(Long partnerId) {
         return waitingRepository.findByPartnerId(partnerId);
+    }
+
+    @Transactional
+    public void deleteByUserIdAndPartnerId(Long userId, Long partnerId) {
+        waitingRepository.deleteByUserIdAndPartnerId(userId, partnerId);
     }
 }
