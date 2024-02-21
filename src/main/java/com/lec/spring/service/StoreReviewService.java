@@ -7,6 +7,7 @@ import com.lec.spring.domain.PartnerReviewAttachment;
 import com.lec.spring.domain.StoreReview;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.PartnerRepository;
+import com.lec.spring.repository.PartnerReviewAttachmentRepository;
 import com.lec.spring.repository.StoreReviewRepository;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class StoreReviewService {
     private final StoreReviewRepository storeReviewRepository;
     private final PartnerRepository partnerRepository;
     private final UserRepository userRepository;
+    private final PartnerReviewAttachmentRepository partnerReviewAttachmentRepository;
 
 
     //매장리뷰작성
@@ -64,5 +66,10 @@ public class StoreReviewService {
         System.out.println(reviews);
         reviews.sort(Comparator.comparing(StoreReview::getId).reversed());
         return reviews;
+    }
+
+    public ResponseEntity<?> findByReviewImgLength(Long partnerId) {
+        long count = partnerReviewAttachmentRepository.countByPartnerId(partnerId);
+        return ResponseEntity.ok(count);
     }
 }
