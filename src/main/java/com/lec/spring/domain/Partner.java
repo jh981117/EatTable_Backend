@@ -19,7 +19,7 @@ import java.util.List;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Builder
-public class Partner extends BaseEntity{
+public class Partner extends BaseSubEntity{
 
 
     @Id
@@ -52,6 +52,10 @@ public class Partner extends BaseEntity{
 
     @ColumnDefault("0")
     private Long viewCnt;
+
+    @ColumnDefault("0")
+    private String readyTime;
+
 
 
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

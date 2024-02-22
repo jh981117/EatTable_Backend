@@ -1,5 +1,6 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.DTO.WaitingDto;
 import com.lec.spring.domain.TrueFalse;
 import com.lec.spring.domain.Waiting;
 import com.lec.spring.service.WaitingService;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,14 +23,16 @@ public class WaitingController {
 
     // 매장 대기열 리스트 (파트너 계정이 관리)
     @GetMapping("/waitingList/{partnerId}")
-    public ResponseEntity<List<Waiting>> listWaitings() {
-        List<Waiting> waitings = waitingService.findAllWaitings();
+    public ResponseEntity<List<Waiting>> listWaitings(@PathVariable Long partnerId) {
+        List<Waiting> waitings = waitingService.findWaitingsByPartnerId(partnerId); // 해당 파트너의 대기열 목록을 조회하는 메서드를 호출합니다.
         return new ResponseEntity<>(waitings, HttpStatus.OK);
     }
 
     // 매장 대기열 추가 (파트너 계정이 관리)
     @PostMapping("/addWaiting/{partnerId}")
-    public ResponseEntity<?> addReservation(@PathVariable Long partnerId, @RequestBody Waiting waiting) {
+    public ResponseEntity<?> addReservation(@PathVariable Long partnerId, @RequestBody WaitingDto waiting) {
+        System.out.println(partnerId);
+        System.out.println(waiting);
         Waiting saveWating = waitingService.saveWaiting(waiting, partnerId);
         return new ResponseEntity<>(saveWating, HttpStatus.CREATED);
     }
@@ -49,9 +53,9 @@ public class WaitingController {
     }
 
     // 유저 대기열 삭제 (유저 마이페이지에서 개인이 삭제)
-    @DeleteMapping("/waitingDelete/{userId}")
-    public ResponseEntity<?> deleteWaiting(@PathVariable Long userId) {
-        waitingService.deleteByUserId(userId);
+    @DeleteMapping("/waitingDelete/{partnerId}/{userId}")
+    public ResponseEntity<?> deleteWaiting(@PathVariable Long partnerId, @PathVariable Long userId) {
+        waitingService.deleteByUserIdAndPartnerId(userId, partnerId);
         return ResponseEntity.noContent().build();
     }
 

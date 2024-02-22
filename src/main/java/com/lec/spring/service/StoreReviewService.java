@@ -7,24 +7,20 @@ import com.lec.spring.domain.PartnerReviewAttachment;
 import com.lec.spring.domain.StoreReview;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.PartnerRepository;
+import com.lec.spring.repository.PartnerReviewAttachmentRepository;
 import com.lec.spring.repository.StoreReviewRepository;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
+
+
+import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @Service
@@ -33,7 +29,7 @@ public class StoreReviewService {
     private final StoreReviewRepository storeReviewRepository;
     private final PartnerRepository partnerRepository;
     private final UserRepository userRepository;
-    private final S3Service s3Service;
+    private final PartnerReviewAttachmentRepository partnerReviewAttachmentRepository;
 
 
     //매장리뷰작성
@@ -54,33 +50,51 @@ public class StoreReviewService {
     }
 
 
-    public List<StoreReviewDto> findReviewsByPartnerId(Long partnerId) {
-        List<StoreReview> reviews = storeReviewRepository.findByPartnerId(partnerId);
-
-        return reviews.stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
+    public List<StoreReview> findReviewsByPartnerId(Long partnerId) {
+        return storeReviewRepository.findByPartnerId(partnerId);
     }
 
-    private StoreReviewDto toDto(StoreReview review) {
-        List<String> imageUrls = review.getPartnerReviewAttachments()
-                .stream()
-                .map(PartnerReviewAttachment::getImageUrl)
-                .collect(Collectors.toList());
 
-        return StoreReviewDto.builder()
-                .storeReviewId(review.getId())
-                .content(review.getContent())
-                .avg(review.getAvg())
-                .userId(review.getUser().getId())
-                .nickname(review.getUser().getNickName())
-                .profileImageUrl(review.getUser().getProfileImageUrl())
-                .temperature(review.getUser().getTemperature())
-                .storeName(review.getPartner().getStoreName())
-                .partnerReviewAttachments(imageUrls)
-                .createdAt(review.getCreatedAt())
-                .updatedAt(review.getUpdatedAt())
-                .build();
+    public ResponseEntity<?> findByReviewLength(Long partnerId) {
+        long count = storeReviewRepository.countByPartnerId(partnerId);
+        return ResponseEntity.ok(count);
+    }
+
+    public List<StoreReview> findReviewsByUserId(Long userId) {
+        List<StoreReview> reviews = storeReviewRepository.findByUserId(userId);
+        // createdAt 기준으로 내림차순으로 정렬
+
+        reviews.sort(Comparator.comparing(StoreReview::getId).reversed());
+        return reviews;
+    }
+
+    public ResponseEntity<?> findByReviewImgLength(Long partnerId) {
+        long count = partnerReviewAttachmentRepository.countByPartnerId(partnerId);
+        return ResponseEntity.ok(count);
+    }
+
+    // 리뷰 수정
+    public StoreReview findByReviewId(StoreReviewDto storeReviewDto) {
+
+        System.out.println("리뷰DTO : " + storeReviewDto);
+        StoreReview storeReview = storeReviewRepository.findById(storeReviewDto.getStoreReviewId()).orElse(null);
+
+        storeReview.setContent(storeReviewDto.getContent());
+        storeReview.setAvg(storeReviewDto.getAvg());
+
+        return storeReviewRepository.save(storeReview);
+    }
+
+
+    // 리뷰 삭제
+    public String findByReviewId(Long reviewId) {
+        System.out.println("리뷰ID : " + reviewId);
+        StoreReview review = storeReviewRepository.findById(reviewId).orElse(null);
+        if (review != null) {
+            storeReviewRepository.deleteById(reviewId);
+            return "1";
+        }
+        return  "0";
     }
 
 }

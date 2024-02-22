@@ -13,5 +13,5 @@ public interface PartnerReviewAttachmentRepository extends JpaRepository<Partner
         List<PartnerReviewAttachment> findByStoreReviewId(Long storeReviewId);
 
 
-
+    long countByPartnerId(Long partnerId);
 }

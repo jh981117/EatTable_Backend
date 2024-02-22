@@ -28,6 +28,7 @@ public class PartnerDto  {
 
     private Address address;
 
+    private String readyTime;
     private String tableCnt;
 
     private String openTime;
@@ -53,6 +54,8 @@ public class PartnerDto  {
 
     @JsonFormat(pattern = "yyyy년 MM월 dd일 HH시 mm분")
     private LocalDateTime updatedAt;
+
+    private Double averageRating;
 
 
 

@@ -11,6 +11,7 @@ import com.lec.spring.repository.PartnerReqRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,12 +62,31 @@ public class PartnerService {
         }
     }
 
-    @Transactional
-    public Page<Partner> homeList( Pageable pageable) {
+    @Transactional(readOnly = true)
+    public Page<PartnerDto> homeList(Pageable pageable) {
+        Page<Partner> partners = partnerRepository.findAll(pageable);
 
-            return partnerRepository.findAll(pageable);
+        List<PartnerDto> dtos = partners.getContent().stream().map(partner -> {
+            Double averageRating = getStoreAvg(partner.getId());
+            return PartnerDto.builder()
+                    .id(partner.getId())
+                    .address(partner.getAddress())
+                    .corkCharge(partner.getCorkCharge())
+                    .createdAt(partner.getCreatedAt())
+                    .dog(partner.getDog())
+                    .favorite(partner.getFavorite())
+                    .fileList(partner.getFileList())
+                    .partnerState(partner.getPartnerState())
+                    .storeName(partner.getStoreName())
+                    .viewCnt(partner.getViewCnt())
+                    // Partner 엔티티의 다른 필드들을 설정...
+                    .averageRating(averageRating)
+                    .build();
+        }).collect(Collectors.toList());
 
+        return new PageImpl<>(dtos, pageable, partners.getTotalElements());
     }
+
 
     //매장등록
 
@@ -79,7 +99,7 @@ public class PartnerService {
     @Transactional
     public PartnerDto detail(Long id){
         Partner partner = partnerRepository.findById(id).orElse(null);
-
+        Double averageRating = getStoreAvg(partner.getId());
         PartnerDto partnerDto = PartnerDto.builder()
                 .id(partner.getId())
                 .storeName(partner.getStoreName())
@@ -89,6 +109,7 @@ public class PartnerService {
                 .partnerPhone(partner.getPartnerPhone())
                 .address(partner.getAddress())
                 .tableCnt(partner.getTableCnt())
+                .readyTime(partner.getReadyTime())
                 .openTime(partner.getOpenTime())
                 .storeInfo(partner.getStoreInfo())
                 .reserveInfo(partner.getReserveInfo())
@@ -97,12 +118,16 @@ public class PartnerService {
                 .parking(partner.getParking())
                 .corkCharge(partner.getCorkCharge())
                 .dog(partner.getDog())
+
+                .averageRating(averageRating)
                 .partnerState(partner.getPartnerState())
                 .fileList(partner.getFileList())
+
                 .build();
 
         return partnerDto;
     }
+
 
 
     //매장정보 수정  ( 이미지추후 추가, 고민중)
@@ -137,6 +162,7 @@ public class PartnerService {
         partnerUpdate.setStoreInfo(partner.getStoreInfo());
         partnerUpdate.setDog(partner.getDog());
         partnerUpdate.setFavorite(partner.getFavorite());
+        partnerUpdate.setReadyTime(partner.getReadyTime());
         partnerUpdate.setCorkCharge(partner.getCorkCharge());
         partnerUpdate.setTableCnt(partner.getTableCnt());
         partnerUpdate.setOpenTime(partner.getOpenTime());
@@ -215,5 +241,14 @@ public List<PartnerDto> getPartnersByUserId(Long userId) {
         return partnerRepository.save(partner); //
     }
 
+
+    @Transactional(readOnly = true)
+    public Double getStoreAvg(Long partnerId) {
+        Double averageRating = partnerRepository.findAvhPartner(partnerId);
+        if (averageRating == null) {
+            return null; // 평균 평점이 없는 경우, null 또는 적절한 기본값 반환
+        }
+        return Math.round(averageRating * 10) / 10.0; // 소수점 첫 번째 자리까지 반올림
+    }
 
 }

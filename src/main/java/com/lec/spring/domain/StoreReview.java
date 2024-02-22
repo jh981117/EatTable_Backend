@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @Entity
-public class StoreReview extends BaseEntity{
+public class StoreReview extends BaseSubEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,23 +29,18 @@ public class StoreReview extends BaseEntity{
     ;
 
     @ManyToOne
-    @ToString.Exclude
-    @JsonIgnore
     @JoinColumn(name = "userId")
     private User user;
 
     @ManyToOne
-    @ToString.Exclude
-    @JsonIgnore
     @JoinColumn(name ="partnerId")
     private Partner partner;
 
 
 
     //이미지
-    @OneToMany(mappedBy = "storeReview")
-    @ToString.Exclude
-    @JsonIgnore
+    @OneToMany(mappedBy = "storeReview",cascade = CascadeType.ALL,  orphanRemoval = true)
+
     private List<PartnerReviewAttachment> partnerReviewAttachments;
 
 

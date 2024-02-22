@@ -3,15 +3,18 @@ package com.lec.spring.service;
 import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.PartnerMenu;
 import com.lec.spring.repository.PartnerMenuRepository;
+import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.util.U;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +24,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -30,7 +34,7 @@ public class PartnerMenuService {
     private String menuUploadDir;
 
     private final PartnerMenuRepository partnerMenuRepository;
-
+    private final PartnerRepository partnerRepository;
 
 
 
@@ -51,10 +55,14 @@ public class PartnerMenuService {
 
     // 메뉴 저장
     public PartnerMenu saveMenu(Long partnerId, String name, String price, String imageURL) {
+        Partner partner = partnerRepository.findById(partnerId)
+                .orElseThrow(() -> new IllegalArgumentException("Partner not found"));
+
         PartnerMenu menu = new PartnerMenu();
         menu.setName(name);
         menu.setPrice(price);
         menu.setMenuImageUrl(imageURL); // 이미지 URL 저장
+        menu.setPartner(partner); // Partner 객체 설정
 
         return partnerMenuRepository.save(menu);
     }
