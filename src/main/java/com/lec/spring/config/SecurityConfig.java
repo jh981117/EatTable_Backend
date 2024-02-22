@@ -2,8 +2,6 @@ package com.lec.spring.config;
 
 
 import com.lec.spring.domain.RoleName;
-import com.lec.spring.oauth2.CustomSuccessHandler;
-import com.lec.spring.service.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+import com.lec.spring.service.NaverOAuth2UserService;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -28,8 +26,7 @@ public class SecurityConfig   {
 
     private final CustomUserDetailsService userDetailService;
 
-    private final OAuth2UserService oAuth2UserService;
-    private final CustomSuccessHandler customSuccessHandler;
+    private final NaverOAuth2UserService naverOAuth2UserService;
 
 
     // PasswordEncoder는 BCryptPasswordEncoder를 사용
@@ -76,9 +73,9 @@ public class SecurityConfig   {
                 )
 
                 .oauth2Login((oauth2 -> oauth2.userInfoEndpoint
-                            (((userInfoEndpointConfig) -> userInfoEndpointConfig.userService(oAuth2UserService)))
-                        .successHandler(customSuccessHandler)
-                            ))
+                        (((userInfoEndpointConfig) -> userInfoEndpointConfig.userService(naverOAuth2UserService)))
+                ))
+
 
                 // 로그인 페이지 및 관련 설정
                 .formLogin((formLogin) ->
