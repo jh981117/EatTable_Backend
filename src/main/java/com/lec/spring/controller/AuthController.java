@@ -61,7 +61,6 @@ public class AuthController {
         // 해당 객체를 SecurityContextHolder에 저장하고
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-
         if (!user.isActivated()) {
             // 탈퇴한 회원인 경우
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Collections.singletonMap("message", "탈퇴한 회원입니다."));
@@ -137,7 +136,7 @@ public class AuthController {
 
 
 
-
+    //history 완료
     @PostMapping("/user/isPassword")
     public ResponseEntity<?> isPassword(@Valid @RequestBody PasswordRequest request) {
         boolean isAuthenticated = userService.authenticateUser(request.getUsername(), request.getPassword());
@@ -148,6 +147,12 @@ public class AuthController {
 
         // 인증 성공 시, 사용자 상태를 FALSE로 변경
         boolean isUpdated = userService.updateUserStateToFalse(request.getUsername());
+
+        User user = userRepository.findByUsername(request.getUsername());
+        UserHistory userHistory = new UserHistory();
+        userHistory.setName(String.format("%s가 회원탈퇴를 하였습니다.", user.getUsername()));
+        userHistoryRepository.save(userHistory);
+
         if (!isUpdated) {
             // 상태 업데이트 실패 시 (예: 사용자가 존재하지 않는 경우)
             return ResponseEntity.badRequest().body(Collections.singletonMap("message", "사용자 상태 업데이트 실패"));
