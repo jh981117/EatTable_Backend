@@ -50,6 +50,7 @@ spring:
               - nickname
               - birthday
               - mobile
+              - birthyear
         provider:
           naver:
             authorization-uri: https://nid.naver.com/oauth2.0/authorize
@@ -78,5 +79,4 @@ jwt:
   #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
   secret: a2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ==
   token-validity-in-seconds: 86400 # ttl (초)
-
 

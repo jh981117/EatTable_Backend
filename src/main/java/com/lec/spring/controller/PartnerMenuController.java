@@ -3,6 +3,7 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.PartnerMenu;
 import com.lec.spring.service.PartnerMenuService;
+import com.lec.spring.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.Map;
 public class PartnerMenuController {
 
     private final PartnerMenuService partnerMenuService;
+    private final S3Service s3Service;
 
 
     // 기존 메뉴 가져오기
@@ -27,13 +29,28 @@ public class PartnerMenuController {
         return new ResponseEntity<>(partnerMenuService.getMenuListByPartnerId(partnerId), HttpStatus.OK);
     }
 
+
+    @GetMapping("/homePartnerMenuList/{partnerId}")
+    public ResponseEntity<?> homePartnerMenuList(@PathVariable Long partnerId) {
+        return new ResponseEntity<>(partnerMenuService.getHomeListByPartnerId(partnerId), HttpStatus.OK);
+    }
+
+
+
+
     // 새로운 메뉴 추가 기능
-    @PostMapping("/addMenu/{partnerId}")
-    public ResponseEntity<?> addMenu(@PathVariable Long partnerId, @RequestBody Map<String, Object> menuData) {
+    @PostMapping(value = "/addMenu/{partnerId}", consumes = "multipart/form-data")
+    public ResponseEntity<?> addMenu(
+            @PathVariable Long partnerId,
+            @RequestParam("name") String name,
+            @RequestParam("price") String price,
+            @RequestParam(value = "file", required = false) MultipartFile file) {
         try {
-            String name = menuData.get("name").toString();
-            String price = menuData.get("price").toString();
-            String imageURL = menuData.get("imageURL").toString();
+            String imageURL = null;
+            // 파일 처리 로직 (파일을 저장하고, 저장된 파일의 URL을 반환)
+            if (file != null && !file.isEmpty()) {
+                imageURL =  s3Service.uploadFile(file);
+            }
 
             // PartnerMenuService의 saveMenu 메서드를 호출하여 데이터를 저장하고 응답을 반환합니다.
             PartnerMenu menu = partnerMenuService.saveMenu(partnerId, name, price, imageURL);
@@ -52,8 +69,8 @@ public class PartnerMenuController {
     }
 
     // 메뉴 삭제 기능
-    @DeleteMapping("/deleteMenu/{partnerId}/{id}")
-    public ResponseEntity<?> deleteMenu(@PathVariable Long id, @PathVariable Long partnerId) {
+    @DeleteMapping("/deleteMenu/{id}")
+    public ResponseEntity<?> deleteMenu(@PathVariable Long id) {
         try {
             partnerMenuService.deleteMenu(id);
             return new ResponseEntity<>("Menu deleted successfully", HttpStatus.OK);
