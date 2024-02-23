@@ -28,6 +28,14 @@ public class WaitingController {
         return new ResponseEntity<>(waitings, HttpStatus.OK);
     }
 
+    @GetMapping("/waitingCount/{id}")
+    public ResponseEntity<Integer> getWaitingCount(@PathVariable Long id) {
+        // id를 이용하여 대기열 수를 조회하고 반환
+        int waitingCount = waitingService.countWaitingsByPartnerId(id);
+        return ResponseEntity.ok(waitingCount);
+    }
+
+
     // 매장 대기열 추가 (파트너 계정이 관리)
     @PostMapping("/addWaiting/{partnerId}")
     public ResponseEntity<?> addReservation(@PathVariable Long partnerId, @RequestBody WaitingDto waiting) {
@@ -45,6 +53,16 @@ public class WaitingController {
     }
 
 
+
+    // 매장 대기열 상태 업데이트 waitingState TRUE, FALSE 관리 (파트너 계정이 관리) (이거 사용함 위에꺼 사용 x)
+    @PutMapping("/updateWaitingState/{partnerId}/{waitingId}")
+    public ResponseEntity<?> updateWaiting(@PathVariable Long waitingId, @PathVariable Long partnerId, @RequestBody WaitingDto waitingDto){
+        // WaitingDto에서 waitingState를 가져와서 사용
+        String newWaitingState = waitingDto.getWaitingState();
+        Waiting waiting = waitingService.updateWaitingState(waitingId, partnerId, newWaitingState);
+        return new ResponseEntity<>(waiting, HttpStatus.OK);
+    }
+
     // 유저 개인의 예약리스트 (유저 마이페이지에서 보여줄 것)
     @GetMapping("/userWaiting/{userId}")
     public ResponseEntity<List<Waiting>> findUserWaiting(@PathVariable Long userId) {
@@ -53,9 +71,9 @@ public class WaitingController {
     }
 
     // 유저 대기열 삭제 (유저 마이페이지에서 개인이 삭제)
-    @DeleteMapping("/waitingDelete/{partnerId}/{userId}")
-    public ResponseEntity<?> deleteWaiting(@PathVariable Long partnerId, @PathVariable Long userId) {
-        waitingService.deleteByUserIdAndPartnerId(userId, partnerId);
+    @DeleteMapping("/waitingDelete/{partnerId}/{waitingId}")
+    public ResponseEntity<?> deleteWaiting(@PathVariable Long partnerId, @PathVariable Long waitingId) {
+        waitingService.deleteByWaitingIdAndPartnerId(waitingId, partnerId);
         return ResponseEntity.noContent().build();
     }
 
