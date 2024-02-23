@@ -98,8 +98,9 @@ public class UserService {
     public User update(User user){
         User userUpdate = userRepository.findById(user.getId()).orElse(null);
         userUpdate.setBio(user.getBio());
-        userUpdate.setEmail(user.getEmail());
         userUpdate.setNickName(user.getNickName());
+        userUpdate.setPhone(user.getPhone());
+        System.out.println("전화번호 : " + user.getPhone());
 
         return userUpdate;
     }
