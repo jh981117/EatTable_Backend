@@ -1,5 +1,6 @@
 package com.lec.spring.service;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.lec.spring.domain.DTO.StoreReviewAttchmentDto;
 import com.lec.spring.domain.DTO.StoreReviewDto;
 import com.lec.spring.domain.PartnerAttachment;
@@ -74,9 +75,21 @@ public class AttachmentService {
         }
     }
 
-//    // 리뷰 이미지 삭제
+//     리뷰 이미지 삭제
 //    @Transactional
-//    public void deleteByReviewId(Long reviewId) {
-//        partnerReviewAttachmentRepository.deleteByReviewId(reviewId);
+//    public void deleteByImageId(PartnerReviewAttachment imageId) {
+//
+//        // 이미지 식별자를 사용하여 데이터베이스에서 이미지 정보를 검색
+//        imageId =  partnerReviewAttachmentRepository.findById(imageId.getId()).orElse(null);
+//        if (imageId != null) {
+//            // 데이터베이스에서 이미지 정보 삭제
+//            partnerReviewAttachmentRepository.delete(imageId);
+//            // 실제 이미지를 삭제 (예시: Amazon S3를 사용하는 경우)
+//            s3Service.delete(imageId.getImageUrl());
+//        } else {
+//            // 이미지가 존재하지 않을 경우 예외 처리 또는 메시지 반환
+//            throw new NotFoundException("Image not found with id: " + imageId);
+//        }
 //    }
+
 }

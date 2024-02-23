@@ -97,7 +97,7 @@ public class StoreReviewController {
 
     // 리뷰 이미지 수정
     @PutMapping("/reviews/update/attachments")
-    public ResponseEntity<?> updateReviewAttachments(@RequestBody StoreReviewAttchmentDto storeReviewAttchmentDto, @RequestParam("files") List<MultipartFile> files) {
+    public ResponseEntity<?> updateReviewAttachments(@RequestParam StoreReviewAttchmentDto storeReviewAttchmentDto, @RequestParam("files") List<MultipartFile> files) {
         try {
             attachmentService.updateAttachments(storeReviewAttchmentDto.getStoreId(), files); // 이미지 업데이트 서비스 호출
             // 파일 업로드 성공 응답
