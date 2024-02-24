@@ -15,4 +15,5 @@ public class Address {
     private String zipCode;
     private Double lat;
     private Double lng;
+    private String district;
 }

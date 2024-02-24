@@ -20,6 +20,7 @@ public class PartnerWriteDto {
     private Double lng;
     private String area;
     private String zipCode;
+    private String district;
 
 
 
@@ -28,7 +29,7 @@ public class PartnerWriteDto {
         partner.setUser(user);
         partner.setStoreName(storeName);
         partner.setPartnerName(partnerName);
-        partner.setAddress(new Address(area,zipCode,lat,lng));
+        partner.setAddress(new Address(area,zipCode,lat,lng,district));
         partner.setPartnerPhone(partnerPhone);
         partner.setStorePhone(storePhone);
         partner.setFavorite(favorite);

@@ -104,6 +104,11 @@ public class UserController {
 
 
 
+        @GetMapping("/password")
+        public ResponseEntity<?> getpassword(@RequestBody String password){
+                return ResponseEntity.ok(userService.getPassword(password));
+        }
+
 
 
 

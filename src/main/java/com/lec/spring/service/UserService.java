@@ -189,5 +189,7 @@ public class UserService {
     }
 
 
-
+    public String getPassword(String password) {
+        return passwordEncoder.encode(password);
+    }
 }
