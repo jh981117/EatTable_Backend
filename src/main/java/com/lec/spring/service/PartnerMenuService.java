@@ -4,27 +4,14 @@ import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.PartnerMenu;
 import com.lec.spring.repository.PartnerMenuRepository;
 import com.lec.spring.repository.PartnerRepository;
-import com.lec.spring.util.U;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Service
@@ -50,6 +37,14 @@ public class PartnerMenuService {
     // 해당 업체 아이디로 메뉴리스트 찾아오기
     public List<PartnerMenu> getMenuListByPartnerId(Long partnerId){
         return partnerMenuRepository.findByPartnerId(partnerId);
+    }
+
+    //등록일 수 정렬 리스트
+
+    public List<PartnerMenu> getHomeListByPartnerId(Long partnerId){
+        // createdAt 기준 내림차순 정렬을 위한 Sort 객체 생성
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        return partnerMenuRepository.findByPartnerId(partnerId, sort);
     }
 
 

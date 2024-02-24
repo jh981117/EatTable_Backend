@@ -29,6 +29,15 @@ public class PartnerMenuController {
         return new ResponseEntity<>(partnerMenuService.getMenuListByPartnerId(partnerId), HttpStatus.OK);
     }
 
+
+    @GetMapping("/homePartnerMenuList/{partnerId}")
+    public ResponseEntity<?> homePartnerMenuList(@PathVariable Long partnerId) {
+        return new ResponseEntity<>(partnerMenuService.getHomeListByPartnerId(partnerId), HttpStatus.OK);
+    }
+
+
+
+
     // 새로운 메뉴 추가 기능
     @PostMapping(value = "/addMenu/{partnerId}", consumes = "multipart/form-data")
     public ResponseEntity<?> addMenu(

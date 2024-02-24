@@ -94,6 +94,21 @@ public class StoreReviewController {
         return ResponseEntity.ok(review);
     }
 
+
+    // 리뷰 이미지 수정
+    @PutMapping("/reviews/update/attachments")
+    public ResponseEntity<?> updateReviewAttachments(@RequestParam StoreReviewAttchmentDto storeReviewAttchmentDto, @RequestParam("files") List<MultipartFile> files) {
+        try {
+            attachmentService.updateAttachments(storeReviewAttchmentDto.getStoreId(), files); // 이미지 업데이트 서비스 호출
+            // 파일 업로드 성공 응답
+            return ResponseEntity.ok().body("이미지 수정 성공");
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 파일 업로드 실패 응답
+            return ResponseEntity.badRequest().body("이미지 수정 실패");
+        }
+    }
+
     // 리뷰 삭제
     @DeleteMapping("/reviews/delete/{reviewId}")
     public ResponseEntity<?> deleteReview(@PathVariable Long reviewId) {

@@ -530,6 +530,7 @@ insert into partnerreviewattachment (isImage, createdAt, id, partnerId, storeRev
 (1,'2024-02-15 13:48:28.177494',29,1,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/ab8600f444c54313a2625968c9b077c0?small220'),
 (1,'2024-02-15 13:48:28.177494',30,1,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/ab8600f444c54313a2625968c9b077c0?small220'),
 (1,'2024-02-15 13:48:28.177494',31,1,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/ab8600f444c54313a2625968c9b077c0?small220'),
+(1,'2024-02-15 13:48:28.177494',32,1,1,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/ab8600f444c54313a2625968c9b077c0?small220'),
 (1,'2024-02-15 13:48:28.177494',2,1,2,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s3cSNdEyRL50KeKUYvOAJug/d2cc80fab644402ab73e965386c5c3df?small220'),
 (1,'2024-02-15 13:48:28.177494',33,1,2,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/9578658354ac4c0e9c7fa5abd59bb681?small220'),
 (1,'2024-02-15 13:48:28.177494',34,1,2,'2024-02-18 13:48:28.177494','123','https://ugc-images.catchtable.co.kr/rv/s7qElyOWH4iYaJoTd5P-VAw/9578658354ac4c0e9c7fa5abd59bb681?small220'),
