@@ -188,8 +188,10 @@ public class UserService {
                 .flatMap(userRepository::findOneWithAuthoritiesByUsername);
     }
 
+
     public String getPassword(String password) {
         return passwordEncoder.encode(password);
     }
+
 
 }

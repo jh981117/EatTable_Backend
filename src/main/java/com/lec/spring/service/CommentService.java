@@ -21,57 +21,30 @@ public class CommentService {
     private final StoreReviewRepository storeReviewRepository;
 
 
-    // 해당 리뷰에 댓글
-    public QryCommentList list(Long id){
-        QryCommentList list = new QryCommentList();
-        List<Comment> comments = commentRepository.findByStoreReviewId(id);
 
-        list.setCount(comments.size()); //댓글 갯수
-        list.setList(comments);
-        list.setStatus("OK");
 
-        return list;
 
+    public Comment addComment(Comment comment) {
+        return commentRepository.save(comment);
     }
 
+    public List<Comment> getAllComments() {
+        return commentRepository.findAll();
+    }
+    public Comment getCommentById(Long commentId) {
+        return commentRepository.findById(commentId)
+                .orElse(null);
+    }
 
+    public void updateComment(Long commentId, Comment updatedComment) {
+        Comment comment = getCommentById(commentId);
 
-    public QryResult write(Long storeReviewId, Long userId, String content){
+        comment.setContent(updatedComment.getContent());
 
-        User user = userRepository.findById(userId).orElse(null);
-        StoreReview storeReview = storeReviewRepository.findById(storeReviewId).orElse(null);
-
-        Comment comment= Comment.builder()
-                .user(user)
-                .content(content)
-                .storeReview(storeReview)
-                .build();
         commentRepository.save(comment);
-
-        QryResult result = QryResult.builder()
-                .count(1)
-                .status("OK")
-                .build();
-
-        return result;
     }
 
-
-    public QryResult delte(Long id){
-        int count = commentRepository.deleteByIdint(id);
-        String status = "FAIL";
-
-        if(count > 0) status = "OK";
-
-        QryResult result = QryResult.builder()
-                .count(count)
-                .status(status)
-                .build();
-
-        return result;
+    public void deleteComment(Long commentId) {
+        commentRepository.deleteById(commentId);
     }
-
-
-
-
 }

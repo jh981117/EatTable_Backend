@@ -115,6 +115,7 @@ public class UserController {
 
 
 
+
 //        @GetMapping("/profile")
 //        public ResponseEntity<?> getUserProfile() {
 //                // SecurityUtil을 사용하여 현재 사용자 정보를 가져옴
