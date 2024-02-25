@@ -25,4 +25,6 @@ public interface WaitingRepository extends JpaRepository<Waiting , Long> {
     int countWaitingsByPartnerId(Long partnerId);
 
 
+
+
 }

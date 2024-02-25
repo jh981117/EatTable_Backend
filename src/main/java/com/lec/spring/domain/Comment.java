@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity(name = "comment")
-public class Comment {
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +21,6 @@ public class Comment {
     @Column(nullable = false)
     private String content;
 
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime regDate;
 
     @ManyToOne()
     @JoinColumn(name = "storeReviewId") // 외래 키를 명시합니다
@@ -36,8 +33,5 @@ public class Comment {
     private User user;
 
 
-    @PrePersist
-    public void prePersist() {
-        regDate = LocalDateTime.now();
-    }
+
 }
