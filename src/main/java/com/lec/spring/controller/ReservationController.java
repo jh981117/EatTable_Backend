@@ -68,4 +68,13 @@ public class ReservationController {
         return ResponseEntity.noContent().build();
     }
 
+
+
+
+    @GetMapping("/userWaitingCount/{partnerId}/{reservationId}")
+    public ResponseEntity<?> userCount (@PathVariable Long reservationId , @PathVariable Long partnerId){
+        return ResponseEntity.ok(reservationService.findCountWaiting(reservationId , partnerId));
+
+    }
+
 }
