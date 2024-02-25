@@ -21,4 +21,13 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     void deleteByReservationIdAndPartnerId(@Param("reservationId") Long waitingId, @Param("partnerId") Long partnerId);
 
     int countReservationsByPartnerId(Long partnerId);
+
+
+    @Query("SELECT COUNT(r)\n" +
+            "FROM Reservation r\n" +
+            "WHERE r.id < :reservationId\n" +
+            "AND r.reservationState = 'WAITING' AND r.partner.id = :partnerId")
+    Long countByUserId(@Param("reservationId") Long reservationId, @Param("partnerId") Long partnerId);
+
+
 }
