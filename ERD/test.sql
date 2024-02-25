@@ -425,6 +425,7 @@ insert into partner (createdAt, updatedAt, area, lat, lng, zipCode, corkCharge, 
 
 
 
+
 #--------파트너 어테치먼트-----------------------------
 
 
