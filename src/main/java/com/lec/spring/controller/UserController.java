@@ -34,6 +34,11 @@ public class UserController {
         private final UserRepository userRepository;
         private final UserHistoryRepository userHistoryRepository;
 
+        @GetMapping("/list/{id}")
+        public ResponseEntity<?> info(@PathVariable Long id) {
+                return new ResponseEntity<>(userService.infoById(id), HttpStatus.OK);
+        }
+
         @GetMapping("/list")
         public ResponseEntity<?> list() {
                 return new ResponseEntity<>(userService.list(), HttpStatus.OK);
