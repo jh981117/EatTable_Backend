@@ -10,10 +10,14 @@ import com.lec.spring.domain.StoreReview;
 import com.lec.spring.service.AttachmentService;
 import com.lec.spring.service.StoreReviewService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -128,6 +132,13 @@ public class StoreReviewController {
     }
 
 
+    // 리뷰 삭제
+    @DeleteMapping("/reviews/delete/{reviewId}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long reviewId) {
+        return ResponseEntity.ok(storeReviewService.findByReviewId(reviewId));
+    }
+
+
     // 리뷰 이미지 수정
     @PutMapping("/reviews/update/attachments")
     public ResponseEntity<?> updateReviewAttachments(@RequestParam StoreReviewAttchmentDto storeReviewAttchmentDto, @RequestParam("files") List<MultipartFile> files) {
@@ -142,10 +153,11 @@ public class StoreReviewController {
         }
     }
 
-    // 리뷰 삭제
-    @DeleteMapping("/reviews/delete/{reviewId}")
-    public ResponseEntity<?> deleteReview(@PathVariable Long reviewId) {
-        return ResponseEntity.ok(storeReviewService.findByReviewId(reviewId));
+
+    // 리뷰 이미지 삭제
+    @DeleteMapping("/reviews/deleteImage/{imageId}")
+    public ResponseEntity<?> deleteImage(@PathVariable Long imageId) {
+        return new ResponseEntity<>(attachmentService.delete(imageId), HttpStatus.OK);
     }
 
     @GetMapping("/reviews/following/{userId}")
