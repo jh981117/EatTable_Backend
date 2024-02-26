@@ -84,4 +84,11 @@ public class ReservationService {
 
         return reservationRepository.save(reservation);
     }
+
+
+
+    @Transactional
+    public Long findCountWaiting (Long reservationId , Long partnerId) {
+        return reservationRepository.countByUserId(reservationId , partnerId);
+    }
 }

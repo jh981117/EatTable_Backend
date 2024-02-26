@@ -75,6 +75,20 @@ public class AttachmentService {
         }
     }
 
+
+    // 리뷰 이미지 삭제
+    public String delete(Long imageId) {
+        PartnerReviewAttachment deleteAttachment = partnerReviewAttachmentRepository.findById(imageId).orElse(null);
+        if (deleteAttachment != null) {
+            partnerReviewAttachmentRepository.deleteById(imageId);
+            // 실제 이미지를 삭제.....
+            s3Service.deleteImage(imageId);
+            System.out.println("이미지ID값은? : " + imageId);
+            return "1"; // 삭제
+        }
+        return "0"; //
+    }
+
 //     리뷰 이미지 삭제
 //    @Transactional
 //    public void deleteByImageId(PartnerReviewAttachment imageId) {

@@ -1,6 +1,7 @@
 package com.lec.spring.config;
 
 
+import com.lec.spring.repository.TokensRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -30,15 +31,18 @@ public class TokenProvider implements InitializingBean {
     private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
     private static final String AUTHORITIES_KEY = "auth";
     private final String secret;
-    private final long tokenValidityInMilliseconds;
     private Key key;
+    private final long tokenValidityInMilliseconds;
+    private final long refreshTokenValidityInMilliseconds;
+
 
     public TokenProvider(
             @Value("${jwt.secret}") String secret,
-            @Value("${jwt.token-validity-in-seconds}")
-            long tokenValidityInSeconds) {
+            @Value("${jwt.expiration}") long tokenExpiration ,
+            @Value("${jwt.refresh-token.expiration}") long refreshTokenExpiration){
         this.secret = secret;
-        this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
+        this.tokenValidityInMilliseconds = tokenExpiration;
+        this.refreshTokenValidityInMilliseconds = refreshTokenExpiration ;
     }
 
     // 빈이 생성되고 주입을 받은 후에 secret값을 Base64 Decode해서 key 변수에 할당하기 위해
@@ -84,6 +88,26 @@ public class TokenProvider implements InitializingBean {
     }
 
 
+    ///리플레쉬
+    public String createRefreshToken(Authentication authentication) {
+        // 리프레시 토큰의 만료 시간은 액세스 토큰보다 길게 설정
+        long  now = (new Date()).getTime();
+        Date validityInMilliseconds = new Date(now + this.refreshTokenValidityInMilliseconds);
+
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        return Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim(AUTHORITIES_KEY, authorities)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .setExpiration(validityInMilliseconds)
+                .compact();
+    }
+
+
+
 
 
 
@@ -125,5 +149,27 @@ public class TokenProvider implements InitializingBean {
             logger.info("JWT 토큰이 잘못되었습니다.");
         }
         return false;
+    }
+
+
+
+    public Authentication getAuthenticationFromRefreshToken(String token) {
+        // 토큰에서 클레임을 추출합니다.
+        Claims claims = Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
+
+        // 클레임에서 권한 정보를 추출합니다.
+        Collection<SimpleGrantedAuthority> authorities =
+                Arrays.stream(claims.get("auth").toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+        // UserDetails 객체를 생성합니다.
+        User principal = new User(claims.getSubject(), "", authorities);
+
+        // 최종적으로 Authentication 객체를 생성하여 반환합니다.
+        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 }

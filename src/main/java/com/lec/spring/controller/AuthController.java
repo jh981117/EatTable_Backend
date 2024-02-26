@@ -1,13 +1,12 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.config.CustomUserDetails;
+import com.lec.spring.config.CustomUserDetailsService;
 import com.lec.spring.config.JwtFilter;
 import com.lec.spring.config.TokenProvider;
-import com.lec.spring.domain.DTO.LoginDto;
-import com.lec.spring.domain.DTO.PasswordChangeRequest;
-import com.lec.spring.domain.DTO.PasswordRequest;
-import com.lec.spring.domain.DTO.TokenDto;
-import com.lec.spring.domain.User;
-import com.lec.spring.domain.UserHistory;
+import com.lec.spring.domain.*;
+import com.lec.spring.domain.DTO.*;
+import com.lec.spring.repository.TokensRepository;
 import com.lec.spring.repository.UserHistoryRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.UserService;
@@ -31,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -42,6 +42,9 @@ public class AuthController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final UserHistoryRepository userHistoryRepository;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final TokensRepository tokensRepository;
+
 
 
 
@@ -68,17 +71,32 @@ public class AuthController {
 
         // authentication 객체를 createToken 메소드를 통해서 JWT Token을 생성
         String jwt = tokenProvider.createToken(authentication);
+        String refreshToken = tokenProvider.createRefreshToken(authentication);
 
         HttpHeaders httpHeaders = new HttpHeaders();
         // response header에 jwt token에 넣어줌
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        httpHeaders.add("Refresh-Token", refreshToken); // 리프레시 토큰을 응답 헤더에 추가
+
+
+        // 액세스 토큰과 리프레시 토큰을 모두 클라이언트에 전달
+// authenticate 메소드 내
+
+
+//        Tokens tokens = new Tokens();
+//        tokens.setToken(jwt);
+//        tokens.setRefreshToken(refreshToken);
+//        tokens.setUser(user);
+//
+//        tokensRepository.save(tokens);
+
 
         // 로그인 기록 저장
         UserHistory userHistory = new UserHistory();
         userHistory.setName(String.format("%s가 로그인을 하였습니다.", user.getUsername()));
         userHistoryRepository.save(userHistory);
-
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        System.out.println(jwt + "123213131231");
+        return new ResponseEntity<>(new TokensDto(jwt,refreshToken) , httpHeaders, HttpStatus.OK);
     }
     //history 완료
     @PostMapping("/logout")
@@ -160,6 +178,38 @@ public class AuthController {
 
         // 상태 업데이트 성공 시, 200 OK 반환
         return ResponseEntity.ok(Collections.singletonMap("message", "비밀번호 맞음, 사용자 상태 업데이트 성공"));
+    }
+
+
+
+    // 리플레쉬 토큰으로 액세스 토큰 재발행하는 엔드포인트
+    @PostMapping("/refresh-token")
+    public ResponseEntity<TokenResponse> refreshAccessToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+        String refreshToken = refreshTokenRequest.getRefreshToken();
+        Optional<User> userOptional = tokensRepository.findByRefreshToken(refreshToken);
+
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new TokenResponse("Invalid refresh token", null));
+        }
+
+        User user = userOptional.get();
+        // Authentication 객체 생성
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(user.getUsername(), null, Collections.emptyList());
+
+
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getUsername());
+
+        // Authentication 객체에 UserDetails 설정
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                userDetails, null, userDetails.getAuthorities());
+
+        // 새로운 액세스 토큰 생성
+        String newAccessToken = tokenProvider.createToken(authentication);
+
+        // TokenResponse 객체 생성 및 반환
+        TokenResponse tokenResponse = new TokenResponse(newAccessToken, refreshToken);
+        return ResponseEntity.ok(tokenResponse);
     }
 
 
