@@ -1,3 +1,4 @@
+
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.DTO.ReservationDto;
@@ -75,6 +76,12 @@ public class ReservationController {
     public ResponseEntity<?> userCount (@PathVariable Long reservationId , @PathVariable Long partnerId){
         return ResponseEntity.ok(reservationService.findCountWaiting(reservationId , partnerId));
 
+    }
+
+    @PostMapping("/confirm/{id}")
+    public ResponseEntity<?> confirmReservation(@PathVariable("id") Long reservationId) {
+        reservationService.confirmReservation(reservationId);
+        return ResponseEntity.ok().build();
     }
 
 }

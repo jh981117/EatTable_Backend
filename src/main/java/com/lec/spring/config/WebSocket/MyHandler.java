@@ -1,3 +1,4 @@
+
 package com.lec.spring.config.WebSocket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,6 +61,7 @@ public class MyHandler extends TextWebSocketHandler {
 
         sendWaitingCount(session);
         sendWaitingList(session); // 대기열 리스트도 전송
+        sendReservationList(session);
     }
 
     private void sendWaitingCount(WebSocketSession session) {

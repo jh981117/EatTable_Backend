@@ -77,4 +77,11 @@ public class WaitingController {
         return ResponseEntity.noContent().build();
     }
 
+    // POST 요청을 통해 웨이팅을 확정하는 엔드포인트
+    @PostMapping("/confirm/{waitingId}")
+    public ResponseEntity<String> confirmWaiting(@PathVariable Long waitingId) {
+        waitingService.confirmWaiting(waitingId); // 웨이팅을 확정하는 서비스 메서드 호출
+        return ResponseEntity.ok("Waiting confirmed successfully");
+    }
+
 }
