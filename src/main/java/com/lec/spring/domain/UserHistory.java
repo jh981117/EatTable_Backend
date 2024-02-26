@@ -1,10 +1,11 @@
 package com.lec.spring.domain;
 
 
-import com.lec.spring.domain.listener.UserEntityListener;
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.context.event.EventListener;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor

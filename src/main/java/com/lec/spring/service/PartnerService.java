@@ -255,4 +255,8 @@ public List<PartnerDto> getPartnersByUserId(Long userId) {
     }
 
 
+    public Partner findById(Long partnerId) {
+        return partnerRepository.findById(partnerId).orElse(null);
+    }
+
 }

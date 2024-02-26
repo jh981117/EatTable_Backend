@@ -111,4 +111,7 @@ public class WaitingService {
     }
 
 
+    public List<Waiting> getWaitingsByPartnerId(Long partnerId) {
+        return waitingRepository.findByPartnerId(partnerId);
+    }
 }

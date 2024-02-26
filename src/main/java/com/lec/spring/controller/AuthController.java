@@ -1,22 +1,20 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.config.CustomUserDetails;
 import com.lec.spring.config.CustomUserDetailsService;
 import com.lec.spring.config.JwtFilter;
 import com.lec.spring.config.TokenProvider;
 import com.lec.spring.domain.*;
 import com.lec.spring.domain.DTO.*;
+import com.lec.spring.repository.BlackTokenRepository;
 import com.lec.spring.repository.TokensRepository;
 import com.lec.spring.repository.UserHistoryRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.UserService;
-import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -24,10 +22,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +40,7 @@ public class AuthController {
     private final UserHistoryRepository userHistoryRepository;
     private final CustomUserDetailsService customUserDetailsService;
     private final TokensRepository tokensRepository;
+    private final BlackTokenRepository blackTokenRepository;
 
 
 
@@ -83,12 +80,12 @@ public class AuthController {
 // authenticate 메소드 내
 
 
-//        Tokens tokens = new Tokens();
+        RefreshTokens tokens = new RefreshTokens();
 //        tokens.setToken(jwt);
-//        tokens.setRefreshToken(refreshToken);
-//        tokens.setUser(user);
-//
-//        tokensRepository.save(tokens);
+        tokens.setRefreshToken(refreshToken);
+        tokens.setUser(user);
+
+        tokensRepository.save(tokens);
 
 
         // 로그인 기록 저장
@@ -113,6 +110,10 @@ public class AuthController {
         userHistory.setName(String.format("%s님이 로그아웃을 하였습니다.", user.getUsername()));
         userHistoryRepository.save(userHistory);
 
+        BlackToken blackToken = new BlackToken();
+        blackToken.setBlackToken(jwtToken);
+
+        blackTokenRepository.save(blackToken);
         return ResponseEntity.ok("로그아웃 되었습니다.");
     }
 
@@ -184,12 +185,12 @@ public class AuthController {
 
     // 리플레쉬 토큰으로 액세스 토큰 재발행하는 엔드포인트
     @PostMapping("/refresh-token")
-    public ResponseEntity<TokenResponse> refreshAccessToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+    public ResponseEntity<TokensDto> refreshAccessToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         String refreshToken = refreshTokenRequest.getRefreshToken();
         Optional<User> userOptional = tokensRepository.findByRefreshToken(refreshToken);
 
         if (!userOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new TokenResponse("Invalid refresh token", null));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new TokensDto("Invalid refresh token", null));
         }
 
         User user = userOptional.get();
@@ -207,11 +208,37 @@ public class AuthController {
         // 새로운 액세스 토큰 생성
         String newAccessToken = tokenProvider.createToken(authentication);
 
-        // TokenResponse 객체 생성 및 반환
-        TokenResponse tokenResponse = new TokenResponse(newAccessToken, refreshToken);
+        //  객체 생성 및 반환
+        TokensDto tokenResponse = new TokensDto(newAccessToken, refreshToken);
         return ResponseEntity.ok(tokenResponse);
     }
 
+
+
+
+
+
+
+    @PostMapping("/black")
+    public ResponseEntity<?> black(@RequestBody BlackToken blackToken) {
+        try {
+            // Extract the token string from the BlackToken entity
+            String tokenString = blackToken.getBlackToken();
+
+            // Check if the token string exists in the repository
+            boolean exists = blackTokenRepository.existsByBlackToken(tokenString);
+            System.out.println(exists + "123444===============================================4");
+
+            // Return the existence result
+            return ResponseEntity.ok(exists);
+        } catch (Exception e) {
+            // Log the error
+            e.printStackTrace();
+
+            // Return an error response to the client
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+        }
+    }
 
 
 }
