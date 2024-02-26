@@ -69,10 +69,12 @@ public class PartnerController {
         return ResponseEntity.ok(partnerWithAverages);
     }
 
-
+@GetMapping("/google")
+public ResponseEntity<List<Partner>> google( @RequestParam String keyword){
+    return new ResponseEntity<>(partnerService.google(keyword), HttpStatus.OK);
+}
 
     //매장등록
-
     //history완료
     @PostMapping("/write")
     public ResponseEntity<?> write(@RequestBody PartnerWriteDto partnerWriteDto){
