@@ -10,7 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 
 public class UserEntityListener {
-    @PostUpdate
+
     public void updateAndPersist(Object o){
         UserHistoryRepository userHistoryRepository = BeanUtil.getBean(UserHistoryRepository.class);
 
