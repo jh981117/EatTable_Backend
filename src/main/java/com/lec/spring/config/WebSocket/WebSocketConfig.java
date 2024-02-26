@@ -8,14 +8,13 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
-@CrossOrigin
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // 클라이언트에서 WebSocket 연결을 수락하는 데 사용할 엔드포인트 등록
-        registry.addEndpoint("/ws").setAllowedOrigins("http://localhost:8080").withSockJS();
+        registry.addEndpoint("/ws").setAllowedOrigins("http://localhost:3000");
     }
 
     @Override

@@ -91,4 +91,8 @@ public class ReservationService {
     public Long findCountWaiting (Long reservationId , Long partnerId) {
         return reservationRepository.countByUserId(reservationId , partnerId);
     }
+
+    public List<Reservation> getReservationsByPartnerId(Long partnerId) {
+        return reservationRepository.findByPartnerId(partnerId);
+    }
 }

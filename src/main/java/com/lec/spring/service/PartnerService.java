@@ -251,4 +251,8 @@ public List<PartnerDto> getPartnersByUserId(Long userId) {
         return Math.round(averageRating * 10) / 10.0; // 소수점 첫 번째 자리까지 반올림
     }
 
+
+    public Partner findById(Long partnerId) {
+        return partnerRepository.findById(partnerId).orElse(null);
+    }
 }
