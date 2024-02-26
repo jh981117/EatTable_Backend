@@ -3,12 +3,10 @@ package com.lec.spring.service;
 import com.lec.spring.domain.DTO.PartnerDto;
 import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.PartnerAttachment;
-import com.lec.spring.domain.PartnerReq;
 import com.lec.spring.domain.TrueFalse;
 import com.lec.spring.repository.PartnerAttachmentRepository;
 import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.repository.PartnerReqRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,9 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,6 +47,13 @@ public class PartnerService {
         }
     }
 
+    public List<Partner> google(String keyword) {
+        if (keyword != null && !keyword.isEmpty()) {
+            return partnerRepository.google(keyword);
+        } else {
+            return partnerRepository.findAll();
+        }
+    }
 
     //매장리스트
     @Transactional
@@ -255,4 +258,5 @@ public List<PartnerDto> getPartnersByUserId(Long userId) {
     public Partner findById(Long partnerId) {
         return partnerRepository.findById(partnerId).orElse(null);
     }
+
 }
