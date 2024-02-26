@@ -29,25 +29,13 @@ public class CommentController {
 
     @PostMapping("/write")
     public ResponseEntity<Comment> addComment(@RequestBody CommentDto commentDto) {
-        System.out.println(commentDto + "231123123123123123123");
-        Comment comment = new Comment();
-        comment.setContent(commentDto.getContent());
-        // Set userId and storeReviewId from DTO
-        User user = new User();
-        user.setId(commentDto.getUserId());
-        comment.setUser(user);
 
-        StoreReview storeReview = new StoreReview();
-        storeReview.setId(commentDto.getStoreReviewId());
-        comment.setStoreReview(storeReview);
-
-        Comment addedComment = commentService.addComment(comment);
-        return new ResponseEntity<>(addedComment, HttpStatus.CREATED);
+        return new ResponseEntity<>(commentService.addComment(commentDto), HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Comment>> getAllComments() {
-        List<Comment> comments = commentService.getAllComments();
+    @GetMapping("/list/{reviewId}")
+    public ResponseEntity<List<Comment>> getAllComments(@PathVariable Long reviewId) {
+        List<Comment> comments = commentService.getListComment(reviewId);
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 

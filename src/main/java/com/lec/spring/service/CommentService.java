@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.*;
+import com.lec.spring.domain.DTO.CommentDto;
 import com.lec.spring.repository.CommentRepository;
 import com.lec.spring.repository.StoreReviewRepository;
 import com.lec.spring.repository.UserRepository;
@@ -24,7 +25,14 @@ public class CommentService {
 
 
 
-    public Comment addComment(Comment comment) {
+    public Comment addComment(CommentDto commentDto) {
+        User user = userRepository.findById(commentDto.getUserId()).orElse(null);
+        StoreReview storeReview = storeReviewRepository.findById(commentDto.getStoreReviewId()).orElse(null);
+        Comment comment = Comment.builder()
+                .content(commentDto.getContent())
+                .user(user)
+                .storeReview(storeReview)
+                .build();
         return commentRepository.save(comment);
     }
 
@@ -46,5 +54,9 @@ public class CommentService {
 
     public void deleteComment(Long commentId) {
         commentRepository.deleteById(commentId);
+    }
+
+    public List<Comment> getListComment(Long reviewId) {
+        return commentRepository.findByStoreReviewId(reviewId);
     }
 }
