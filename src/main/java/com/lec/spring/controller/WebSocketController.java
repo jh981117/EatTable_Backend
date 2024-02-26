@@ -33,6 +33,7 @@ public class WebSocketController {
     }
 
 
+    @MessageMapping("/updateReservationList")
     @SendTo("/topic/reservationList")
     public List<Reservation> updateReservationList(String message, Long partnerId) {
         // 예약 확정 이벤트를 받으면 대기열 정보를 업데이트하고 모든 클라이언트에게 새로운 대기열 정보를 전송
