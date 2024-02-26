@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/waiting")
-@CrossOrigin // cross-origin 요청 허용
+@CrossOrigin(origins = "http://localhost:3000") // cross-origin 요청 허용
 public class WaitingController {
 
 
