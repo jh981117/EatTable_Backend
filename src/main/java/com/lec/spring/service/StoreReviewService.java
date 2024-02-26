@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 
+import com.lec.spring.domain.DTO.PartnerDto;
 import com.lec.spring.domain.DTO.StoreReviewDto;
 import com.lec.spring.domain.Partner;
 import com.lec.spring.domain.PartnerReviewAttachment;
@@ -12,10 +13,15 @@ import com.lec.spring.repository.StoreReviewRepository;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.Comparator;
@@ -50,8 +56,8 @@ public class StoreReviewService {
     }
 
 
-    public List<StoreReview> findReviewsByPartnerId(Long partnerId) {
-        return storeReviewRepository.findByPartnerId(partnerId);
+    public List<StoreReview> findReviewsByPartnerId(Long partnerId ,Sort sort) {
+        return storeReviewRepository.findByPartnerId(partnerId,sort);
     }
 
 
@@ -96,5 +102,18 @@ public class StoreReviewService {
         }
         return  "0";
     }
+
+    public Page<StoreReview> findList(Pageable pageable) {
+        return storeReviewRepository.findAll(pageable);
+    }
+
+    public Page<StoreReview> findUserList(Pageable pageable,Long userId) {
+        return storeReviewRepository.findByUserId(pageable , userId);
+    }
+
+    public Page<StoreReview> getReviewsByFollowing(Long userId,Pageable pageable) {
+        return storeReviewRepository.findAllByFollowing(userId,pageable);
+    }
+
 
 }

@@ -10,19 +10,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 public class Follow {
-
     @EmbeddedId
     private FollowId id;
 
     @ManyToOne
     @MapsId("fromId")
     @JoinColumn(name = "fromId")
-    private User fromId;
+    private User fromUser;
 
     @ManyToOne
     @MapsId("toId")
     @JoinColumn(name = "toId")
-    private User toId;
+    private User toUser;
+
+
+//
+
 
 
 }

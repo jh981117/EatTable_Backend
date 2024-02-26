@@ -1,6 +1,7 @@
 package com.lec.spring.controller;
 
 
+import com.lec.spring.domain.DTO.PartnerDto;
 import com.lec.spring.domain.DTO.StoreReviewAttchmentDto;
 import com.lec.spring.domain.DTO.StoreReviewDto;
 import com.lec.spring.domain.PartnerAttachment;
@@ -9,7 +10,14 @@ import com.lec.spring.domain.StoreReview;
 import com.lec.spring.service.AttachmentService;
 import com.lec.spring.service.StoreReviewService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -65,9 +73,37 @@ public class StoreReviewController {
     @GetMapping("/partner/{partnerId}")
     public ResponseEntity<List<?>> getAllReviews(@PathVariable Long partnerId) {
         System.out.println(partnerId);
-        List<StoreReview> reviews = storeReviewService.findReviewsByPartnerId(partnerId);
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        List<StoreReview> reviews = storeReviewService.findReviewsByPartnerId(partnerId, sort);
+
         return ResponseEntity.ok(reviews);
+
+
     }
+
+
+    //전체 리뷰리스트
+
+    @GetMapping("/review/list")
+    public ResponseEntity<Page<StoreReview>> getReviewList(@RequestParam(defaultValue = "0") int page,
+                                                           @RequestParam(defaultValue = "4") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<StoreReview> reviewPage = storeReviewService.findList(pageable);
+
+        return ResponseEntity.ok(reviewPage);
+    }
+
+    //로그인중인 유저가 팔로우한 리스트
+    @GetMapping("/review/list/{userId}")
+    public ResponseEntity<Page<StoreReview>> getUserReviewList(@RequestParam(defaultValue = "0") int page,
+                                                           @RequestParam(defaultValue = "4") int size , Long userId) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<StoreReview> reviewPage = storeReviewService.findUserList(pageable,userId);
+
+        return ResponseEntity.ok(reviewPage);
+    }
+
+
 
     @GetMapping("/partner/img/length/{partnerId}")
     public ResponseEntity<?> reviewImgLength(@PathVariable Long partnerId){
@@ -122,5 +158,13 @@ public class StoreReviewController {
     @DeleteMapping("/reviews/deleteImage/{imageId}")
     public ResponseEntity<?> deleteImage(@PathVariable Long imageId) {
         return new ResponseEntity<>(attachmentService.delete(imageId), HttpStatus.OK);
+    }
+
+    @GetMapping("/reviews/following/{userId}")
+    public ResponseEntity<Page<StoreReview>> getReviewsByFollowing(@RequestParam(defaultValue = "0") int page,
+                                                                   @RequestParam(defaultValue = "4") int size ,@PathVariable Long userId) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<StoreReview> reviews = storeReviewService.getReviewsByFollowing(userId,pageable);
+        return ResponseEntity.ok().body(reviews);
     }
 }

@@ -12,10 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/follow")
+@CrossOrigin
 public class FollowController {
 
 
@@ -23,27 +25,48 @@ public class FollowController {
 
 
     //해당 사용자 팔로우 리스트보기
-    @Transactional(readOnly = true)
-    @GetMapping("list/{user}")
-    public ResponseEntity<List<Follow>> userList(@PathVariable User user){
-        return new ResponseEntity<>(followService.list(user),HttpStatus.OK);
-    }
 
 
 
     //팔로우 등록
-    @Transactional
-    @PostMapping("/insert")
-    public ResponseEntity<?> insert (@RequestBody Follow follow){
-        return  new ResponseEntity<>(followService.insert(follow),HttpStatus.CREATED);
+    @PostMapping("/{fromId}/{toId}")
+    public ResponseEntity<?> createFollow(@PathVariable Long fromId, @PathVariable Long toId) {
+        Follow follow = followService.createFollow(fromId, toId);
+        return ResponseEntity.ok(follow);
     }
+
 
 
     //팔로우 삭제
-    @Transactional
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
-        return new ResponseEntity<>(followService.delete(id),HttpStatus.OK);
+    @DeleteMapping("/{fromUserId}/{toUserId}")
+    public ResponseEntity<String> deleteFollow(@PathVariable Long fromUserId, @PathVariable Long toUserId) {
+        followService.deleteFollow(fromUserId, toUserId);
+        return ResponseEntity.ok("성공");
     }
+
+
+
+
+
+
+
+
+    //로그인중인 유저의 팔로우상태
+    @GetMapping("/{userId}/following")
+    public ResponseEntity<List<Follow>> getFollowingList(@PathVariable Long userId) {
+        System.out.println(userId);
+        List<Follow> followingList = followService.getFollowingList(userId);
+        return ResponseEntity.ok(followingList);
+
+    }
+
+
+    // 팔로우 상태 조회
+    @GetMapping("/status/{userId}/{toUserId}")
+    public ResponseEntity<?> getFollowStatus(@PathVariable Long userId, @PathVariable Long toUserId) {
+        boolean isFollowing = followService.checkFollowStatus(userId, toUserId);
+        return ResponseEntity.ok().body(Map.of("isFollowing", isFollowing));
+    }
+
 
 }

@@ -82,7 +82,33 @@ public class WaitingService {
     }
 
     @Transactional
-    public void deleteByUserIdAndPartnerId(Long userId, Long partnerId) {
-        waitingRepository.deleteByUserIdAndPartnerId(userId, partnerId);
+    public void deleteByWaitingIdAndPartnerId(Long waitingId, Long partnerId) {
+        waitingRepository.deleteByWaitingIdAndPartnerId(waitingId, partnerId);
     }
+
+    @Transactional
+    public int countWaitingsByPartnerId(Long partnerId) {
+        return waitingRepository.countWaitingsByPartnerId(partnerId);
+    }
+
+    @Transactional
+    public Waiting updateWaitingState(Long waitingId, Long partnerId, String newWaitingState) {
+        Waiting waiting = waitingRepository.findById(waitingId)
+                .orElseThrow(() -> new RuntimeException("Waiting not found with id: " + waitingId));
+
+        // String 값을 TrueFalse 열거형으로 변환
+        TrueFalse trueFalseState;
+        try {
+            trueFalseState = TrueFalse.valueOf(newWaitingState.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid waiting state: " + newWaitingState);
+        }
+
+        waiting.setWaitingState(trueFalseState);
+        // 다른 필요한 작업 수행
+
+        return waitingRepository.save(waiting);
+    }
+
+
 }
