@@ -91,6 +91,7 @@ public class UserController {
         }
 
         @GetMapping("/profile")
+
         @PreAuthorize("hasAnyRole('MEMBER','ADMIN')")
         public ResponseEntity<User> getMyUserInfo() {
                 return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());

@@ -68,7 +68,7 @@ public class OAuth2Controller {
         System.out.println(oAuth2User.getName());
         User user = userRepository.findByUsername(oAuth2User.getName());
         UserHistory userHistory = new UserHistory();
-        userHistory.setName(String.format("%s가 회원탈퇴를 하였습니다.", user.getUsername()));
+        userHistory.setName(String.format("%s가 로그인을 하였습니다.", user.getUsername()));
         userHistoryRepository.save(userHistory);
 
         return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
