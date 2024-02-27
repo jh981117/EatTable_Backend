@@ -57,4 +57,11 @@ public class CommentController {
         commentService.deleteComment(commentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/length/{reviewId}")
+    public ResponseEntity<?> length (@PathVariable Long reviewId){
+
+        return commentService.getCommentCount(reviewId);
+
+    }
 }

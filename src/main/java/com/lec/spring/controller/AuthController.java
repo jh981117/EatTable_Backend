@@ -203,12 +203,13 @@ public class AuthController {
         expiredAccessToken = expiredAccessToken.substring(7);
 
         String username = null;
-        try {
+//        try {
             // 만료된 엑세스 토큰에서 사용자 이름 추출
-            username = tokenProvider.getUsernameFromToken(expiredAccessToken);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid access token.");
-        }
+            username = tokenProvider.getUsernameFromExpiredToken(expiredAccessToken);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid access token.");
+//        }
+        System.out.println(username);
 
         // 데이터베이스에서 사용자 찾기
         User user = userRepository.findByUsername(username);
@@ -230,6 +231,7 @@ public class AuthController {
 
 // 새 액세스 토큰 생성
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), null, authorities);
+        System.out.println(authentication + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         String newAccessToken = tokenProvider.createToken(authentication);
 
         HttpHeaders httpHeaders = new HttpHeaders();

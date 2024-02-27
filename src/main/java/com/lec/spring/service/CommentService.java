@@ -6,6 +6,7 @@ import com.lec.spring.repository.CommentRepository;
 import com.lec.spring.repository.StoreReviewRepository;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,5 +59,10 @@ public class CommentService {
 
     public List<Comment> getListComment(Long reviewId) {
         return commentRepository.findByStoreReviewId(reviewId);
+    }
+
+    public ResponseEntity<?> getCommentCount(Long reviewId) {
+       Long count = commentRepository.countByStoreReviewId(reviewId);
+       return ResponseEntity.ok(count);
     }
 }

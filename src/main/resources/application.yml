@@ -74,9 +74,24 @@ app:
       password: 1234
 
 
+
 jwt:
   header: Authorization
   #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
   secret: a2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ==
-  token-validity-in-seconds: 86400 # ttl (초)
+  expiration: 86400000 # 86400000 # 1일
+  refresh-token:
+    expiration: 604800000  #7일
 
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIA33DMWBRZSHB4IMWE
+      secretKey: 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
+    s3:
+      bucket: eatablebucket
+    region:
+      static: ap-northeast-2
+    stack:
+
+      auto: false

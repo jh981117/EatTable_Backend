@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOriginPatterns("*") // 모든 출처 허용 패턴 사용
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
-                .exposedHeaders("Refresh-Token") // 클라이언트에서 접근 가능하도록 Refresh-Token 헤더 노출
+                .exposedHeaders("Refresh-Token" , "Authorization") // 클라이언트에서 접근 가능하도록 Refresh-Token 헤더 노출
                 .allowCredentials(true)
                 .maxAge(3600); // 1시간 동안 pre-flight 결과 캐시
     }

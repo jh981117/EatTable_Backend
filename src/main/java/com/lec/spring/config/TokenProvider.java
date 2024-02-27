@@ -173,6 +173,17 @@ public class TokenProvider implements InitializingBean {
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
+
+
+    ///////////////////////////////////
+    private Claims parseClaims(String accessToken) {
+        try {
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
+    }
+
     public String getUsernameFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -182,4 +193,12 @@ public class TokenProvider implements InitializingBean {
         return claims.getSubject();
     }
 
+//}
+public String getUsernameFromExpiredToken(String token) {
+        Claims claims = parseClaims(token);
+        System.out.println(claims);
+        System.out.println(token);
+        return claims.getSubject();
+
+}
 }
