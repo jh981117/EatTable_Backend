@@ -29,7 +29,6 @@ public class Comment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "userId")
     @ToString.Exclude
-    @JsonIgnore
     private User user;
 
 

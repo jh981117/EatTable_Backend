@@ -54,6 +54,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
+    public User infoById(Long id){ return userRepository.findById(id).orElse(null);}
+
 
     //회원가입
     @Transactional

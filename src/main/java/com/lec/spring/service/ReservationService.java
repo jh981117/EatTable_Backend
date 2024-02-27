@@ -6,6 +6,7 @@ import com.lec.spring.repository.PartnerRepository;
 import com.lec.spring.repository.ReservationRepository;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
     private final PartnerRepository partnerRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
 
     @Transactional
@@ -94,5 +96,18 @@ public class ReservationService {
 
     public List<Reservation> getReservationsByPartnerId(Long partnerId) {
         return reservationRepository.findByPartnerId(partnerId);
+    }
+
+    // 예약을 확정하고, 클라이언트에게 실시간으로 전송
+    public void confirmReservation(Long reservationId) {
+        // 예약을 확정하는 로직 구현
+        Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
+        if (reservation != null) {
+            reservation.setReservationState(TrueFalse.TRUE); // 예약을 확정으로 설정
+            reservationRepository.save(reservation);
+
+            // 확정된 예약 정보를 웹소켓을 통해 클라이언트에게 전송
+            messagingTemplate.convertAndSend("/topic/reservationConfirmation", reservation);
+        }
     }
 }
