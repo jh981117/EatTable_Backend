@@ -50,7 +50,7 @@ public class WaitingService {
         System.out.println(partner);
         Waiting waiting = Waiting.builder()
                 .people(waitingDto.getPeople())
-                .waitingState(waitingDto.getWaitingState().equals("True") ? TrueFalse.TRUE : TrueFalse.FALSE)
+                .waitingState(waitingDto.getWaitingState().equals("True") ? TrueFalse.TRUE : TrueFalse.WAITING)
                 .waitingRegDate(waitingDto.getWaitingRegDate())
                 .user(user)
                 .partner(partner)

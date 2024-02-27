@@ -33,7 +33,7 @@ public class ReservationService {
 
         Reservation reservation = Reservation.builder()
                 .people(reservationDto.getPeople())
-                .reservationState(reservationDto.getReservationState().equals("True") ? TrueFalse.TRUE : TrueFalse.FALSE)
+                .reservationState(reservationDto.getReservationState().equals("True") ? TrueFalse.TRUE : TrueFalse.WAITING)
                 .reservationRegDate(reservationDto.getReservationRegDate())
                 .user(user)
                 .partner(partner)
