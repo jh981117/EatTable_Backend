@@ -11,6 +11,7 @@ SELECT * FROM user;
 SELECT * FROM partnerreq;
 SELECT * FROM reviewlike;
 SELECT * FROM waiting;
+SELECT * FROM reservation;
 
 
 
