@@ -103,7 +103,7 @@ public class ReservationService {
         // 예약을 확정하는 로직 구현
         Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
         if (reservation != null) {
-            reservation.setReservationState(TrueFalse.TRUE); // 예약을 확정으로 설정
+            reservation.setReservationState(TrueFalse.WAITING); // 예약을 확정으로 설정
             reservationRepository.save(reservation);
 
             // 확정된 예약 정보를 웹소켓을 통해 클라이언트에게 전송
