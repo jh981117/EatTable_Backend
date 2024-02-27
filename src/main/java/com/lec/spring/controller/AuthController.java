@@ -5,11 +5,10 @@ import com.lec.spring.config.JwtFilter;
 import com.lec.spring.config.TokenProvider;
 import com.lec.spring.domain.*;
 import com.lec.spring.domain.DTO.*;
-import com.lec.spring.repository.BlackTokenRepository;
-import com.lec.spring.repository.TokensRepository;
-import com.lec.spring.repository.UserHistoryRepository;
-import com.lec.spring.repository.UserRepository;
+import com.lec.spring.repository.*;
 import com.lec.spring.service.UserService;
+import com.nimbusds.oauth2.sdk.token.RefreshToken;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -24,9 +23,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.lec.spring.domain.RoleName.ROLE_MEMBER;
 
 @RestController
 @RequestMapping("/api")
@@ -41,6 +41,7 @@ public class AuthController {
     private final CustomUserDetailsService customUserDetailsService;
     private final TokensRepository tokensRepository;
     private final BlackTokenRepository blackTokenRepository;
+    private final RefreshTokensRepository refreshTokensRepository;
 
 
 
@@ -80,12 +81,19 @@ public class AuthController {
 // authenticate 메소드 내
 
 
-        RefreshTokens tokens = new RefreshTokens();
-//        tokens.setToken(jwt);
-        tokens.setRefreshToken(refreshToken);
-        tokens.setUser(user);
-
-        tokensRepository.save(tokens);
+        // 기존의 리프레시 토큰 조회 및 업데이트 또는 생성
+        RefreshTokens existingToken = refreshTokensRepository.findByUserId(user.getId());
+        if (existingToken != null) {
+            // 기존 토큰이 있다면, 리프레시 토큰 업데이트
+            existingToken.setRefreshToken(refreshToken);
+            tokensRepository.save(existingToken);
+        } else {
+            // 기존 토큰이 없다면, 새로운 토큰 생성 및 저장
+            RefreshTokens newToken = new RefreshTokens();
+            newToken.setRefreshToken(refreshToken);
+            newToken.setUser(user);
+            tokensRepository.save(newToken);
+        }
 
 
         // 로그인 기록 저장
@@ -129,7 +137,7 @@ public class AuthController {
         // 비밀번호 업데이트
         userService.updatePassword(request.getUsername(), request.getNewPassword());
 
-        // 사용자의 권한 가져오기 (예제로 사용자에게 "ROLE_USER" 권한을 부여)
+        // 사용자의 권한 가져오기 ( 사용자에게 "ROLE_USER" 권한을 부여)
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
         // 새 Authentication 객체 생성
@@ -183,34 +191,53 @@ public class AuthController {
 
 
 
-    // 리플레쉬 토큰으로 액세스 토큰 재발행하는 엔드포인트
+    /// 리프레쉬 토큰으로 액세스 토큰 재발행하는 엔드포인트
     @PostMapping("/refresh-token")
-    public ResponseEntity<TokensDto> refreshAccessToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
-        String refreshToken = refreshTokenRequest.getRefreshToken();
-        Optional<User> userOptional = tokensRepository.findByRefreshToken(refreshToken);
-
-        if (!userOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new TokensDto("Invalid refresh token", null));
+    public ResponseEntity<?> refreshAccessToken(HttpServletRequest request) {
+        String expiredAccessToken = request.getHeader("Authorization");
+        if (expiredAccessToken == null || !expiredAccessToken.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid access token.");
         }
 
-        User user = userOptional.get();
-        // Authentication 객체 생성
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(user.getUsername(), null, Collections.emptyList());
+        // "Bearer " 접두사 제거
+        expiredAccessToken = expiredAccessToken.substring(7);
 
+        String username = null;
+        try {
+            // 만료된 엑세스 토큰에서 사용자 이름 추출
+            username = tokenProvider.getUsernameFromToken(expiredAccessToken);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid access token.");
+        }
 
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getUsername());
+        // 데이터베이스에서 사용자 찾기
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+        }
 
-        // Authentication 객체에 UserDetails 설정
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
+        // 데이터베이스에서 리프레쉬 토큰 찾기
+        RefreshTokens refreshToken = refreshTokensRepository.findByUserId(user.getId());
+        if (refreshToken == null || !tokenProvider.validateToken(refreshToken.getRefreshToken())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired refresh token.");
+        }
 
-        // 새로운 액세스 토큰 생성
+        // 권한 정보 추출
+        Collection<? extends GrantedAuthority> authorities =
+                user.getRoles().stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getRoleName().name()))
+                        .collect(Collectors.toList());
+
+// 새 액세스 토큰 생성
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), null, authorities);
         String newAccessToken = tokenProvider.createToken(authentication);
 
-        //  객체 생성 및 반환
-        TokensDto tokenResponse = new TokensDto(newAccessToken, refreshToken);
-        return ResponseEntity.ok(tokenResponse);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + newAccessToken);
+        System.out.println(newAccessToken);
+        return new ResponseEntity<>(new TokensDto(newAccessToken, refreshToken.getToken()), httpHeaders, HttpStatus.OK);
+
+
     }
 
 
@@ -218,8 +245,7 @@ public class AuthController {
 
 
 
-
-    @PostMapping("/black")
+        @PostMapping("/black")
     public ResponseEntity<?> black(@RequestBody BlackToken blackToken) {
         try {
             // Extract the token string from the BlackToken entity

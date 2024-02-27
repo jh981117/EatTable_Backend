@@ -1,5 +1,6 @@
 package com.lec.spring.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class Reservation {
     @Enumerated(value = EnumType.STRING)
     private TrueFalse reservationState;
 
+    @JsonFormat(pattern = "yyyy년 MM월 dd일 ")
     private String reservationRegDate;
 
     private String Time;

@@ -44,12 +44,12 @@ public class CommentService {
                 .orElse(null);
     }
 
-    public void updateComment(Long commentId, Comment updatedComment) {
+    public Comment updateComment(Long commentId, Comment updatedComment) {
         Comment comment = getCommentById(commentId);
 
         comment.setContent(updatedComment.getContent());
 
-        commentRepository.save(comment);
+        return commentRepository.save(comment);
     }
 
     public void deleteComment(Long commentId) {

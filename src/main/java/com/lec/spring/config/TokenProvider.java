@@ -172,4 +172,14 @@ public class TokenProvider implements InitializingBean {
         // 최종적으로 Authentication 객체를 생성하여 반환합니다.
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
+
+    public String getUsernameFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
+    }
+
 }

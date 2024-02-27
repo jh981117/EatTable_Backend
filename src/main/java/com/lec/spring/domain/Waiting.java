@@ -28,7 +28,7 @@ public class Waiting {
     @Enumerated(value = EnumType.STRING)
     private TrueFalse waitingState;
 
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy년 MM월 dd일 ")
     private String waitingRegDate;
 
 

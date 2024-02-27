@@ -13,6 +13,8 @@ public class ReservationDto {
 
     private int people;
     private String reservationState;
+
+
     private String reservationRegDate;
     private String Time;
     private Long userId;

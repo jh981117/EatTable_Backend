@@ -46,10 +46,11 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    public ResponseEntity<Void> updateComment(@PathVariable Long commentId, @RequestBody Comment updatedComment) {
-        commentService.updateComment(commentId, updatedComment);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Comment> updateComment(@PathVariable Long commentId, @RequestBody Comment updatedComment) {
+        Comment updated = commentService.updateComment(commentId, updatedComment);
+        return ResponseEntity.ok(updated); // 수정된 댓글 객체 반환
     }
+
 
     @DeleteMapping("/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
