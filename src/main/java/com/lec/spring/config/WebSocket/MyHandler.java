@@ -90,6 +90,14 @@ public class MyHandler extends TextWebSocketHandler {
         }
     }
 
+    @Scheduled(fixedRate = 1000) // 10초마다 실행
+    public void sendWaitingListToClients() {
+        // 파트너 아이디를 이용하여 해당 파트너의 대기열 리스트를 조회
+        List<Waiting> waitingList = waitingService.getWaitingsByPartnerId(partnerId);
+        // 모든 클라이언트에게 대기열 리스트를 전송
+        messagingTemplate.convertAndSend("/topic/updateWaitingList", waitingList);
+    }
+
 
 
     private void sendWaitingList(WebSocketSession session) {
