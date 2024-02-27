@@ -58,7 +58,7 @@ public class NaverOAuth2UserService extends DefaultOAuth2UserService {
         String nickname = jsonNode.get("response").get("nickname").asText();
         String provider = "naver";
         String providerId = jsonNode.get("response").get("id").asText();
-        String phone = jsonNode.get("response").get("mobile").asText();
+        String phone = jsonNode.get("response").get("mobile").asText().replace("-","");
         Role role = roleRepository.findByRoleName(RoleName.ROLE_MEMBER);
         User userInfo = userRepository.findByUsername(username);
 
