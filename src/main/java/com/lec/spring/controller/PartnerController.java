@@ -22,9 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -103,6 +101,8 @@ public class PartnerController {
     public ResponseEntity<?> detail(@PathVariable Long id) {
                return new ResponseEntity<>(partnerService.detail(id), HttpStatus.OK);
     }
+
+    Set<String> processedIPs = new HashSet<>();
 
     @Transactional
     @GetMapping("/base/detail/{id}")
