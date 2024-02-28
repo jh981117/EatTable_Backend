@@ -41,12 +41,18 @@ public class WebSocketController {
 
 
     @MessageMapping("/updateReservationList")
-    @SendTo("/topic/reservationList")
-    public List<Reservation> updateReservationList(String message, Long partnerId) {
-        // 예약 확정 이벤트를 받으면 대기열 정보를 업데이트하고 모든 클라이언트에게 새로운 대기열 정보를 전송
-        log.info("Received reservation confirmed event: {}", message);
-        List<Reservation> reservationList = reservationService.getReservationsByPartnerId(partnerId); // 대기열 정보 조회
-        log.info("Sending updated waiting list to all clients: {}", reservationList);
-        return reservationList;
+    public void updateReservationState(Long reservationId, Long partnerId, String newReservationState) {
+        // 대기열 상태 업데이트 로직 수행
+        reservationService.updateReservationState(reservationId, partnerId, newReservationState);
+        // 업데이트된 대기열 정보 반환
+        List<Reservation> updatedReservations = reservationService.getReservationsByPartnerId(partnerId);
+
+        // 메시지에 waitingId와 업데이트된 대기열 정보를 포함하여 전송
+        Map<String, Object> message = new HashMap<>();
+        message.put("reservationId", reservationId);
+        message.put("Reservations", updatedReservations);
+
+        messagingTemplate.convertAndSend("/topic/reservationConfirmation", message);
+
     }
 }
