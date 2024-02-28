@@ -47,10 +47,28 @@ public class PartnerService {
         }
     }
 
-    public List<Partner> google(String keyword) {
-        if (keyword != null && !keyword.isEmpty()) {
-            return partnerRepository.google(keyword);
-        } else {
+//    public List<Partner> google(String keyword) {
+//        if (keyword != null && !keyword.isEmpty()) {
+//            return partnerRepository.google(keyword);
+//        } else {
+//            return partnerRepository.findAll();
+//        }
+//    }
+
+    public List<Partner> google(String inputValue, String keyword) {
+          if ((inputValue == null && inputValue.isEmpty()) && (keyword == null && keyword.isEmpty())){
+            return partnerRepository.findAll();
+        }
+        else if ((inputValue != null && !inputValue.isEmpty()) && (keyword != null && !keyword.isEmpty())) {
+            // 가게 이름과 지역 모두가 입력된 경우, 두 조건을 모두 만족하는 데이터를 검색합니다.
+            return partnerRepository.findGoogle(inputValue, keyword);
+        } else if (inputValue != null && !inputValue.isEmpty()) {
+            // 가게 이름만 입력된 경우, 가게 이름을 포함하는 데이터를 검색합니다.
+            return partnerRepository.findGoogle1(inputValue);
+        } else if (keyword != null && !keyword.isEmpty()) {
+            // 지역만 입력된 경우, 지역을 포함하는 데이터를 검색합니다.
+            return partnerRepository.findGoogle2(keyword);
+        }else {
             return partnerRepository.findAll();
         }
     }
