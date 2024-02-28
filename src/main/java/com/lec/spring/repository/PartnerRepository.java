@@ -30,6 +30,15 @@ public interface PartnerRepository extends JpaRepository<Partner,Long> {
     @Query("SELECT AVG(r.avg) FROM StoreReview r WHERE r.partner.id = ?1")
     Double findAvhPartner(Long partnerId);
 
-    @Query("SELECT e FROM Partner e WHERE e.storeName LIKE %:keyword% OR e.address.district LIKE %:keyword% OR e.favorite LIKE %:keyword%")
-    List<Partner> google(String keyword);
+//    @Query("SELECT e FROM Partner e WHERE e.storeName LIKE %:keyword% OR e.address.district LIKE %:keyword% OR e.favorite LIKE %:keyword%")
+//    List<Partner> google(String keyword);
+
+    @Query("SELECT e FROM Partner e WHERE e.storeName LIKE %:inputValue% and e.address.district LIKE %:keyword% OR e.favorite LIKE %:keyword%")
+    List<Partner> findGoogle(@Param("inputValue") String inputValue,@Param("keyword")String keyword);
+
+    @Query("SELECT e FROM Partner e WHERE e.storeName LIKE %:inputValue%")
+    List<Partner> findGoogle1(@Param("inputValue") String inputValue);
+
+    @Query("SELECT e FROM Partner e WHERE e.address.district LIKE %:keyword% OR e.favorite LIKE %:keyword%")
+    List<Partner> findGoogle2(@Param("keyword")String keyword);
 }
