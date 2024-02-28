@@ -60,9 +60,7 @@ public class SecurityConfig   {
                                 // 루트 경로와 /login/**에 대한 모든 사용자 접근 허용
 
                                 .requestMatchers("/api/authenticate").permitAll() //
-                                .requestMatchers("/api/user/signup").permitAll() // 회원가입 api
-                                .requestMatchers("/api/user/login").permitAll() // 로그인 api
-                                .requestMatchers("/favicon.ico").permitAll()
+
                                 .requestMatchers("/authenticate/**").hasAuthority(RoleName.ROLE_ADMIN.name())
                                 .anyRequest().permitAll()//
                 )

@@ -1,5 +1,6 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.config.CustomUserDetails;
 import com.lec.spring.config.CustomUserDetailsService;
 import com.lec.spring.config.JwtFilter;
 import com.lec.spring.config.TokenProvider;
@@ -209,7 +210,7 @@ public class AuthController {
 //        } catch (Exception e) {
 //            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid access token.");
 //        }
-        System.out.println(username);
+        System.out.println(username + "!@#!@#!@#!@#");
 
         // 데이터베이스에서 사용자 찾기
         User user = userRepository.findByUsername(username);
@@ -228,9 +229,9 @@ public class AuthController {
                 user.getRoles().stream()
                         .map(role -> new SimpleGrantedAuthority(role.getRoleName().name()))
                         .collect(Collectors.toList());
-
+        CustomUserDetails userDetails = new CustomUserDetails(user.getUsername(),user.getPassword(),authorities,user.getName(),user.getNickName(),user.getId());
 // 새 액세스 토큰 생성
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), null, authorities);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
         System.out.println(authentication + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         String newAccessToken = tokenProvider.createToken(authentication);
 

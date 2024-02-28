@@ -98,26 +98,9 @@ public class UserController {
         }
 
         @GetMapping("/profile")
-        public ResponseEntity<User> getMyUserInfo(HttpServletRequest request) {
-                // 클라이언트로부터 JWT 토큰을 헤더에서 가져옴
-                String jwtToken = request.getHeader("Authorization");
-
-                // 토큰 검증
-                if (jwtToken != null && jwtToken.startsWith("Bearer ")) {
-                        jwtToken = jwtToken.substring(7); // "Bearer " 부분을 제외한 토큰 추출
-                        // 토큰 검증 및 사용자 확인
-                        if (tokenProvider.validateToken(jwtToken)) {
-                                // 사용자가 인증되었으므로 사용자 정보 반환
-                                User user = userService.getMyUserWithAuthorities().orElse(null);
-                                return ResponseEntity.ok(user);
-                        } else {
-                                // 토큰이 유효하지 않은 경우에 대한 처리
-                                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-                        }
-                } else {
-                        // 토큰이 존재하지 않는 경우에 대한 처리
-                        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-                }
+        public ResponseEntity<User> getMyUserInfo() {
+                User user = userService.getMyUserWithAuthorities().orElse(null);
+                return ResponseEntity.ok(user);
         }
 
 
