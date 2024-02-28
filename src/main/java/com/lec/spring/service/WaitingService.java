@@ -50,7 +50,7 @@ public class WaitingService {
         System.out.println(partner);
         Waiting waiting = Waiting.builder()
                 .people(waitingDto.getPeople())
-                .waitingState(waitingDto.getWaitingState().equals("True") ? TrueFalse.TRUE : TrueFalse.FALSE)
+                .waitingState(waitingDto.getWaitingState().equals("True") ? TrueFalse.TRUE : TrueFalse.WAITING)
                 .waitingRegDate(waitingDto.getWaitingRegDate())
                 .user(user)
                 .partner(partner)
@@ -122,7 +122,7 @@ public class WaitingService {
         // 웨이팅을 확정하는 로직 구현
         Waiting waiting = waitingRepository.findById(waitingId).orElse(null);
         if (waiting != null) {
-            waiting.setWaitingState(TrueFalse.TRUE); // 웨이팅을 확정으로 설정
+            waiting.setWaitingState(TrueFalse.WAITING); // 웨이팅을 확정으로 설정
             waitingRepository.save(waiting);
 
             // 확정된 웨이팅 정보를 웹소켓을 통해 클라이언트에게 전송

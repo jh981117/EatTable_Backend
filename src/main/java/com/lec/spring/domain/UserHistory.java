@@ -21,7 +21,4 @@ public class UserHistory extends BaseEntity {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name="user_id",insertable = false,updatable = false)
-    private  User user;
 }

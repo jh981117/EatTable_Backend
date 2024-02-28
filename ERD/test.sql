@@ -11,6 +11,7 @@ SELECT * FROM user;
 SELECT * FROM partnerreq;
 SELECT * FROM reviewlike;
 SELECT * FROM waiting;
+SELECT * FROM reservation;
 
 
 
@@ -390,6 +391,7 @@ insert into partnerreq(id,managerName,storeName,phone,partnerReqState,createdAt,
 #--------업체--------------------------------------------
 
 insert into partner (createdAt, updatedAt, area,district,lat, lng, zipCode, corkCharge, dog, favorite, openTime, parking, partnerName, partnerPhone, partnerState, reserveInfo, storeInfo, storeName, storePhone, tableCnt, viewCnt, userId) VALUES
+
 ('2024-02-26 13:48:28.177494','2024-02-12 13:48:28.177494','서울특별시 강남역사거리','강남구','37.4979052','127.0275777','12312',2,2,'한식,퓨전,돈까스','평일 11:30 ~ 21:00 브레이크타임 15:00 ~ 17:00 라스트오더 20:30(재료소진 시 조기마감)',1,'송송','11111111111','TRUE','웨이팅시 연락안되면 취소될수있습니다.','육즙이 살아있는 두툼한 일본식 돈카츠','크레이지카츠','11111111','20','102',1),
 ('2024-02-26 13:48:28.177494','2024-02-12 13:48:28.177494','서울특별시 서초역사거리','서초구','37.4917945','127.0076354','12312',2,2,'한식','24시',1,'송송','11111111111','TRUE','웨이팅시 연락안되면 취소될수있습니다.''','가게정보1','서초김밥','11111111','20','10',2),
 ('2024-02-26 13:48:28.177494','2024-02-12 13:48:28.177494','서울특별시 서초구 방배동','서초구','37.4794939','126.9931207','12312',2,2,'한식','24시',2,'송송','11111111111','TRUE','웨이팅시 연락안되면 취소될수있습니다.''','가게정보2','방배김밥','11111111','20','12',3),
@@ -481,6 +483,7 @@ insert into partner (createdAt, updatedAt, area,district,lat, lng, zipCode, cork
 ('2024-03-05 09:45:22.177494', '2024-03-05 09:45:22.177494', '서울특별시 서대문구', '서대문구', '37.564362', '126.948990', '03780', 2, 2, '돈까스', '매일 11:00 ~ 22:00', 1, '돈까스나라', '010-5678-9012', 'TRUE', '온라인 주문 가능합니다.', '신선한 돈까스 요리', '돈까스나라', '02-1098-7654', '25', '95', 89),
 ('2024-03-06 11:20:55.177494', '2024-03-06 11:20:55.177494', '서울특별시 양천구', '양천구', '37.528044', '126.863894', '08005', 2, 2, '중식', '매일 12:00 ~ 24:00', 1, '중국요리', '010-6789-0123', 'TRUE', '예약 가능합니다.', '정통 중식 요리', '중국요리', '02-7654-3210', '30', '100', 90);
 
+
 #--------파트너 어테치먼트-----------------------------
 
 
@@ -488,15 +491,15 @@ insert into partnerattachment (filename, imageUrl, isImage, partnerId) VALUES
     ('사진1','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sclyxAotIIvHeTsQ7SecaEA/clyxaotiivhetsq7secaea_2352310501583350.jpg',1,1),
     ('사진2','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sclyxAotIIvHeTsQ7SecaEA/clyxaotiivhetsq7secaea_2352310501587636.jpg',1,1),
     ('사진3','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sclyxAotIIvHeTsQ7SecaEA/clyxaotiivhetsq7secaea_2352310501587795.jpg',1,1),
-    ('사진4','https://image.toast.com/aaaaaqx/catchtable/shopinfo/s1pE_2hl3vjLdnFYCkRmKcQ/1pe_2hl3vjldnfyckrmkcq_2361410350586042.jpg?detail750',1,2),
+    ('사진4','https://lh3.googleusercontent.com/p/AF1QipPfVKjTGGkYh8OLW7DtoYWbWTgkAih_i0AgP5lr=s680-w680-h510',1,2),
     ('사진31','https://image.toast.com/aaaaaqx/catchtable/shopinfo/s14063/14063_2012117051878366.jpg?detail750',1,2),
     ('사진5','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sjdTkAxJi8e1X02OCeQjdOA/jdtkaxji8e1x02oceqjdoa_237512113808579.png?detail750',1,3),
     ('사진6','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sR1B6qa4fT537GjL6KO9bHg/r1b6qa4ft537gjl6ko9bhg_2371016411290157.jpg?detail750',1,4),
     ('사진7','https://ugc-images.catchtable.co.kr/catchtable/shopinfo/sBBiBFMN4TMKGS_wxWHzQ1A/46fc93b0e6d5460aabfbbdfa3b6c262f?detail750',1,5),
     ('사진8','https://ugc-images.catchtable.co.kr/catchtable/shopinfo/spc8XLqQkwoPvQVvHrKby7A/c74b4710891749ba9a0c5f60e184c20d?detail750',1,6),
     ('사진9','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sONn32WCV9edJm7OxF_hcqA/onn32wcv9edjm7oxf_hcqa_2371317362857540.jpg?detail750',1,7),
-    ('사진10','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sMw5J2WVI13FMCvZ_siAqmA/mw5j2wvi13fmcvz_siaqma_2372011243524932.jpeg?detail750',1,8),
-    ('사진11','https://image.toast.com/aaaaaqx/catchtable/shopinfo/smj1t-yFX4rH6vDS79Te31w/mj1t-yfx4rh6vds79te31w_236210554046226.jpg?detail750',1,9),
+    ('사진10','https://ugc-images.catchtable.co.kr/rv/sU0FqZiAlANGf89HZCn7rbw/e34007809e23488f85c1ac3896ae458d',1,8),
+    ('사진11','https://ugc-images.catchtable.co.kr/rv/sA4qp9Pt3isq6V0apHEGEqQ/c986fe594f4e48c0bb2a8cc70eb6c76e',1,9),
     ('사진12','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sTkDM9-Ou_h6pSK4midndzg/tkdm9-ou_h6psk4midndzg_2342510552156345.jpg?detail750',1,10),
     ('사진13','https://image.toast.com/aaaaaqx/catchtable/shopinfo/s5VQV0VsuaF0fxLMB-RQvFQ/5vqv0vsuaf0fxlmb-rqvfq_2342511014291923.jpg?detail750',1,11),
     ('사진14','https://image.toast.com/aaaaaqx/catchtable/shopinfo/si3ed949noo8-IQGq7ZIZpA/i3ed949noo8-iqgq7zizpa_2342511071163551.jpg?detail750',1,12),
@@ -508,13 +511,13 @@ insert into partnerattachment (filename, imageUrl, isImage, partnerId) VALUES
     ('사진20','https://image.toast.com/aaaaaqx/catchtable/shopinfo/snUVjSSlp0uXVetuDgQ-eWg/nuvjsslp0uxvetudgq-ewg_2352511164355747.jpg?detail750',1,18),
     ('사진21','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sRpUFfIelZApNTQFn7_EkTQ/rpuffielzapntqfn7_ektq_2361617333044950.jpg?detail750',1,19),
     ('사진22','https://image.toast.com/aaaaaqx/catchtable/shopinfo/sqTUWbsiVKYGXcAsXwLSh1Q/qtuwbsivkygxcasxwlsh1q_236716303859638.jpeg?detail750',1,20),
-    ('사진23','https://postfiles.pstatic.net/MjAyMzA3MDdfMTgy/MDAxNjg4NjkwNTA2NTcw.kV3iMKD2AzhVXiENdxYNF-L4VA4xL2gV5ngr5P9-hsAg.DauyCLKKJ2qC5vdzk9yKOC_XKkXy-j-NFiAhRLLxgHAg.JPEG.ugnyj/20230129%EF%BC%BF123258.jpg?type=w773',1,21),
+    ('사진23','https://ugc-images.catchtable.co.kr/rv/sxZnVif6ld5CqjTOubw0X7g/479033a2e1c648e290dd4c8251f5cc13',1,21),
     ('사진24','https://image.toast.com/aaaaaqx/rv/s48LKmshXJbSoONbQjPXBow/221023175742932_rv.jpg?small200',1,22),
     ('사진25','https://ugc-images.catchtable.co.kr/rv/seUCmXllc1DS4W1csRi1Fcg/6f35c66ee8274ca09f8ad0d60226290d',1,23),
     ('사진26','https://ugc-images.catchtable.co.kr/rv/sNFiCk5XJ_OhZakVLcUSeUg/b361048c4301441591c430a213e1c31b',1,24),
     ('사진27','https://ugc-images.catchtable.co.kr/rv/s8xzM7ljsUvPJx75ZXROanQ/4ef5665b7e1c478d8f0deb3c050314ec',1,25),
     ('사진28','https://ugc-images.catchtable.co.kr/rv/swWzeDbMtWdcV-u6IxHNkQg/5093497b72394a85870f1d7d1838737b',1,26),
-    ('사진29','https://postfiles.pstatic.net/MjAyMzA0MTBfNzkg/MDAxNjgxMTAxMDAxMTc0.TpP5vtQTwiM2FapFJgGJnh-QlxBJZvIDS_H7jLfMHWcg.EWBtvXm-ACybh2YJG-Hmm_6JPsbJSPXalGbMrAAtU60g.JPEG.sievn/08270hg1_(51).jpg?type=w966',1,27),
+    ('사진29','https://ugc-images.catchtable.co.kr/rv/sxZnVif6ld5CqjTOubw0X7g/479033a2e1c648e290dd4c8251f5cc13',1,27),
     ('사진30','https://ugc-images.catchtable.co.kr/rv/s8xzM7ljsUvPJx75ZXROanQ/074c0b505ca24b53bcad6acf357a5286',1,28),
     ('사진31','https://image.toast.com/aaaaaqx/rv/s10976/_2062214123899918.jpg?small200',1,29),
     ('사진32','https://image.toast.com/aaaaaqx/rv/s10976/_2062214123898033.jpg?small200',1,30),
@@ -610,15 +613,15 @@ insert into partnerattachment (filename, imageUrl, isImage, partnerId) VALUES
 ('2','2024-02-15 13:48:28.177494',17,2,14,'2024-02-18 13:48:28.177494','리뷰18 test'),
 ('3','2024-02-16 13:48:28.177494',18,2,4,'2024-02-18 13:48:28.177494','리뷰19 test'),
 ('3','2024-02-17 13:48:28.177494',19,2,5,'2024-02-18 13:48:28.177494','리뷰20 test'),
-('5','2024-02-18 13:48:28.177494',20,2,6,'2024-02-18 13:48:28.177494','리뷰21 test!!'),
-('5','2024-02-12 13:48:28.177494',21,2,7,'2024-02-18 13:48:28.177494','리뷰22 test'),
-('4','2024-02-13 13:48:28.177494',22,2,8,'2024-02-18 13:48:28.177494','리뷰23 test'),
-('3','2024-02-15 13:48:28.177494',23,2,9,'2024-02-18 13:48:28.177494','리뷰24 test'),
-('2','2024-02-16 13:48:28.177494',24,2,20,'2024-02-18 13:48:28.177494','리뷰25 test'),
-('4','2024-02-14 13:48:28.177494',25,2,5,'2024-02-18 13:48:28.177494','리뷰26 test'),
-('3','2024-02-15 13:48:28.177494',26,2,7,'2024-02-18 13:48:28.177494','리뷰27 test'),
-('5','2024-02-18 13:48:28.177494',27,2,9,'2024-02-18 13:48:28.177494','리뷰28 test'),
-('2','2024-02-13 13:48:28.177494',28,2,3,'2024-02-18 13:48:28.177494','리뷰29 test'),
+('5','2024-02-18 13:48:28.177494',20,3,6,'2024-02-18 13:48:28.177494','리뷰21 test!!'),
+('5','2024-02-12 13:48:28.177494',21,3,7,'2024-02-18 13:48:28.177494','리뷰22 test'),
+('4','2024-02-13 13:48:28.177494',22,3,8,'2024-02-18 13:48:28.177494','리뷰23 test'),
+('3','2024-02-15 13:48:28.177494',23,3,9,'2024-02-18 13:48:28.177494','리뷰24 test'),
+('2','2024-02-16 13:48:28.177494',24,3,20,'2024-02-18 13:48:28.177494','리뷰25 test'),
+('4','2024-02-14 13:48:28.177494',25,3,5,'2024-02-18 13:48:28.177494','리뷰26 test'),
+('3','2024-02-15 13:48:28.177494',26,3,7,'2024-02-18 13:48:28.177494','리뷰27 test'),
+('5','2024-02-18 13:48:28.177494',27,3,9,'2024-02-18 13:48:28.177494','리뷰28 test'),
+('2','2024-02-13 13:48:28.177494',28,3,3,'2024-02-18 13:48:28.177494','리뷰29 test'),
 ('4','2024-02-13 13:48:28.177494',30,3,22,'2024-02-18 13:48:28.177494','리뷰30 test'),
 ('3','2024-02-13 13:48:28.177494',31,3,22,'2024-02-18 13:48:28.177494','리뷰31 test'),
 ('1','2024-02-13 13:48:28.177494',32,3,22,'2024-02-18 13:48:28.177494','리뷰32 test'),
