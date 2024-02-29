@@ -167,4 +167,11 @@ public class StoreReviewController {
         Page<StoreReview> reviews = storeReviewService.getReviewsByFollowing(userId,pageable);
         return ResponseEntity.ok().body(reviews);
     }
+
+
+    @GetMapping("/reviews/{userId}")
+    public ResponseEntity<?> getUserReview(@PathVariable Long userId){
+
+        return new ResponseEntity<>(storeReviewService.findByUserId(userId) , HttpStatus.OK);
+    }
 }

@@ -68,5 +68,9 @@ public class FollowController {
         return ResponseEntity.ok().body(Map.of("isFollowing", isFollowing));
     }
 
+    @GetMapping("/follow/{userId}")
+    public ResponseEntity<?> getFollow(@PathVariable Long userId){
+        return new ResponseEntity<>(followService.findFollow(userId),HttpStatus.OK);
+    }
 
 }

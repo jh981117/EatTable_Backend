@@ -59,5 +59,7 @@ public class FollowService {
     }
 
 
-
+    public List<Follow> findFollow(Long userId) {
+        return followRepository.findByFromUserId(userId);
     }
+}

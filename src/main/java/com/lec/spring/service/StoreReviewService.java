@@ -116,4 +116,7 @@ public class StoreReviewService {
     }
 
 
+    public List<StoreReview> findByUserId(Long userId) {
+       return storeReviewRepository.findByUserId(userId);
+    }
 }
