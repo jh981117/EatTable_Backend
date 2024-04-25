@@ -107,10 +107,6 @@ JWT
 히스토리
 ![히스토리](https://github.com/jh981117/jh981117/assets/146803040/77eeb7a6-57e3-4793-a61f-9a64a03bea22)
 
-메뉴
-디테일
-![디테일](https://github.com/jh981117/jh981117/assets/146803040/45cff310-4948-4e1c-9823-aff71e2679be)
-
 예약, 대기열
 ![예약](https://github.com/jh981117/jh981117/assets/146803040/320711c9-0703-4a2a-9edc-f16ed194733c)
 
@@ -123,11 +119,9 @@ JWT
 
 ![파트너2](https://github.com/jh981117/jh981117/assets/146803040/eebf913e-33e7-43d7-9316-2e6db168fb9d)
 
-룰렛
-![룰렛](https://github.com/jh981117/jh981117/assets/146803040/1327e228-ce0b-4d0d-9ba2-25819995d8d0)
 
 구글맵
 ![구글맵](https://github.com/jh981117/jh981117/assets/146803040/34e4b636-30c7-472f-bc61-8eada834ba09)
 
 타임라인
-![타임라인](https://github.com/jh981117/jh981117/assets/146803040/5acf349f-8a55-4997-883d-ee88eaa66d28)
+![타임라인](https://github.com/jh981117/jh981117/assets/146803040/a0cde480-19d8-4385-a381-a6af8f9f4968)
